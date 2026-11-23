@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2657250003c46b9a5bbdc103b3b8ae, type: 3}
+  m_Name: "Originally_Hard_Area"
+  m_EditorClassIdentifier: 
+  source: {fileID: 11400000, guid: b96f8560055b4ef09ae3104742c8fbe2, type: 2}
+  laneId: area
+  snapSubdivision: 4
+  events:
+  - stableId: ea94ade40e2a4aa98ceadf33be3abd1c
+    index: 0
+    time: 52.2
+    eventId: "Originally_Hard_Area"
+    payload: "5000000000010060"
+  - stableId: f1a857841d7c4abb8a3f15e33698ada7
+    index: 1
+    time: 57
+    eventId: "Originally_Hard_Area"
+    payload: "5000000001010060"
+  - stableId: ed9faa6074b041cd987aae4c4a067486
+    index: 2
+    time: 61.8
+    eventId: "Originally_Hard_Area"
+    payload: "5000000000000060"
+  - stableId: f0c52bede5ec473989165414e3b3490c
+    index: 3
+    time: 81.6
+    eventId: "Originally_Hard_Area"
+    payload: "1000000000015240"
+  - stableId: 4b81f7ba36104ce69ac5dab9eb14bb44
+    index: 4
+    time: 84
+    eventId: "Originally_Hard_Area"
+    payload: "1000000000000240"
+  - stableId: a564230674dc4116802be90536aa7c3f
+    index: 5
+    time: 86.4
+    eventId: "Originally_Hard_Area"
+    payload: "1000000001015240"
+  - stableId: 1bdf23ca0c01435eb7353ca937f623e1
+    index: 6
+    time: 88.8
+    eventId: "Originally_Hard_Area"
+    payload: "1000000000000240"

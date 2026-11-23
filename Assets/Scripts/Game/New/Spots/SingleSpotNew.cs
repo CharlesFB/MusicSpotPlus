@@ -8,8 +8,8 @@ public class SingleSpotNew : Spot
     public ResultManager resultManager;
     public EffectController effectController;
 
+    public float spawnSongTime;
     private Animator anim;
-    private float timer = 0; //计时器，用于判定点击事件
 
     private bool doneTouch = true;
     private bool doneOK = true;
@@ -23,15 +23,14 @@ public class SingleSpotNew : Spot
 
     private void Update()
     {
-        if (!GameInfoSingleton.instance.isPaused)
-            timer += Time.deltaTime;
+        float elapsed = ChartPlayback.Since(spawnSongTime);
 
-        if (timer >= deltaGap(5))   //结束时间
+        if (elapsed >= deltaGap(5))   //结束时间
         {
             Miss();
             endAnim();
         }
-        else if (timer >= deltaGap(2) + 0.1f)  //注释这一段==============test
+        else if (elapsed >= deltaGap(2) + 0.1f)  //注释这一段==============test
         {
             if (doneTouch)
             {
@@ -39,7 +38,7 @@ public class SingleSpotNew : Spot
                 doneTouch = false;
             }
         }
-        else if (timer >= deltaGap(0))   //允许点击时间
+        else if (elapsed >= deltaGap(0))   //允许点击时间
         {
             if (doneOK)
             {
@@ -52,11 +51,12 @@ public class SingleSpotNew : Spot
     public void DoTouch() //执行点击事件
     {
         isOkForTouch = false; //点击后不允许再点击
-        if (timer >= deltaGap(2) && timer < deltaGap(3))
+        float elapsed = ChartPlayback.Since(spawnSongTime);
+        if (elapsed >= deltaGap(2) && elapsed < deltaGap(3))
             PerfectClick();
-        else if (timer >= deltaGap(1) && timer < deltaGap(4))
+        else if (elapsed >= deltaGap(1) && elapsed < deltaGap(4))
             GreatClick();
-        else if (timer >= deltaGap(0) && timer < deltaGap(5))
+        else if (elapsed >= deltaGap(0) && elapsed < deltaGap(5))
             BadClick();
     }
 

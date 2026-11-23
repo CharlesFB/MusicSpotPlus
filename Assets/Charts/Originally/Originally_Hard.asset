@@ -1,0 +1,1363 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2657250003c46b9a5bbdc103b3b8ae, type: 3}
+  m_Name: "Originally_Hard"
+  m_EditorClassIdentifier: 
+  source: {fileID: 11400000, guid: b96f8560055b4ef09ae3104742c8fbe2, type: 2}
+  laneId: spots
+  snapSubdivision: 4
+  events:
+  - stableId: a24f8d41ac454d19b8a19390232218c0
+    index: 0
+    time: 1.2
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: da62ce6e977b40cfb23bf81ae0c86db7
+    index: 1
+    time: 1.42498866
+    eventId: "Originally_Hard"
+    payload: "01020105000,00020105000"
+  - stableId: cb506968862b442ba8505f37e13747a1
+    index: 2
+    time: 1.72498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: cb9eb8ba075b4d159f3107042a59b1bc
+    index: 3
+    time: 2.02498866
+    eventId: "Originally_Hard"
+    payload: "00060005000"
+  - stableId: c7de24e90b764610a708caa3b7f1c36f
+    index: 4
+    time: 2.17498866
+    eventId: "Originally_Hard"
+    payload: "01020007500"
+  - stableId: 711aa48407c74e689845268750356512
+    index: 5
+    time: 2.47498866
+    eventId: "Originally_Hard"
+    payload: "00020007500"
+  - stableId: e83ea63092ed46eabd6531becf3d4abf
+    index: 6
+    time: 2.62498866
+    eventId: "Originally_Hard"
+    payload: "00000005000"
+  - stableId: d137603887b345f7b30734b7eeb1058b
+    index: 7
+    time: 2.77498866
+    eventId: "Originally_Hard"
+    payload: "01020002500"
+  - stableId: aaf166603ff04a9ba53dfc9874ee6809
+    index: 8
+    time: 2.92498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 65bd4c22ebde4be291eba956ddef8e0b
+    index: 9
+    time: 3.22498866
+    eventId: "Originally_Hard"
+    payload: "01060105000,00060105000"
+  - stableId: 26d4382623eb4a90ae994103b0641354
+    index: 10
+    time: 3.52498866
+    eventId: "Originally_Hard"
+    payload: "00020110000"
+  - stableId: dc28f4be7e63448092ed3715d95c581d
+    index: 11
+    time: 3.82498866
+    eventId: "Originally_Hard"
+    payload: "01020105000"
+  - stableId: 198d1f17496b442a87ccbbd23472086e
+    index: 12
+    time: 4.12498866
+    eventId: "Originally_Hard"
+    payload: "00020000000"
+  - stableId: 7d2462a12338460b8b79a94246d0ca1d
+    index: 13
+    time: 4.27498866
+    eventId: "Originally_Hard"
+    payload: "00020002500"
+  - stableId: de7b6f9fdaac46e0bd7c46452e5a16e0
+    index: 14
+    time: 4.57498866
+    eventId: "Originally_Hard"
+    payload: "00000007500"
+  - stableId: 1f6b269a98064ce88c17414856f18825
+    index: 15
+    time: 4.79997732
+    eventId: "Originally_Hard"
+    payload: "41020010011"
+  - stableId: 9c6a7622b1014979a7922e4320077b7b
+    index: 16
+    time: 5.92498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 5dd16ce6fac24e89bdd77f11f6bea654
+    index: 17
+    time: 6.22498866
+    eventId: "Originally_Hard"
+    payload: "01020105000,00020105000"
+  - stableId: 1f2688bf63a742d58f125d010732f704
+    index: 18
+    time: 6.52498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: b2ce2ba4f0114a2495ba23c0ca10e669
+    index: 19
+    time: 6.82498866
+    eventId: "Originally_Hard"
+    payload: "00060005000"
+  - stableId: 8e9f2f0ce19f445cadc3ecd65b05de75
+    index: 20
+    time: 6.97498866
+    eventId: "Originally_Hard"
+    payload: "01020007500"
+  - stableId: 8445e691abfa4945b344ba4ebf5e322c
+    index: 21
+    time: 7.27498866
+    eventId: "Originally_Hard"
+    payload: "00020007500"
+  - stableId: bbe80eac8c10474fa5bb2e114a677e40
+    index: 22
+    time: 7.42498866
+    eventId: "Originally_Hard"
+    payload: "00000005000"
+  - stableId: 442b87a444ad41a195af6dee3b6787ce
+    index: 23
+    time: 7.57498866
+    eventId: "Originally_Hard"
+    payload: "01020002500"
+  - stableId: c3cff8a0da234f83886bdb6641260d7b
+    index: 24
+    time: 7.72498866
+    eventId: "Originally_Hard"
+    payload: "01020000000,00020000000"
+  - stableId: 5b3d336a5fa6423499c365a0a71eaec2
+    index: 25
+    time: 8.02498866
+    eventId: "Originally_Hard"
+    payload: "01060105000,00060105000"
+  - stableId: 55b67a417b47469e88d05bfaf43f06db
+    index: 26
+    time: 8.32498866
+    eventId: "Originally_Hard"
+    payload: "00060110000"
+  - stableId: b579cb19237d403bafa5b7dcad6fb453
+    index: 27
+    time: 8.47498866
+    eventId: "Originally_Hard"
+    payload: "01060107500"
+  - stableId: ea8dfe77da3f4d2cb542b34ebefe2b3a
+    index: 28
+    time: 8.62498866
+    eventId: "Originally_Hard"
+    payload: "00080105000"
+  - stableId: ff783435e1734fd1a84b1d9df1f23c83
+    index: 29
+    time: 8.77498866
+    eventId: "Originally_Hard"
+    payload: "01080102500"
+  - stableId: 8cca1348959846868ab7e7c6e3a183e2
+    index: 30
+    time: 8.92498866
+    eventId: "Originally_Hard"
+    payload: "00060000000"
+  - stableId: e4b7ea261ba74f08b2597895dc88a014
+    index: 31
+    time: 9.07498866
+    eventId: "Originally_Hard"
+    payload: "01060002500"
+  - stableId: ebe13e9d2bd64110a75bb8f788bfa616
+    index: 32
+    time: 9.22498866
+    eventId: "Originally_Hard"
+    payload: "00040005000"
+  - stableId: ffe19b81fa0145fe9b153c1845d1f1ce
+    index: 33
+    time: 9.37498866
+    eventId: "Originally_Hard"
+    payload: "01040007500"
+  - stableId: 5d6a141664b145a6a4ce43da6df38444
+    index: 34
+    time: 9.59997732
+    eventId: "Originally_Hard"
+    payload: "41020010011,40020010011"
+  - stableId: 236c66d14ea84ecc91228cd23a9ffd81
+    index: 35
+    time: 10.72498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 5fe2294d0399424e81ff20e51a2ac9c9
+    index: 36
+    time: 11.02498866
+    eventId: "Originally_Hard"
+    payload: "01020105000,00020105000"
+  - stableId: 7b6c7789b1c04aa5936072843cd5f63c
+    index: 37
+    time: 11.32498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 72e8567693584e7fae99820260c4e169
+    index: 38
+    time: 11.62498866
+    eventId: "Originally_Hard"
+    payload: "00060005000"
+  - stableId: 593c1eb59eef42919a0f7071cd28f43c
+    index: 39
+    time: 11.77498866
+    eventId: "Originally_Hard"
+    payload: "01020007500"
+  - stableId: 0388fac1c8b74b4392afe14c95b6cbdb
+    index: 40
+    time: 12.07498866
+    eventId: "Originally_Hard"
+    payload: "00020007500"
+  - stableId: 8b128de132ac4bc598102f4e760240c8
+    index: 41
+    time: 12.22498866
+    eventId: "Originally_Hard"
+    payload: "00000005000"
+  - stableId: c5b2fb34e3fd4229bf7c475fc934313c
+    index: 42
+    time: 12.37498866
+    eventId: "Originally_Hard"
+    payload: "01020002500"
+  - stableId: f634182f6d09401099de3a6011920106
+    index: 43
+    time: 12.52498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 3737d2749ad64722a619b9c6336b8f9f
+    index: 44
+    time: 12.82498866
+    eventId: "Originally_Hard"
+    payload: "01060105000,00060105000"
+  - stableId: 5af45062c7dd45dcba1995e3ca234729
+    index: 45
+    time: 13.12498866
+    eventId: "Originally_Hard"
+    payload: "00020110000"
+  - stableId: bf257bd1a98f42d0a4d0193451997dd1
+    index: 46
+    time: 13.42498866
+    eventId: "Originally_Hard"
+    payload: "01020105000"
+  - stableId: 786742f08d61437ea07d5b4e3c049351
+    index: 47
+    time: 13.72498866
+    eventId: "Originally_Hard"
+    payload: "00020000000"
+  - stableId: 9c33665f8a544d42a1a26bdcc8c8debc
+    index: 48
+    time: 13.87498866
+    eventId: "Originally_Hard"
+    payload: "00020002500"
+  - stableId: 85fdb1fcdc4d47e6880e6358e3cae161
+    index: 49
+    time: 14.17498866
+    eventId: "Originally_Hard"
+    payload: "00000007500"
+  - stableId: c39bab048d2c4352a152e5f73322b2e5
+    index: 50
+    time: 14.39997732
+    eventId: "Originally_Hard"
+    payload: "41020010011"
+  - stableId: 7cb65aec020c4754b5c762aedb68fa86
+    index: 51
+    time: 14.62498866
+    eventId: "Originally_Hard"
+    payload: "11020005000"
+  - stableId: 6df50a71307f461fa8195a9515e3af24
+    index: 52
+    time: 15.07498866
+    eventId: "Originally_Hard"
+    payload: "10020102500"
+  - stableId: 6accf94158164e10922974302d66d435
+    index: 53
+    time: 15.52498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 0f27ded969bf47fea5d04d81f5cffe60
+    index: 54
+    time: 15.82498866
+    eventId: "Originally_Hard"
+    payload: "01020105000,00020105000"
+  - stableId: d6493a03cc564eebb9b78e792548bbab
+    index: 55
+    time: 16.12498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 3211685af93e427ca2a838f54ff90653
+    index: 56
+    time: 16.42498866
+    eventId: "Originally_Hard"
+    payload: "00060005000"
+  - stableId: cff75346d84a44e6aa0e1ef14571644f
+    index: 57
+    time: 16.57498866
+    eventId: "Originally_Hard"
+    payload: "01020007500"
+  - stableId: c0c43dc7d6784c9f86aa955083baccd6
+    index: 58
+    time: 16.87498866
+    eventId: "Originally_Hard"
+    payload: "00020007500"
+  - stableId: 161ca0d3ab394e3ab74816adc38c6b93
+    index: 59
+    time: 17.02498866
+    eventId: "Originally_Hard"
+    payload: "00000005000"
+  - stableId: 8c5aab9318e649ba980f0ac6d6458c68
+    index: 60
+    time: 17.17498866
+    eventId: "Originally_Hard"
+    payload: "01020002500"
+  - stableId: eedccad189ee41dfa832a3760ce202cb
+    index: 61
+    time: 17.32498866
+    eventId: "Originally_Hard"
+    payload: "01020000000,00020000000"
+  - stableId: e4c193d292d24c21b6023c5e83c219e7
+    index: 62
+    time: 17.62498866
+    eventId: "Originally_Hard"
+    payload: "01060105000,00060105000"
+  - stableId: fb8f01ed3d8d4743939ca7ebc88378a9
+    index: 63
+    time: 17.92498866
+    eventId: "Originally_Hard"
+    payload: "00060110000,01060110000"
+  - stableId: bce5d589538d483e941f90527f8beee9
+    index: 64
+    time: 18.07498866
+    eventId: "Originally_Hard"
+    payload: "00060107500,01060107500"
+  - stableId: 1c31cf7471514ea2bcc12da56b02efa6
+    index: 65
+    time: 18.22498866
+    eventId: "Originally_Hard"
+    payload: "00080105000,01080105000"
+  - stableId: 38f2213d797748e6928cbe21d5d82ed8
+    index: 66
+    time: 18.37498866
+    eventId: "Originally_Hard"
+    payload: "00080102500,01080102500"
+  - stableId: 3d30b357d9624a1fba7c2e54f6d1c4f4
+    index: 67
+    time: 18.52498866
+    eventId: "Originally_Hard"
+    payload: "00060000000,01060000000"
+  - stableId: 6efe0ce4a4464c31a9e053da8a00cb86
+    index: 68
+    time: 18.67498866
+    eventId: "Originally_Hard"
+    payload: "00060002500,01060002500"
+  - stableId: c7f4fe0531394babb353921e4ebdde5c
+    index: 69
+    time: 18.82498866
+    eventId: "Originally_Hard"
+    payload: "00040005000,01040005000"
+  - stableId: 83a1bdedf8254b20b3ffdbb57d19547b
+    index: 70
+    time: 18.97498866
+    eventId: "Originally_Hard"
+    payload: "00040007500,01040007500"
+  - stableId: a4c361a5b1024998b6f5c30d4aab7fc2
+    index: 71
+    time: 19.12498866
+    eventId: "Originally_Hard"
+    payload: "01060010011,00060010011"
+  - stableId: 3bee8697658b4388b3acd3e1063e8cd3
+    index: 72
+    time: 19.27498866
+    eventId: "Originally_Hard"
+    payload: "11065007500,10065007500"
+  - stableId: efb9de68d9344909ba97a33d2764c0ac
+    index: 73
+    time: 19.42498866
+    eventId: "Originally_Hard"
+    payload: "11070005000,10070005000"
+  - stableId: 674682b3da7d4401a8bd12aec15a250d
+    index: 74
+    time: 19.57498866
+    eventId: "Originally_Hard"
+    payload: "11075002500,10075002500"
+  - stableId: 0b18d47e106c4943a2c4fc0b4835252c
+    index: 75
+    time: 19.72498866
+    eventId: "Originally_Hard"
+    payload: "11080000000,10080000000"
+  - stableId: 479288c5826e45818be7f4f7ca6a3ca3
+    index: 76
+    time: 19.87498866
+    eventId: "Originally_Hard"
+    payload: "11075102500,10075102500"
+  - stableId: 280d8d3cf289481fbd155da768613d7d
+    index: 77
+    time: 20.02498866
+    eventId: "Originally_Hard"
+    payload: "11070105000,10070105000"
+  - stableId: b5dcf259bedc4f76a19a822f73bdc7f4
+    index: 78
+    time: 20.17498866
+    eventId: "Originally_Hard"
+    payload: "11065107500,10065107500"
+  - stableId: 6f2ab74154fd4ebdace68096171f0391
+    index: 79
+    time: 20.32498866
+    eventId: "Originally_Hard"
+    payload: "01060110000"
+  - stableId: fbb660d988584b1caa8fb1d70ab100b6
+    index: 80
+    time: 20.47498866
+    eventId: "Originally_Hard"
+    payload: "11050108800"
+  - stableId: d5d96751a79c48939ef2d377de33ee72
+    index: 81
+    time: 20.62498866
+    eventId: "Originally_Hard"
+    payload: "11040107500"
+  - stableId: fa21a3cc27724e3aa718adcda9557449
+    index: 82
+    time: 20.77498866
+    eventId: "Originally_Hard"
+    payload: "01050106300"
+  - stableId: 94618491820340a985d4ab3adb9bc377
+    index: 83
+    time: 20.92498866
+    eventId: "Originally_Hard"
+    payload: "11040105000"
+  - stableId: a23fe4f1796f40c39b39669fbcd8ad5e
+    index: 84
+    time: 20.99997732
+    eventId: "Originally_Hard"
+    payload: "11035104400"
+  - stableId: 445e626c293040f5be0faadbd85e099e
+    index: 85
+    time: 21.07498866
+    eventId: "Originally_Hard"
+    payload: "11030103800"
+  - stableId: 9d1d5407c2f84318908cdbb34ff12cde
+    index: 86
+    time: 21.22498866
+    eventId: "Originally_Hard"
+    payload: "01020102500"
+  - stableId: 0c7a933c9d8342079f9d5efd95a92623
+    index: 87
+    time: 21.37498866
+    eventId: "Originally_Hard"
+    payload: "01010101300"
+  - stableId: 3634f2af11e341b7928731db13ad3a24
+    index: 88
+    time: 21.52498866
+    eventId: "Originally_Hard"
+    payload: "00000000000"
+  - stableId: cc217aaf54a842f7bc114dd827548804
+    index: 89
+    time: 21.67498866
+    eventId: "Originally_Hard"
+    payload: "10010001300"
+  - stableId: 45479e20eda04dab8f96581202123c46
+    index: 90
+    time: 21.82498866
+    eventId: "Originally_Hard"
+    payload: "10020002500"
+  - stableId: c801ef75fc774ad9abb53e5a878106ee
+    index: 91
+    time: 21.97498866
+    eventId: "Originally_Hard"
+    payload: "00010003800"
+  - stableId: 32d5f2aa241349e29cdfc5075158c80a
+    index: 92
+    time: 22.12498866
+    eventId: "Originally_Hard"
+    payload: "10020005000"
+  - stableId: 264fd12bb0734208943c795354f51bc3
+    index: 93
+    time: 22.19997732
+    eventId: "Originally_Hard"
+    payload: "10025005600"
+  - stableId: 8bb55e2963e6493cb4ecf374a612fd20
+    index: 94
+    time: 22.27498866
+    eventId: "Originally_Hard"
+    payload: "10030006300"
+  - stableId: 9f7fd9502cfa4602bffe5f9e65268c76
+    index: 95
+    time: 22.42498866
+    eventId: "Originally_Hard"
+    payload: "00040007500"
+  - stableId: 0a2ede8ec6234a8ca2edb6f799f1eb7c
+    index: 96
+    time: 22.57498866
+    eventId: "Originally_Hard"
+    payload: "00050008800"
+  - stableId: d74e890d3f22452cac2c2e9ca078c165
+    index: 97
+    time: 22.72498866
+    eventId: "Originally_Hard"
+    payload: "01060010000"
+  - stableId: c0bf2f54e78f4b75ab57ee7450507b5a
+    index: 98
+    time: 22.87498866
+    eventId: "Originally_Hard"
+    payload: "11050008800"
+  - stableId: 9b03455b75a74764be57e9191b18da33
+    index: 99
+    time: 23.02498866
+    eventId: "Originally_Hard"
+    payload: "11040007500"
+  - stableId: 7e62597d05974d0cbe1d010934ab327f
+    index: 100
+    time: 23.17498866
+    eventId: "Originally_Hard"
+    payload: "01050006300"
+  - stableId: 7c8decab8c514b31a22ec3f18206489f
+    index: 101
+    time: 23.32498866
+    eventId: "Originally_Hard"
+    payload: "11040005000"
+  - stableId: 5e061f0e505f4e17a9d38b95be73d113
+    index: 102
+    time: 23.39997732
+    eventId: "Originally_Hard"
+    payload: "11035004400"
+  - stableId: 27ca1f63dc7e4f6bbb015207faec2ba4
+    index: 103
+    time: 23.47498866
+    eventId: "Originally_Hard"
+    payload: "11030003800"
+  - stableId: f551fe66edcb402eaaa13ddb99effdd7
+    index: 104
+    time: 23.62498866
+    eventId: "Originally_Hard"
+    payload: "01020002500"
+  - stableId: 3d2ce7fc43f84c698bf0f2dac3050f9d
+    index: 105
+    time: 23.77498866
+    eventId: "Originally_Hard"
+    payload: "01010001300"
+  - stableId: 9b4e100076464176ba5b590211ea4b83
+    index: 106
+    time: 23.92498866
+    eventId: "Originally_Hard"
+    payload: "00000000000"
+  - stableId: c3bbd8e3957944fd808651b71bf62845
+    index: 107
+    time: 24.07498866
+    eventId: "Originally_Hard"
+    payload: "00010101300"
+  - stableId: 56aa856c70a2487f8543ef5b377c555b
+    index: 108
+    time: 24.22498866
+    eventId: "Originally_Hard"
+    payload: "00020102500"
+  - stableId: 27571b478abe490cb095e2cce8dabd19
+    index: 109
+    time: 24.37498866
+    eventId: "Originally_Hard"
+    payload: "10025103100"
+  - stableId: f74ed20dda6047afbb82dd383739858c
+    index: 110
+    time: 24.44997732
+    eventId: "Originally_Hard"
+    payload: "10030103800"
+  - stableId: f87767da68d243d1aca99e84629f3d9f
+    index: 111
+    time: 24.52498866
+    eventId: "Originally_Hard"
+    payload: "00020105600"
+  - stableId: 076d875fb4a341ae8045b3fec00f730a
+    index: 112
+    time: 24.67498866
+    eventId: "Originally_Hard"
+    payload: "00040106300"
+  - stableId: 1a97339ce3594a08bdc98b376c27dd68
+    index: 113
+    time: 24.82498866
+    eventId: "Originally_Hard"
+    payload: "00030107500"
+  - stableId: 95e9d5b9340d4ad894052ecec036c989
+    index: 114
+    time: 24.97498866
+    eventId: "Originally_Hard"
+    payload: "00050108800"
+  - stableId: 3b36468c06cd4c7983e8127c2a03f86a
+    index: 115
+    time: 25.12498866
+    eventId: "Originally_Hard"
+    payload: "01060110000"
+  - stableId: 30fedcdb64ba476183b9d8f67825edb9
+    index: 116
+    time: 25.27498866
+    eventId: "Originally_Hard"
+    payload: "11050108800"
+  - stableId: b696d43069684b55b5dc06ac67ea93e8
+    index: 117
+    time: 25.42498866
+    eventId: "Originally_Hard"
+    payload: "11040107500"
+  - stableId: 551800d1b8f8409dafc033e3b4bcb10e
+    index: 118
+    time: 25.57498866
+    eventId: "Originally_Hard"
+    payload: "01050106300"
+  - stableId: 5980f62246144fb1beb272be6a8bea2f
+    index: 119
+    time: 25.72498866
+    eventId: "Originally_Hard"
+    payload: "11040105000"
+  - stableId: d0767b6b0e7c489fa35e33839c32022e
+    index: 120
+    time: 25.79997732
+    eventId: "Originally_Hard"
+    payload: "11035104400"
+  - stableId: db02d7d0540d48929a856bd57b61eab9
+    index: 121
+    time: 25.87498866
+    eventId: "Originally_Hard"
+    payload: "11030103800"
+  - stableId: 27b3b2693496435b827a7f094792fbff
+    index: 122
+    time: 26.02498866
+    eventId: "Originally_Hard"
+    payload: "01020102500"
+  - stableId: 00607bb16332401abe643d5eceeea5a1
+    index: 123
+    time: 26.17498866
+    eventId: "Originally_Hard"
+    payload: "01010101300"
+  - stableId: b1bd7aef3e934eaa8ae83ca645cccaf1
+    index: 124
+    time: 26.32498866
+    eventId: "Originally_Hard"
+    payload: "00000000000"
+  - stableId: ba99b3ae6da14d43a86b70ad85ec23c2
+    index: 125
+    time: 26.47498866
+    eventId: "Originally_Hard"
+    payload: "10010001300"
+  - stableId: 9b13b5e8060c421bb817af1579ed2c7d
+    index: 126
+    time: 26.62498866
+    eventId: "Originally_Hard"
+    payload: "10020002500"
+  - stableId: 77db49c0f1fd46fd9bca1f359f67f295
+    index: 127
+    time: 26.77498866
+    eventId: "Originally_Hard"
+    payload: "00010003800"
+  - stableId: 235ff87294de41928d1f8ab0b4f4e8b8
+    index: 128
+    time: 26.92498866
+    eventId: "Originally_Hard"
+    payload: "10020005000"
+  - stableId: f128663f68934579b1606083055c34e5
+    index: 129
+    time: 26.99997732
+    eventId: "Originally_Hard"
+    payload: "10025005600"
+  - stableId: 59f1d0e85ef74a5bb70c5a63391113d9
+    index: 130
+    time: 27.07498866
+    eventId: "Originally_Hard"
+    payload: "10030006300"
+  - stableId: 2c841b37619d466eb0c949edb47d986e
+    index: 131
+    time: 27.22498866
+    eventId: "Originally_Hard"
+    payload: "00040007500"
+  - stableId: 6b17e8f8694d465685033adf52e2eded
+    index: 132
+    time: 27.37498866
+    eventId: "Originally_Hard"
+    payload: "00050008800"
+  - stableId: 5ad11af300644263957f7cc56dab6fec
+    index: 133
+    time: 27.52498866
+    eventId: "Originally_Hard"
+    payload: "01060010000"
+  - stableId: c680eb0c65dc48eab673f0962f128682
+    index: 134
+    time: 27.67498866
+    eventId: "Originally_Hard"
+    payload: "11050008800"
+  - stableId: 1238844d9869491e9146367ca19914c9
+    index: 135
+    time: 27.82498866
+    eventId: "Originally_Hard"
+    payload: "11040007500"
+  - stableId: 964aff83ab364058a4471567661a7212
+    index: 136
+    time: 27.97498866
+    eventId: "Originally_Hard"
+    payload: "01050006300"
+  - stableId: 97d3ae6d5aca4ce1ad4a363e43229764
+    index: 137
+    time: 28.12498866
+    eventId: "Originally_Hard"
+    payload: "11040005000"
+  - stableId: cd59ac6cb32c4dd9ac1b72179e3b87f9
+    index: 138
+    time: 28.19997732
+    eventId: "Originally_Hard"
+    payload: "11035004400"
+  - stableId: 9b09be33b66f413686c887ae6f1920f0
+    index: 139
+    time: 28.27498866
+    eventId: "Originally_Hard"
+    payload: "11030003800"
+  - stableId: 2e4a30eed53244ea82f13b5b6a4ba7bf
+    index: 140
+    time: 28.42498866
+    eventId: "Originally_Hard"
+    payload: "01020002500"
+  - stableId: 7bcf5a5580994d0a97adbdf987e3ed66
+    index: 141
+    time: 28.57498866
+    eventId: "Originally_Hard"
+    payload: "01010001300"
+  - stableId: 4d504b21a99941028be6c1172aff9842
+    index: 142
+    time: 28.72498866
+    eventId: "Originally_Hard"
+    payload: "00000000000"
+  - stableId: 84862f33fd734b4eb7e0a04eb0d359eb
+    index: 143
+    time: 28.87498866
+    eventId: "Originally_Hard"
+    payload: "00010101300"
+  - stableId: 522b7c0b7aa84b2ba2dd86ca593e405e
+    index: 144
+    time: 29.02498866
+    eventId: "Originally_Hard"
+    payload: "00020102500"
+  - stableId: 0b7d4efa5d064e409bd3b4e29dd2cc81
+    index: 145
+    time: 29.17498866
+    eventId: "Originally_Hard"
+    payload: "10025103100"
+  - stableId: a095c9050e894fd7a9eab7ab8c3f4e05
+    index: 146
+    time: 29.24997732
+    eventId: "Originally_Hard"
+    payload: "10030103800"
+  - stableId: 864881e102c444eca708da08fe74eed0
+    index: 147
+    time: 29.32498866
+    eventId: "Originally_Hard"
+    payload: "10020105600"
+  - stableId: e9a9710ed5294765a5f9c14fac05524d
+    index: 148
+    time: 29.47498866
+    eventId: "Originally_Hard"
+    payload: "10030106300"
+  - stableId: d9003cefb6e14821a2d87c98b4049925
+    index: 149
+    time: 29.62498866
+    eventId: "Originally_Hard"
+    payload: "10040107500"
+  - stableId: afffb64046bd4667bcdca3c1e90163b4
+    index: 150
+    time: 29.77498866
+    eventId: "Originally_Hard"
+    payload: "10050108800"
+  - stableId: 94c748b868a94efbb07f1e998a4c4a15
+    index: 151
+    time: 29.92498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: fae23b8cd47042ac8a8bfa562a48b339
+    index: 152
+    time: 30.22498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: f9fcf19c48af454cbca78b79818db169
+    index: 153
+    time: 30.52498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: b4ed4532a5fe43768a157bf83b7c06f3
+    index: 154
+    time: 30.82498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 7e597b51f5cb4cabbab0ea7be6e613d1
+    index: 155
+    time: 31.12498866
+    eventId: "Originally_Hard"
+    payload: "01060010000,00060010000"
+  - stableId: 8532327d227744259575171fcc5c9ede
+    index: 156
+    time: 31.42498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 382661bce64a4b629d0266161d82a74c
+    index: 157
+    time: 31.72498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 6c0cb62fe5ef40fcb0c2f421b547eb75
+    index: 158
+    time: 32.02498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: ca25c4cc8a3d4ddbbc0f3fa8c7acbc6d
+    index: 159
+    time: 32.32498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 88cd6ff79e9844f69e9b4d9f35d8ff5d
+    index: 160
+    time: 32.62498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: 091877ff9cc04531960ef9c00e8770a8
+    index: 161
+    time: 32.92498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 6055d26c5ed742368fc0536243b0bc4e
+    index: 162
+    time: 33.22498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 124830f9e7f8493eaa903388979e27d8
+    index: 163
+    time: 33.52498866
+    eventId: "Originally_Hard"
+    payload: "01060010000,00060010000"
+  - stableId: 2bc74844678d456da1a81e4d99420df6
+    index: 164
+    time: 33.82498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 1a77e35c129d4025a543a073c3479f16
+    index: 165
+    time: 34.12498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: b29f158b30054595945413c161320f5a
+    index: 166
+    time: 34.42498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: dee89b57fad94951ac34eaff9de4b9f8
+    index: 167
+    time: 34.72498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 53803925c50b40248fcd64dab6ad60d3
+    index: 168
+    time: 35.02498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: cc91c29cd7f742c3a9774ba90ab51b0c
+    index: 169
+    time: 35.32498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: f26d0d6042014282802327caf6e1ac90
+    index: 170
+    time: 35.62498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: cab0b4a108044dbb959aa8df24341b5d
+    index: 171
+    time: 35.92498866
+    eventId: "Originally_Hard"
+    payload: "01060010000,00060010000"
+  - stableId: 9d017523f3eb4cc885e3c860d526b427
+    index: 172
+    time: 36.22498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 82ee3f8b69e3476d8c3a02af21c43282
+    index: 173
+    time: 36.52498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 11670c39b1384b718bf0f0d580b3976f
+    index: 174
+    time: 36.82498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: 56d30a7235b84b3c8e4ff5027485f2d6
+    index: 175
+    time: 37.12498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 7665cc788aea4677b46abd8422508478
+    index: 176
+    time: 37.42498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: f54a351c62bb4b46ae295fcdaf295294
+    index: 177
+    time: 37.72498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 8024f31ddc9044f4886f9ba19f33f2e2
+    index: 178
+    time: 38.02498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: d79eb4ff150f42d8be7d4eb740dc9b7f
+    index: 179
+    time: 38.32498866
+    eventId: "Originally_Hard"
+    payload: "01060010000,00060010000"
+  - stableId: 2ba19feded6f479d8d69c605cbf563c3
+    index: 180
+    time: 38.62498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 216458caa2294b22acad937fe8d09b75
+    index: 181
+    time: 38.92498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 33ebc9a9fbb144d28b4456998435f74e
+    index: 182
+    time: 39.22498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: a724133992ae499fb45661b0616938b3
+    index: 183
+    time: 39.52498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 7e4d84b69dc9463281b58f4b62449b01
+    index: 184
+    time: 39.82498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: 4286f6b3f2a34e23a5d2be177d6e0749
+    index: 185
+    time: 40.12498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 5339eef7116b4ed3b04f6515321a34c4
+    index: 186
+    time: 40.42498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 5c7a66c151414c68b940dd13f482454b
+    index: 187
+    time: 40.72498866
+    eventId: "Originally_Hard"
+    payload: "01060010000,00060010000"
+  - stableId: 58fbc87edff647d5bde7131fe2910e7f
+    index: 188
+    time: 41.02498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: ee42d996cb374dcf92428e096851a746
+    index: 189
+    time: 41.32498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: ca304b4d3fa644d6896d59ac5b1e8b3f
+    index: 190
+    time: 41.62498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: bcc31ae17ac7489fbe05ba6782e76b1b
+    index: 191
+    time: 41.92498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 747352f023594ada86865d9bdd7df734
+    index: 192
+    time: 42.22498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: 06df2cd2d4bc4036834ea54c55b8318f
+    index: 193
+    time: 42.52498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 2277812c07f94734aabc4fb02e704a19
+    index: 194
+    time: 42.82498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: e968c68972044df581cc3db6742158b6
+    index: 195
+    time: 43.12498866
+    eventId: "Originally_Hard"
+    payload: "01060010000,00060010000"
+  - stableId: cc98eb5aa7414ca3998297e9b5761261
+    index: 196
+    time: 43.42498866
+    eventId: "Originally_Hard"
+    payload: "01040005000,00040005000"
+  - stableId: 65a3e3b719ec4922b411e7f6ed803c93
+    index: 197
+    time: 43.72498866
+    eventId: "Originally_Hard"
+    payload: "01060000000,00060000000"
+  - stableId: 6fd825f5600b4b188ff35719e7b0a38d
+    index: 198
+    time: 44.02498866
+    eventId: "Originally_Hard"
+    payload: "01040105000,00040105000"
+  - stableId: 51c2784be47041d5a301aae61a2173aa
+    index: 199
+    time: 44.32498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: b0f68a3ca48847ea9118e2f6c6e285fb
+    index: 200
+    time: 44.77498866
+    eventId: "Originally_Hard"
+    payload: "01060102500,00060102500"
+  - stableId: 24e542af6907431a809c33c1f7686f7f
+    index: 201
+    time: 45.07498866
+    eventId: "Originally_Hard"
+    payload: "01060002500,00060002500"
+  - stableId: a6dbec0907cc4dc4b446a341e2b5c525
+    index: 202
+    time: 45.22498866
+    eventId: "Originally_Hard"
+    payload: "01060005000,00060005000"
+  - stableId: a33a2034f5ab453baa3cd46fade3d16e
+    index: 203
+    time: 45.37498866
+    eventId: "Originally_Hard"
+    payload: "01060007500,00060007500"
+  - stableId: 04691ef5531c4e5faf038c3f69238dcf
+    index: 204
+    time: 45.52498866
+    eventId: "Originally_Hard"
+    payload: "01040010000,00040010000"
+  - stableId: 11735048eabd441ea2f004ebb44dbace
+    index: 205
+    time: 45.82498866
+    eventId: "Originally_Hard"
+    payload: "01050005000,00050005000"
+  - stableId: 3f7c45e026b64883ad7f03b827953752
+    index: 206
+    time: 46.04997732
+    eventId: "Originally_Hard"
+    payload: "01040001300,00040001300"
+  - stableId: 7c041d2964b246c4bc5bdf40d00dee4d
+    index: 207
+    time: 46.27498866
+    eventId: "Originally_Hard"
+    payload: "01050102500,00050102500"
+  - stableId: 4d2034984c23452c91f445df7113b4eb
+    index: 208
+    time: 46.49997732
+    eventId: "Originally_Hard"
+    payload: "01040106300,00040106300"
+  - stableId: 964789087823409caddb026e00061d15
+    index: 209
+    time: 46.72498866
+    eventId: "Originally_Hard"
+    payload: "01060110000,00060110000"
+  - stableId: 48e0d20a7b47443dbc8285834c04e4b6
+    index: 210
+    time: 46.94997732
+    eventId: "Originally_Hard"
+    payload: "00040106300"
+  - stableId: ce30a2ca82454a2a9e25f444f1f8a2b3
+    index: 211
+    time: 47.02498866
+    eventId: "Originally_Hard"
+    payload: "01040105000"
+  - stableId: fa7903023ca54311acfb9608ff233442
+    index: 212
+    time: 47.17498866
+    eventId: "Originally_Hard"
+    payload: "01040102500"
+  - stableId: 69623e24eb4c466aa5d9f815a0dfd5d6
+    index: 213
+    time: 47.32498866
+    eventId: "Originally_Hard"
+    payload: "01040000000"
+  - stableId: 1dc211b5ee644142b489daac6090ac9b
+    index: 214
+    time: 47.47498866
+    eventId: "Originally_Hard"
+    payload: "00040002500"
+  - stableId: 74f997f6211044148299d4e41d9ccfbc
+    index: 215
+    time: 47.62498866
+    eventId: "Originally_Hard"
+    payload: "01020005000"
+  - stableId: fa1fcb9c555141bf872f38d4166cbee2
+    index: 216
+    time: 47.69997732
+    eventId: "Originally_Hard"
+    payload: "00020006300"
+  - stableId: 28f000ffa3d448afa115dd8a4993a029
+    index: 217
+    time: 47.77498866
+    eventId: "Originally_Hard"
+    payload: "01020007500"
+  - stableId: 3afcc8ef42504d8f8fcb14616f157705
+    index: 218
+    time: 47.84997732
+    eventId: "Originally_Hard"
+    payload: "00020008800"
+  - stableId: 18cd3801aae64a4b9f6243607a0fe08a
+    index: 219
+    time: 47.92498866
+    eventId: "Originally_Hard"
+    payload: "01040010000"
+  - stableId: d3c77e0780b1446c955a225c5c826bfe
+    index: 220
+    time: 48.14997732
+    eventId: "Originally_Hard"
+    payload: "01040006300"
+  - stableId: 12e7a5ca78df4685bde5f48e750ff2e0
+    index: 221
+    time: 48.22498866
+    eventId: "Originally_Hard"
+    payload: "00040005000"
+  - stableId: 600146ce99124f5eb5a2932593e89e2b
+    index: 222
+    time: 48.37498866
+    eventId: "Originally_Hard"
+    payload: "00040002500"
+  - stableId: 25955242eb5841ec99a34ea6d6206c49
+    index: 223
+    time: 48.52498866
+    eventId: "Originally_Hard"
+    payload: "01060000000"
+  - stableId: 8476fc154749440a8e56ce77ead09918
+    index: 224
+    time: 48.59997732
+    eventId: "Originally_Hard"
+    payload: "11065101300"
+  - stableId: 1776771988bc4bfba6ca5b22c3ae4994
+    index: 225
+    time: 48.74997732
+    eventId: "Originally_Hard"
+    payload: "00060103800"
+  - stableId: 52c9a40be32b4170836863f2d5ab5603
+    index: 226
+    time: 48.82498866
+    eventId: "Originally_Hard"
+    payload: "10065105000"
+  - stableId: d21df7e0ab754d70b8d2c6f744937b4a
+    index: 227
+    time: 48.97498866
+    eventId: "Originally_Hard"
+    payload: "00060107500"
+  - stableId: 49b89f9f824c4c0dafa503915717f5a6
+    index: 228
+    time: 49.04997732
+    eventId: "Originally_Hard"
+    payload: "10065108800"
+  - stableId: 7d69dfb7cb144006af89d1588c4d88f1
+    index: 229
+    time: 51.6
+    eventId: "Originally_Hard"
+    payload: "41065110001"
+  - stableId: d72b046b9d3c4107ae51db2daa45e9bf
+    index: 230
+    time: 52.8
+    eventId: "Originally_Hard"
+    payload: "41055010011"
+  - stableId: 5db650f7a10440388f56abe51d0f9e1b
+    index: 231
+    time: 54
+    eventId: "Originally_Hard"
+    payload: "41065110001"
+  - stableId: 69e08604fd4246179c2dba3509b8977d
+    index: 232
+    time: 55.2
+    eventId: "Originally_Hard"
+    payload: "41055010011"
+  - stableId: df04c8848dae4332a8f4930229ce7724
+    index: 233
+    time: 56.4
+    eventId: "Originally_Hard"
+    payload: "40065110001"
+  - stableId: 409114aefa814097b667bf1a70d39b34
+    index: 234
+    time: 57.6
+    eventId: "Originally_Hard"
+    payload: "40055010011"
+  - stableId: 3ae65461c93942f2a206387ad82c83ab
+    index: 235
+    time: 58.8
+    eventId: "Originally_Hard"
+    payload: "40065110001"
+  - stableId: 209794c51d4f41e4999173ea8b70b5cf
+    index: 236
+    time: 60
+    eventId: "Originally_Hard"
+    payload: "40055010011"
+  - stableId: a0d391d31b8e4b39bbbcd5a8c20a5e7b
+    index: 237
+    time: 70.72498866
+    eventId: "Originally_Hard"
+    payload: "01070110000"
+  - stableId: b54fd6c511d24f36aceafd2d9e3c5ef7
+    index: 238
+    time: 71.17498866
+    eventId: "Originally_Hard"
+    payload: "01070102500"
+  - stableId: 6f847c85798244d49d5ab2e9093481e0
+    index: 239
+    time: 71.62498866
+    eventId: "Originally_Hard"
+    payload: "00070005000"
+  - stableId: 00c21f0e1d174a5c902f41ba4ae0840d
+    index: 240
+    time: 71.92498866
+    eventId: "Originally_Hard"
+    payload: "01070010000"
+  - stableId: be5a1861e9c94a1881ea932d35765472
+    index: 241
+    time: 72.37498866
+    eventId: "Originally_Hard"
+    payload: "01070002500"
+  - stableId: fd7fe87f537b4c55a4262ad4a1d2d7d1
+    index: 242
+    time: 72.82498866
+    eventId: "Originally_Hard"
+    payload: "00070105000"
+  - stableId: 2971785697a94b62ba0c9585bcd61e54
+    index: 243
+    time: 73.12498866
+    eventId: "Originally_Hard"
+    payload: "01080110000"
+  - stableId: efba4b64ae954c1d943960b5c917681a
+    index: 244
+    time: 73.57498866
+    eventId: "Originally_Hard"
+    payload: "00050102500"
+  - stableId: 9c39f4a0ec0e4ca197a30df2c5ccbae5
+    index: 245
+    time: 74.02498866
+    eventId: "Originally_Hard"
+    payload: "01040005000"
+  - stableId: 6fde2dd95d9e4afd9fbcb257f79c24d9
+    index: 246
+    time: 74.32498866
+    eventId: "Originally_Hard"
+    payload: "00070010000"
+  - stableId: 9295f5204c64488d85108c07dfd9e083
+    index: 247
+    time: 74.77498866
+    eventId: "Originally_Hard"
+    payload: "01050002500"
+  - stableId: 3b9349f42b184839ad155b1c84925a89
+    index: 248
+    time: 75.22498866
+    eventId: "Originally_Hard"
+    payload: "00040105000"
+  - stableId: a8edacf6b70b4ecc866fdc62a8338e20
+    index: 249
+    time: 75.52498866
+    eventId: "Originally_Hard"
+    payload: "01070110000"
+  - stableId: 56cd0c74f4724b8ab03700dc8c8e4296
+    index: 250
+    time: 75.97498866
+    eventId: "Originally_Hard"
+    payload: "01070102500"
+  - stableId: 8662655ba99f46cc8d59c17002275da2
+    index: 251
+    time: 76.42498866
+    eventId: "Originally_Hard"
+    payload: "00070005000"
+  - stableId: 69d526ed183046758838a4a787e92067
+    index: 252
+    time: 76.72498866
+    eventId: "Originally_Hard"
+    payload: "01070010000"
+  - stableId: 9b7d12ba760a48cd97c906bc3a382165
+    index: 253
+    time: 77.17498866
+    eventId: "Originally_Hard"
+    payload: "01070002500"
+  - stableId: abffdb45c6c940a984b7c2b88007dc5b
+    index: 254
+    time: 77.62498866
+    eventId: "Originally_Hard"
+    payload: "00070105000"
+  - stableId: 77c8a9bb6b5a4eb795d35421503d97cd
+    index: 255
+    time: 77.92498866
+    eventId: "Originally_Hard"
+    payload: "01080110000"
+  - stableId: a3277ac508d14c8292ec4a59595c6998
+    index: 256
+    time: 78.37498866
+    eventId: "Originally_Hard"
+    payload: "00050102500"
+  - stableId: 071cc02e05c24b3b9d99c7b5d2db0986
+    index: 257
+    time: 78.82498866
+    eventId: "Originally_Hard"
+    payload: "01040005000"
+  - stableId: 199a5568d8924944a0e0372ae70c1b21
+    index: 258
+    time: 79.12498866
+    eventId: "Originally_Hard"
+    payload: "00070010000"
+  - stableId: cb89b40ce722405ca753b929949eb5cd
+    index: 259
+    time: 79.57498866
+    eventId: "Originally_Hard"
+    payload: "01050002500"
+  - stableId: be58fd58a27a4c5f85e06e88c0062a2e
+    index: 260
+    time: 80.02498866
+    eventId: "Originally_Hard"
+    payload: "00040105000"
+  - stableId: 2bc42ef74ae6422ea533b2e75c4558fa
+    index: 261
+    time: 136.72498866
+    eventId: "Originally_Hard"
+    payload: "01060110000"
+  - stableId: b41c14ee6a6048b48db12a8d8a57256a
+    index: 262
+    time: 136.87498866
+    eventId: "Originally_Hard"
+    payload: "00060105000"
+  - stableId: 8b91669b587749ea90ef7566be4f541b
+    index: 263
+    time: 137.02498866
+    eventId: "Originally_Hard"
+    payload: "01060000000"
+  - stableId: 3718b3fafcb34914a4f71870f806fd6f
+    index: 264
+    time: 137.17498866
+    eventId: "Originally_Hard"
+    payload: "00060005000"
+  - stableId: 9151279e10c841c2a63bee900451a735
+    index: 265
+    time: 137.32498866
+    eventId: "Originally_Hard"
+    payload: "01040010000"
+  - stableId: 212c1fa8c37e4d5fb96bb08833a7f852
+    index: 266
+    time: 137.47498866
+    eventId: "Originally_Hard"
+    payload: "00040005000"
+  - stableId: 5d78ee004c3d4c43b867b7a86aa8424b
+    index: 267
+    time: 137.62498866
+    eventId: "Originally_Hard"
+    payload: "010400000"
+  - stableId: c7f7990957a74549b46d3d5b56c3907b
+    index: 268
+    time: 137.77498866
+    eventId: "Originally_Hard"
+    payload: "00040105000"

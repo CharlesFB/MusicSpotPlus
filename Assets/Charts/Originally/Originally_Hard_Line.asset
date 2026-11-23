@@ -1,0 +1,973 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2657250003c46b9a5bbdc103b3b8ae, type: 3}
+  m_Name: "Originally_Hard_Line"
+  m_EditorClassIdentifier: 
+  source: {fileID: 11400000, guid: b96f8560055b4ef09ae3104742c8fbe2, type: 2}
+  laneId: line
+  snapSubdivision: 4
+  events:
+  - stableId: 90f2c2312f8048678fa5161b0b67d656
+    index: 0
+    time: 0
+    eventId: "Originally_Hard_Line"
+    payload: "3000000000000000,2000000000000060"
+  - stableId: 51f3c0a80c834ff695f677ba4f278725
+    index: 1
+    time: 1.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120,2000100000000060"
+  - stableId: de2b670958c74e0aa8d805372b9846a7
+    index: 2
+    time: 2.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 2369aa0ac96f4564923c45a63f72d2c3
+    index: 3
+    time: 3.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: fee344cebf92471cae767d96771ce5b0
+    index: 4
+    time: 4.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: fb0dbecafcd54873a933c16c55641d0b
+    index: 5
+    time: 6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 5b249f9f01374cdcb4035be566d5bc62
+    index: 6
+    time: 7.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: ff57c2c6ac4644f88045cc0cf6c889d1
+    index: 7
+    time: 8.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: cfdba7447aa14b2590f2984f80371693
+    index: 8
+    time: 9.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 46afa861eab94a1cad35741620cc20d2
+    index: 9
+    time: 10.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 40a8ad4a86ed496ba8344e14b7ced7ae
+    index: 10
+    time: 12
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 9aca96c71807408291b7c2eed2cf0fe5
+    index: 11
+    time: 13.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 4f917a24ea774558883f2ac9301b581d
+    index: 12
+    time: 14.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: b1e05258a97e40a5876aee9d28ac9215
+    index: 13
+    time: 15.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 214053fb103744238612686bdd65e00e
+    index: 14
+    time: 16.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 1bc6cd4ac05e4f209ba5dac7c7b17f21
+    index: 15
+    time: 18
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 5c057ca8d5994bbc8cc43a55753d5297
+    index: 16
+    time: 19.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 992d48dfdb50444e9834710479c179d2
+    index: 17
+    time: 20.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 953254d916e84214a576bc635730381f
+    index: 18
+    time: 21.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000240"
+  - stableId: 75a25739255e4139b1da6bda441690e4
+    index: 19
+    time: 24
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000240"
+  - stableId: ba71c280cd974f4da65a39111745e2f6
+    index: 20
+    time: 26.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000240"
+  - stableId: b36e05b788ff4242a1a8f48e5df81f15
+    index: 21
+    time: 28.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000240"
+  - stableId: f88bf81f07bc42859656ad59c55728cd
+    index: 22
+    time: 31.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 49e1793079b445229d6a1418da95ba8b
+    index: 23
+    time: 32.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: d1291f8a73b94d8c845bd223987c3f26
+    index: 24
+    time: 33.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: f7322137f8c54ec29f4ba3c44795098b
+    index: 25
+    time: 34.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 973cb66600a94930b5ede9188b9687a5
+    index: 26
+    time: 36
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 917e910793324d9292856ef8ba3b3aa4
+    index: 27
+    time: 37.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: a96c4db1fae7400fa29250dffb076298
+    index: 28
+    time: 38.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: d1e2c52d9d4e4a7887b64ac52bbfabb0
+    index: 29
+    time: 39.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: b88d45c87e3047a9ba778c6b77933fd2
+    index: 30
+    time: 40.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 08eaf5eb00e0434c9692f1ac3927c684
+    index: 31
+    time: 42
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 72a8cfebce304465afc6fdb9a315027e
+    index: 32
+    time: 43.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: a826bd8b87c34a929992863f0d419e1e
+    index: 33
+    time: 44.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 0e03bf85a52f4965805e1c18821ed43f
+    index: 34
+    time: 45.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: bbe7320f230e4a51a1246c9f7433ed3b
+    index: 35
+    time: 46.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: a2b05e4746f8454b8996199c531795b0
+    index: 36
+    time: 48
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: f998a9024ea94fd48e5186f0ef62d406
+    index: 37
+    time: 49.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 25a327d8fc91421283e1cf6ef6087640
+    index: 38
+    time: 50.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000000000000060,2000000000000060"
+  - stableId: 0167061f29b24939beef624d5dacd9c1
+    index: 39
+    time: 52.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060,2000100000000060"
+  - stableId: 92b913c8f9e545df9693d91bb0fc1786
+    index: 40
+    time: 52.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: abc33371474c454481646717509c9452
+    index: 41
+    time: 54
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: ce9c885ba6b34989ac55b7ec00291a18
+    index: 42
+    time: 55.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 38bdabee80b74cb3ac174d4b9d6c50dc
+    index: 43
+    time: 56.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 1e75b9066ce046958bed0c79f3fa19c9
+    index: 44
+    time: 57.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 362617fc1245408f990f77672b528ed3
+    index: 45
+    time: 58.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 949b7343d94045cca3fa9f43f7c6b94f
+    index: 46
+    time: 60
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: b8f6a6b78b744f0b8d008261d70d96ec
+    index: 47
+    time: 61.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 52723dede1ad486098a1fea74c67e4b0
+    index: 48
+    time: 62.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 95348e75f03b4e0ca2daebc4115082ce
+    index: 49
+    time: 63.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: ae26201b0ad245cbaf82266eb23f9cc9
+    index: 50
+    time: 64.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 2419ed44cf31472bb1b4f10862b2cd8e
+    index: 51
+    time: 66
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: b26529bfead14e0e82abfdab60704015
+    index: 52
+    time: 67.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: bfee2b0d2caa4f03bc563895b0117981
+    index: 53
+    time: 68.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: c0bb5c036eaa4ea7a18eb4454f06ef1c
+    index: 54
+    time: 69.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: bb02bd58dc9846069b2dcf1e49a008d5
+    index: 55
+    time: 70.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: bce3de8584954161a94e93b5c07ea478
+    index: 56
+    time: 71.7
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 1a875593c93a478f994ee4ef3b3be421
+    index: 57
+    time: 71.85
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 625acea4e52e4e9b9397bfc9360034f4
+    index: 58
+    time: 72
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120,2000000000000015"
+  - stableId: 9d47197e647a4597a08f33b8a8a7c445
+    index: 59
+    time: 72.3
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: a0fe1fa2a28a47ada2bcfb06a35a3506
+    index: 60
+    time: 72.45
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 0f630c721b4547a196eda72b199e8b37
+    index: 61
+    time: 72.75
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 32f99286842b4aaf84d656f683cd8805
+    index: 62
+    time: 72.9
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 4d55d218db124eb6a3551f1e741fe940
+    index: 63
+    time: 73.05
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: d11f1b7c41fe46f78a177fbedca9af69
+    index: 64
+    time: 73.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120,2000000000000015"
+  - stableId: 30dc4c127c0c47ab819bb1c6fe5c26f5
+    index: 65
+    time: 73.5
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 873662fcdb674694ba1c5be638570732
+    index: 66
+    time: 73.65
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: ef616347270642888f29ae88100bd3f3
+    index: 67
+    time: 73.95
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 4afc12310bd94a12abef940828ae179f
+    index: 68
+    time: 74.1
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 176664f84ba742eaa5ee3fe2bb116c05
+    index: 69
+    time: 74.25
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: c5a8641893854d9890e6d18535b6c77b
+    index: 70
+    time: 74.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120,2000000000000015"
+  - stableId: 945c81826baa43338353509e21fbb70a
+    index: 71
+    time: 74.7
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: c6831ac358c5432c9dd34697dd14a701
+    index: 72
+    time: 74.85
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: e23b6603e2c04b2296c7166aadde882e
+    index: 73
+    time: 75.15
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 7cf709d112e1404ebd70d7dd05e09061
+    index: 74
+    time: 75.3
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 2fe69249b8164be189f954b1b39a2870
+    index: 75
+    time: 75.45
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 7d82931c8b2b45c4b0ad23f0ebafaf62
+    index: 76
+    time: 75.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120,2000000000000015"
+  - stableId: 73ddbb98289048a9916720cb5a59330b
+    index: 77
+    time: 75.9
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: ed37d0a4faab49cd81eeb674304d13de
+    index: 78
+    time: 76.05
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 1423c3683bc74530b6c7c029c479d501
+    index: 79
+    time: 76.35
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 9fdd6b8d3f584f56bcbc44ee75d865cc
+    index: 80
+    time: 76.5
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 160afdc8f8234b2aba084a849399a9dc
+    index: 81
+    time: 76.65
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 964d035f4a6a40dfa8ff8ef2d105f57d
+    index: 82
+    time: 76.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120,2000000000000015"
+  - stableId: a05b910332d343c3b5acfc49564d906e
+    index: 83
+    time: 77.1
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 39063967e563453eb9d21c7c84fcb150
+    index: 84
+    time: 77.25
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 4dd7d54d83cd40639de6c0d07569f0c1
+    index: 85
+    time: 77.55
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 488ce6e0f8234d09a3e00d2f042915ce
+    index: 86
+    time: 77.7
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: bce9fb9c6b3c48bdbf11d46c1c195a93
+    index: 87
+    time: 77.85
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 11bfd3f952db449aaea483d0c16eca02
+    index: 88
+    time: 78
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120,2000000000000015"
+  - stableId: e8d89e59c3fb4e02be55dba600c0d6d7
+    index: 89
+    time: 78.3
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 1077324ff6a5466fa23068d17ef46352
+    index: 90
+    time: 78.45
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: b775bc81bf034485befca12e00acbd72
+    index: 91
+    time: 78.75
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: e913a645435442b0884478e3bc231a6c
+    index: 92
+    time: 78.9
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 5f01cf64d4ea4d78b0c22b4d6be26132
+    index: 93
+    time: 79.05
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 445fc06bdadb440c8ee361becd6c5c0f
+    index: 94
+    time: 79.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120,2000000000000015"
+  - stableId: b0afad3b6fd24db68c69b65fea778127
+    index: 95
+    time: 79.5
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 5fc475f0477e45868e7cadb25dae420b
+    index: 96
+    time: 79.65
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 2da3f8767dbf4dff8ddc360209661c80
+    index: 97
+    time: 79.95
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: e2d9336ac4344f96a243a84b00587859
+    index: 98
+    time: 80.1
+    eventId: "Originally_Hard_Line"
+    payload: "2000000000000015"
+  - stableId: 0df084e5b42342ceac442c86b50b2a81
+    index: 99
+    time: 80.25
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000015"
+  - stableId: 47b96b354646497ebb285ff497fae190
+    index: 100
+    time: 80.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 3bf926a81fb54403a1885825f6ccab11
+    index: 101
+    time: 81.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: f26585ec1a974b0f8ec8d9b77e938b1c
+    index: 102
+    time: 82.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: f767de0675cd4475b1e77ffc6cb2624d
+    index: 103
+    time: 84
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: cc806dcb071f43be9e7e90b2a807f0e7
+    index: 104
+    time: 85.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 5a3bfde5374c4319a6c79da31edfa3ab
+    index: 105
+    time: 86.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: 82a3e7efb304409a9b36b326f1544987
+    index: 106
+    time: 87.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: 1d5890db20d948d4a5dd1afea342ae60
+    index: 107
+    time: 88.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000120"
+  - stableId: e058cfb155844a118a0311023e3660fb
+    index: 108
+    time: 90
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000120"
+  - stableId: d80184933cf6466c9d13aa5aed8ff76f
+    index: 109
+    time: 91.2
+    eventId: "Originally_Hard_Line"
+    payload: "4000010300000060,1000000000180060,2000000000000060"
+  - stableId: db7fb63c51e84f259439737e8c4d4a13
+    index: 110
+    time: 91.8
+    eventId: "Originally_Hard_Line"
+    payload: "2000100000000060"
+  - stableId: 2dd71e1e7e274c4f9e1669ec1119eacd
+    index: 111
+    time: 92.1
+    eventId: "Originally_Hard_Line"
+    payload: "4000011000000030"
+  - stableId: 77be941a14624ef0b824a7e40f39f949
+    index: 112
+    time: 92.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 06088dd1c67143a69d5318c499b65932
+    index: 113
+    time: 93
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: a69953362cbc48f6b4cd39496e79fd92
+    index: 114
+    time: 93.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 58302ffd148649b3ba1ba870f5388c4e
+    index: 115
+    time: 94.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 8d2075c45cd24fb2bc53d95835ee2c65
+    index: 116
+    time: 94.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 1c1e7c44822b438c87d0e7bb4fbc4f69
+    index: 117
+    time: 95.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 838c0dac2a124f24b5f8191f7010b3c6
+    index: 118
+    time: 96
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 3cf6cb22446c4f48b2a9ea9cc199957b
+    index: 119
+    time: 96.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: f0ccf4804f244c319c9068eef1b5a4cb
+    index: 120
+    time: 97.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 180954abeecf411aaef7a5c6fae2c46c
+    index: 121
+    time: 97.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: b6c118ec5c744434a921129a468d47be
+    index: 122
+    time: 98.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 7d05bfdad4654015a37d496f5aa88340
+    index: 123
+    time: 99
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: ad3a50cf814d444f8352f7cbd47f0b76
+    index: 124
+    time: 99.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: acb3fbd175164f99aa3131711e54ee6f
+    index: 125
+    time: 100.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: cd2a32984d5d41e9a315c190c0cb8f24
+    index: 126
+    time: 100.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: ef4f11c866754399b525022e7aa0296c
+    index: 127
+    time: 101.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: c309468c591c4ac9889d03ffd714191a
+    index: 128
+    time: 102
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 755be5dd52e64c0f901c63029025eb05
+    index: 129
+    time: 102.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: ed101a85bc944f029abe50e6076d6ae7
+    index: 130
+    time: 103.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 632baaadf2e34247bab74d783b442904
+    index: 131
+    time: 103.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 680c35340e2e477c817903c182eadf66
+    index: 132
+    time: 104.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 5b4788f68c36438aa5679be035061f73
+    index: 133
+    time: 105
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: b2f4591d44164ba1ad1f9b7810323ff7
+    index: 134
+    time: 105.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: c5f87f7dbaa04813bbbb246f50ec653b
+    index: 135
+    time: 106.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 685f93ac7c2b4411a1560b8d802469d2
+    index: 136
+    time: 106.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 325adffcea834f4db674fb16083128b7
+    index: 137
+    time: 107.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 725970a04d7c45e7839711b0829a8e8d
+    index: 138
+    time: 108
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: febb0093bce74d6a94f24a0baa6012d8
+    index: 139
+    time: 108.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 8f5f694dccf24fdc985596cb3c05555b
+    index: 140
+    time: 109.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 28e6cc212174428482b6aeed20619142
+    index: 141
+    time: 109.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 03d5613806ab4a888d79ad766b9742b7
+    index: 142
+    time: 110.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: cc7c1b086d1a4caa8da74dd8b1702c65
+    index: 143
+    time: 111
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: dcdec2945c4c4c799c6406056af643dd
+    index: 144
+    time: 111.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 205b4a64b3d8441da1f9be5df2a183a9
+    index: 145
+    time: 112.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 3fb536e4654b43648c100c3be6539692
+    index: 146
+    time: 112.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: a8ec1efc239145d7ac0f47e8a224c72a
+    index: 147
+    time: 113.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 44963390194841b9bf6312351c35232b
+    index: 148
+    time: 114
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: ec029123e12d43509abbbebef3490926
+    index: 149
+    time: 114.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 7e431b12f8f34d558c09f69a24d1f16e
+    index: 150
+    time: 115.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 0c5de498d2744fe4a05fee20a5b1d54b
+    index: 151
+    time: 115.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 68155d33ca984c76b6de8ac4ab404fd7
+    index: 152
+    time: 116.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 69ddb9de650a4d608d370c9515ff6ca2
+    index: 153
+    time: 117
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 0dcf64ac6a4e41b9a8093a4f176d9c22
+    index: 154
+    time: 117.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: c683cca6072b411b937672750c8c95fa
+    index: 155
+    time: 118.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 1a04e2b4da2446839a52a6758e5c8832
+    index: 156
+    time: 118.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: fee85da70c1a4f12b7afe994150be518
+    index: 157
+    time: 119.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: f1002333d4c14ea3830d7e1b5a487f08
+    index: 158
+    time: 120
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 72220be38f7e4ba79f2676ec3e142e4a
+    index: 159
+    time: 120.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: d32883103e87438eb79f3505068e2bab
+    index: 160
+    time: 121.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 5438f818525b444c9729e13c5b741fa1
+    index: 161
+    time: 121.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 93c0a5752ff445608392b9ac7a29bf29
+    index: 162
+    time: 122.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 013b691c578f4ebbadd9f87a2eb7f556
+    index: 163
+    time: 123
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 5bc5a3ad9a614fa8b3e54bfcb9dd551c
+    index: 164
+    time: 123.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: d98d7948950b44049235ff0b496f3323
+    index: 165
+    time: 124.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: a76a51a9806746c19c5c25d96a7a9ff5
+    index: 166
+    time: 124.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: e76b13b1bfd34bc0a2d517b23abded18
+    index: 167
+    time: 125.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: ad0ea5cc83064bf7be9cb94167f6685a
+    index: 168
+    time: 126
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 6870cfc81bb3494da2b32cfa7ca10a2c
+    index: 169
+    time: 126.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 5d586fa371a644e4b0866b6802637221
+    index: 170
+    time: 127.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: a1a6919795e949f1a87f20d6a77e29ff
+    index: 171
+    time: 127.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: edd9fe42a435468e98cef32fca7c8ba3
+    index: 172
+    time: 128.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 2f62c9a2717a4e55b0984cbed64ab82c
+    index: 173
+    time: 129
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: bef28c6f7b444e6dbc2e7aac413cb644
+    index: 174
+    time: 129.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: f10e15596684456e9b68961824d212b3
+    index: 175
+    time: 130.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: d20a1cc07d0241e289cb13c06c72b247
+    index: 176
+    time: 130.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: aa4f4ed7bc3f48e19395168eb5fbfe83
+    index: 177
+    time: 131.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: e6c70566187b4c70a8c462f84bf2acff
+    index: 178
+    time: 132
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 45c8a71ed4704c23beb28bd00bda2aa4
+    index: 179
+    time: 132.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: c49c2b622cc640dc9c46feae38f8e8de
+    index: 180
+    time: 133.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 43c9e1fb846443cab9eeeb8c5ab95fe9
+    index: 181
+    time: 133.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 656426106d1e42319515af317fd6b7c9
+    index: 182
+    time: 134.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: fa537c53480145e4925d6ef57aca00a7
+    index: 183
+    time: 135
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 94bb946ec5e342c4b2c92c54e36a1a72
+    index: 184
+    time: 135.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: cd5b8b4b41c44653819a50c272fca53a
+    index: 185
+    time: 136.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: b9f29a52a1b2470ebe364464998fd8eb
+    index: 186
+    time: 136.8
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 49b250ed27dd4af589d58c6fa2bcf440
+    index: 187
+    time: 137.4
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: 34be29afbe9649688d2b8e4f0c88ef3b
+    index: 188
+    time: 138
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060"
+  - stableId: 27a8bfb64a764952896f9050bc97f259
+    index: 189
+    time: 138.6
+    eventId: "Originally_Hard_Line"
+    payload: "0000011000000060"
+  - stableId: e55aa3c2c6b94d0f9dec3235a123b0bb
+    index: 190
+    time: 139.2
+    eventId: "Originally_Hard_Line"
+    payload: "0000001000000060,2000000000000035"

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SingleSpot : MonoBehaviour
 {
     public float timeBegin = 0; // 需要在动态生成的时候修改
+    public float spawnSongTime;
     public bool isPaused;
     public bool isOkForTouch;
     public float touchTimeOn = 0.73f;
@@ -18,7 +19,6 @@ public class SingleSpot : MonoBehaviour
 
     private bool isClicked;
     private GameObject cam;
-    private AudioSource aud;
     private Animator ani, effectAni;
     private float timer;
 
@@ -31,7 +31,6 @@ public class SingleSpot : MonoBehaviour
         isPaused = false;
 
         cam = GameObject.Find("Main Camera");
-        aud = cam.GetComponent<AudioSource>();
         effectAni = GetComponentsInChildren<Animator>()[1];
 
         timer = 0;
@@ -40,8 +39,7 @@ public class SingleSpot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isPaused)  //供暂停使用,暂停动画和行为
-            timer += Time.deltaTime;
+        timer = ChartPlayback.Since(spawnSongTime);
         
         if (timer >= destroyTime)   // 1.39s + Disappear 0.28s + 0.23s(wait) | 0.28 = 00:27 / 01:00 / 1.62
         {
@@ -66,7 +64,7 @@ public class SingleSpot : MonoBehaviour
             /*
              * 处理点击该音符后的事件
              */
-            float deltaTime = aud.time - timeBegin; // 获得差值时间
+            float deltaTime = ChartPlayback.Since(timeBegin);
             //Debug.Log(deltaTime);
             if (deltaTime < greatScaleLeft || deltaTime >= greatScaleRight)
             {

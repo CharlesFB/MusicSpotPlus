@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using SonicBloom.Koreo;
-using SonicBloom.Koreo.Players;
 using DG.Tweening;
 
 public class ScoreManager : MonoBehaviour
@@ -46,24 +44,24 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        RegisterForKoreo();
         Init();
     }
 
-    private void RegisterForKoreo() //注册tracker
+    public void Bind(ChartPlayback playback, string registerName)
     {
+        registerBuilder = registerName;
         registerLine = registerBuilder + "_Line";
         registerArea = registerBuilder + "_Area";
         registerLine1 = registerBuilder + "_Line1";
         registerLine2 = registerBuilder + "_Line2";
         registerBack = registerBuilder + "_Back";
 
-        Koreographer.Instance.RegisterForEvents(registerBuilder, SpotsProducer);
-        Koreographer.Instance.RegisterForEvents(registerLine, LineMove);
-        Koreographer.Instance.RegisterForEvents(registerLine1, TopScaleLineMove);
-        Koreographer.Instance.RegisterForEvents(registerLine2, BottomScaleLineMove);
-        Koreographer.Instance.RegisterForEvents(registerArea, AreaMove);
-        Koreographer.Instance.RegisterForEvents(registerBack, BackChange);
+        playback.Subscribe(registerBuilder, (lane, e) => SpotsProducer(e.payload, e.time));
+        playback.Subscribe(registerLine, (lane, e) => LineMove(e.payload));
+        playback.Subscribe(registerLine1, (lane, e) => TopScaleLineMove(e.payload));
+        playback.Subscribe(registerLine2, (lane, e) => BottomScaleLineMove(e.payload));
+        playback.Subscribe(registerArea, (lane, e) => AreaMove(e.payload));
+        playback.Subscribe(registerBack, (lane, e) => BackChange(e.payload));
     }
 
     private void Init()
@@ -82,49 +80,47 @@ public class ScoreManager : MonoBehaviour
         height = Screen.height / 2;
     }
 
-    public void SetKoreographer(Koreography musicKoreo)
+    private void SpotsProducer(string payload, float songTime)
     {
-        GetComponent<SimpleMusicPlayer>().LoadSong(musicKoreo,0,false);
-    }
+        if (string.IsNullOrEmpty(payload))
+            return;
 
-    private void SpotsProducer(KoreographyEvent koreographyEvent) //================ Part1 产生谱面元素
-    {
-        if (koreographyEvent != null)
+        SpotInfo[] spotInfos = GetInfo(payload);
+        for (int i = 1; i <= spotInfos[0].len; i++)
         {
-            SpotInfo[] spotInfos = GetInfo(koreographyEvent.GetTextValue());
-            for (int i = 1; i <= spotInfos[0].len; i++)
+            switch (spotInfos[i].type)
             {
-                switch (spotInfos[i].type)
-                {
-                    case 0: // 单击音符
-                        GameObject single = Instantiate(singlePrefab);
-                        single.transform.SetParent(spotsPanel, false);
-                        single.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX,spotInfos[i].posY)), area.transform.localRotation);
-                        single.transform.SetSiblingIndex(0); //将该UI元素在当前父级序列中的渲染位置调整为0（第一个），也就是叠在早生成元素的下方
-                        break;
-                    case 1: // 触发音符
-                        GameObject touch = Instantiate(touchPrefab);
-                        touch.transform.SetParent(spotsPanel, false);
-                        touch.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX, spotInfos[i].posY)), area.transform.localRotation);
-                        touch.transform.SetSiblingIndex(0);
-                        break;
-                    case 2: // 蓄力音符
-                    case 3:
-                    case 4:
-                        GameObject press = Instantiate(pressPrefab);
-                        press.transform.SetParent(spotsPanel, false);
+                case 0: // 单击音符
+                    GameObject single = Instantiate(singlePrefab);
+                    single.transform.SetParent(spotsPanel, false);
+                    single.GetComponent<SingleSpotNew>().spawnSongTime = songTime;
+                    single.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX,spotInfos[i].posY)), area.transform.localRotation);
+                    single.transform.SetSiblingIndex(0); //将该UI元素在当前父级序列中的渲染位置调整为0（第一个），也就是叠在早生成元素的下方
+                    break;
+                case 1: // 触发音符
+                    GameObject touch = Instantiate(touchPrefab);
+                    touch.transform.SetParent(spotsPanel, false);
+                    touch.GetComponent<TouchSpotNew>().spawnSongTime = songTime;
+                    touch.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX, spotInfos[i].posY)), area.transform.localRotation);
+                    touch.transform.SetSiblingIndex(0);
+                    break;
+                case 2: // 蓄力音符
+                case 3:
+                case 4:
+                    GameObject press = Instantiate(pressPrefab);
+                    press.transform.SetParent(spotsPanel, false);
 
-                        press.GetComponent<PressSpotNew>().dir = spotInfos[i].dir;
-                        press.GetComponent<PressSpotNew>().spd = spotInfos[i].len;
-                        press.GetComponent<PressSpotNew>().type = spotInfos[i].type;
+                    press.GetComponent<PressSpotNew>().dir = spotInfos[i].dir;
+                    press.GetComponent<PressSpotNew>().spd = spotInfos[i].len;
+                    press.GetComponent<PressSpotNew>().type = spotInfos[i].type;
+                    press.GetComponent<PressSpotNew>().spawnSongTime = songTime;
 
-                        press.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX, spotInfos[i].posY)), area.transform.localRotation);
-                        
-                        press.transform.SetAsFirstSibling();
-                        break;
-                }
-
+                    press.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX, spotInfos[i].posY)), area.transform.localRotation);
+                    
+                    press.transform.SetAsFirstSibling();
+                    break;
             }
+
         }
     }
 
@@ -197,61 +193,61 @@ public class ScoreManager : MonoBehaviour
         return res;
     }
 
-    private void LineMove(KoreographyEvent koreographyEvent) //====================== Part2 判定线移动
+    private void LineMove(string payload)
     {
-        AnimChange(mainLineRect, mainLineImage, koreographyEvent);
+        AnimChange(mainLineRect, mainLineImage, payload);
     }
 
-    private void TopScaleLineMove(KoreographyEvent koreographyEvent) //============== Part3 判定区域上边界线移动
+    private void TopScaleLineMove(string payload)
     {
-        AnimChange(topLineRect, topLineImage, koreographyEvent);
+        AnimChange(topLineRect, topLineImage, payload);
     }
 
-    private void BottomScaleLineMove(KoreographyEvent koreographyEvent) //=========== Part4 判定区域下边界移动
+    private void BottomScaleLineMove(string payload)
     {
-        AnimChange(bottomLineRect, bottomLineImage, koreographyEvent);
+        AnimChange(bottomLineRect, bottomLineImage, payload);
     }
     
-    private void AreaMove(KoreographyEvent koreographyEvent) //====================== Part5 判定区域运动
+    private void AreaMove(string payload)
     {
-        AnimChange(areaRect, koreographyEvent);
+        AnimChange(areaRect, payload);
     }
 
-    private void AnimChange(RectTransform rect, Image img, KoreographyEvent koreographyEvent)
+    private void AnimChange(RectTransform rect, Image img, string payload)
     {
-        if (koreographyEvent != null)
+        if (string.IsNullOrEmpty(payload))
+            return;
+
+        AnimInfo[] infos = GetAnimInfo(payload);
+        for (int i = 1; i <= infos[0].type; i++)
         {
-            AnimInfo[] infos = GetAnimInfo(koreographyEvent.GetTextValue());
-            for (int i = 1; i <= infos[0].type; i++)
+            switch (infos[i].type)
             {
-                switch (infos[i].type)
-                {
-                    case 0: //线性移动
-                        RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX/100f), GetScreenPosY(infos[i].vecY/100f), 0), infos[i].duration, 0);
-                        break;
-                    case 1: //线性旋转
-                        RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 0);
-                        break;
-                    case 2: //渐变
-                        ImageFade(img, infos[i].vecX, infos[i].duration);
-                        break;
-                    case 3: //开始动画
-                        mainLineRect.DOScaleX(1, 0.6f).SetId<Tween>("game");
-                        Invoke("StartMove", 0.2f);
-                        topLineImage.DOFade(1, 0.5f).SetId<Tween>("game");
-                        topLineRect.DOScale(1, 0.5f).SetId<Tween>("game");
-                        topLineRect.DOLocalMove(new Vector3(0, GAME_SCALE_VERTICAL_FEC * height, 0), 0.5f).SetId<Tween>("game");
-                        bottomLineImage.DOFade(1, 0.5f).SetId<Tween>("game");
-                        bottomLineRect.DOScale(1, 0.5f).SetId<Tween>("game");
-                        bottomLineRect.DOLocalMove(new Vector3(0, -1 * GAME_SCALE_VERTICAL_FEC * height, 0), 0.5f).SetId<Tween>("game");
-                        break;
-                    case 4: //非线性移动
-                        RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 1);
-                        break;
-                    case 5: //非线性旋转
-                        RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 1);
-                        break;
-                }
+                case 0: //线性移动
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX/100f), GetScreenPosY(infos[i].vecY/100f), 0), infos[i].duration, 0);
+                    break;
+                case 1: //线性旋转
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 0);
+                    break;
+                case 2: //渐变
+                    ImageFade(img, infos[i].vecX, infos[i].duration);
+                    break;
+                case 3: //开始动画
+                    mainLineRect.DOScaleX(1, 0.6f).SetId<Tween>("game");
+                    Invoke("StartMove", 0.2f);
+                    topLineImage.DOFade(1, 0.5f).SetId<Tween>("game");
+                    topLineRect.DOScale(1, 0.5f).SetId<Tween>("game");
+                    topLineRect.DOLocalMove(new Vector3(0, GAME_SCALE_VERTICAL_FEC * height, 0), 0.5f).SetId<Tween>("game");
+                    bottomLineImage.DOFade(1, 0.5f).SetId<Tween>("game");
+                    bottomLineRect.DOScale(1, 0.5f).SetId<Tween>("game");
+                    bottomLineRect.DOLocalMove(new Vector3(0, -1 * GAME_SCALE_VERTICAL_FEC * height, 0), 0.5f).SetId<Tween>("game");
+                    break;
+                case 4: //非线性移动
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 1);
+                    break;
+                case 5: //非线性旋转
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 1);
+                    break;
             }
         }
     }
@@ -271,28 +267,28 @@ public class ScoreManager : MonoBehaviour
         mainLineRect.DOLocalMove(new Vector3(0,height * GAME_SCALE_VERTICAL_FEC,0),0.4f).SetId<Tween>("game");
     }
 
-    private void AnimChange(RectTransform rect, KoreographyEvent koreographyEvent)
+    private void AnimChange(RectTransform rect, string payload)
     {
-        if (koreographyEvent != null)
+        if (string.IsNullOrEmpty(payload))
+            return;
+
+        AnimInfo[] infos = GetAnimInfo(payload);
+        for (int i = 1; i <= infos[0].type; i++)
         {
-            AnimInfo[] infos = GetAnimInfo(koreographyEvent.GetTextValue());
-            for (int i = 1; i <= infos[0].type; i++)
+            switch (infos[i].type)
             {
-                switch (infos[i].type)
-                {
-                    case 0: //移动
-                        RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 0);
-                        break;
-                    case 1: //旋转
-                        RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 0);
-                        break;
-                    case 4: //非线性移动
-                        RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 1);
-                        break;
-                    case 5: //非线性旋转
-                        RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 1);
-                        break;
-                }
+                case 0: //移动
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 0);
+                    break;
+                case 1: //旋转
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 0);
+                    break;
+                case 4: //非线性移动
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 1);
+                    break;
+                case 5: //非线性旋转
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 1);
+                    break;
             }
         }
     }
@@ -301,19 +297,18 @@ public class ScoreManager : MonoBehaviour
      * 0：背景图变黑
      * 1：背景图恢复
      */
-    private void BackChange(KoreographyEvent koreographyEvent) //=================== Part6 背景图变化
+    private void BackChange(string payload)
     {
-        if (koreographyEvent != null)
+        if (!int.TryParse(payload, out int value))
+            return;
+        switch (value)
         {
-            switch (koreographyEvent.GetIntValue())
-            {
-                case 0: //背景图变黑
-                    BackTurnBlack();
-                    break;
-                case 1: //背景图转为曲绘
-                    BackTurnMusicBack();
-                    break;
-            }
+            case 0: //背景图变黑
+                BackTurnBlack();
+                break;
+            case 1: //背景图转为曲绘
+                BackTurnMusicBack();
+                break;
         }
     }
 

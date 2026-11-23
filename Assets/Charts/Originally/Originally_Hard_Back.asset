@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2657250003c46b9a5bbdc103b3b8ae, type: 3}
+  m_Name: "Originally_Hard_Back"
+  m_EditorClassIdentifier: 
+  source: {fileID: 11400000, guid: b96f8560055b4ef09ae3104742c8fbe2, type: 2}
+  laneId: back
+  snapSubdivision: 4
+  events:
+  - stableId: a8c9a12334804a20a7bc693548b0bac7
+    index: 0
+    time: 71.4
+    eventId: "Originally_Hard_Back"
+    payload: "0"
+  - stableId: cb9109ba2df94e85b90717dfdd8a4e26
+    index: 1
+    time: 81
+    eventId: "Originally_Hard_Back"
+    payload: "1"

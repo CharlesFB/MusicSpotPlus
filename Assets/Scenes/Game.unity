@@ -2408,12 +2408,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2b1074416c9fc482e913d1f9c3f655b8, type: 3}
   - {fileID: 8300000, guid: 07b375928a9714b1d88671c500f77d51, type: 3}
   - {fileID: 8300000, guid: 2b1074416c9fc482e913d1f9c3f655b8, type: 3}
-  koreographies:
-  - {fileID: 11400000, guid: 46f93c381f8c540f6922e1e5eae07d76, type: 2}
-  - {fileID: 11400000, guid: 46f93c381f8c540f6922e1e5eae07d76, type: 2}
-  - {fileID: 11400000, guid: 46f93c381f8c540f6922e1e5eae07d76, type: 2}
-  - {fileID: 11400000, guid: cd85db59bb8664d12acf6fbcbc3d6ee8, type: 2}
-  - {fileID: 11400000, guid: 46f93c381f8c540f6922e1e5eae07d76, type: 2}
   musicInfo: {fileID: 533575604}
   difficulty: {fileID: 1356062590}
   score: {fileID: 651556228}
@@ -2437,8 +2431,6 @@ GameObject:
   - component: {fileID: 889811451}
   - component: {fileID: 889811453}
   - component: {fileID: 889811454}
-  - component: {fileID: 889811456}
-  - component: {fileID: 889811455}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -2596,35 +2588,6 @@ MonoBehaviour:
   blackInGame: {fileID: 230041971}
   blackBack: {fileID: 21300000, guid: 5b27e1d0db79946eb933ddd04fd14b72, type: 3}
   registerBuilder: 
---- !u!114 &889811455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889811450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 316907577, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadedKoreography: []
-  eventDelayInSeconds: 0
---- !u!114 &889811456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889811450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1060073270, guid: aa81bbec85a3f423193272a7c6154986, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoPlayOnAwake: 0
-  koreography: {fileID: 11400000, guid: cd85db59bb8664d12acf6fbcbc3d6ee8, type: 2}
-  targetKoreographer: {fileID: 889811455}
 --- !u!1 &963001301
 GameObject:
   m_ObjectHideFlags: 0

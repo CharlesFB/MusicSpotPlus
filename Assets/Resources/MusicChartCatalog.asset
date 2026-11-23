@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1d4e7c2b5f4096a3c8d1e6f0b7a294, type: 3}
+  m_Name: "MusicChartCatalog"
+  m_EditorClassIdentifier: 
+  byMusicId:
+  - key: "\u6700\u540e\u8282\u9009"
+    source: {fileID: 11400000, guid: cd944baf11624047a489432cc5c006a9, type: 2}
+    lanes:
+    - {fileID: 11400000, guid: a9d7cab19b074a3b8050bb53e1a2663c, type: 2}
+    - {fileID: 11400000, guid: 2d0cb4cf46fd4d8ca8ab912f5f8cc80e, type: 2}
+    - {fileID: 11400000, guid: c47a843fe872474889d2515dfb16fe9e, type: 2}
+    - {fileID: 11400000, guid: 930c454c93c74b1caeb22a09308771e3, type: 2}
+    - {fileID: 11400000, guid: a6b97427a15b4868b6d6a7ea97924f73, type: 2}
+    - {fileID: 11400000, guid: 97b8c04f491c42a6ae5791d4e74228aa, type: 2}
+  - key: "\u6700\u540e\u8282\u9009"
+    source: {fileID: 11400000, guid: cd944baf11624047a489432cc5c006a9, type: 2}
+    lanes:
+    - {fileID: 11400000, guid: a9d7cab19b074a3b8050bb53e1a2663c, type: 2}
+    - {fileID: 11400000, guid: 2d0cb4cf46fd4d8ca8ab912f5f8cc80e, type: 2}
+    - {fileID: 11400000, guid: c47a843fe872474889d2515dfb16fe9e, type: 2}
+    - {fileID: 11400000, guid: 930c454c93c74b1caeb22a09308771e3, type: 2}
+    - {fileID: 11400000, guid: a6b97427a15b4868b6d6a7ea97924f73, type: 2}
+    - {fileID: 11400000, guid: 97b8c04f491c42a6ae5791d4e74228aa, type: 2}
+  - key: "\u6700\u540e\u8282\u9009"
+    source: {fileID: 11400000, guid: cd944baf11624047a489432cc5c006a9, type: 2}
+    lanes:
+    - {fileID: 11400000, guid: a9d7cab19b074a3b8050bb53e1a2663c, type: 2}
+    - {fileID: 11400000, guid: 2d0cb4cf46fd4d8ca8ab912f5f8cc80e, type: 2}
+    - {fileID: 11400000, guid: c47a843fe872474889d2515dfb16fe9e, type: 2}
+    - {fileID: 11400000, guid: 930c454c93c74b1caeb22a09308771e3, type: 2}
+    - {fileID: 11400000, guid: a6b97427a15b4868b6d6a7ea97924f73, type: 2}
+    - {fileID: 11400000, guid: 97b8c04f491c42a6ae5791d4e74228aa, type: 2}
+  - key: "Originally"
+    source: {fileID: 11400000, guid: b96f8560055b4ef09ae3104742c8fbe2, type: 2}
+    lanes:
+    - {fileID: 11400000, guid: 4e74e0fa65b641669d8250f458856d90, type: 2}
+    - {fileID: 11400000, guid: f4af5518eb2c4363a6bcaabe5a5a6f84, type: 2}
+    - {fileID: 11400000, guid: 5cb7e6186dfa47ddade9950ed976bb17, type: 2}
+    - {fileID: 11400000, guid: cba5c33c6760454fbfa2bd8100aca065, type: 2}
+    - {fileID: 11400000, guid: b69015b377a846ccb3d9e75ac4afd5c3, type: 2}
+    - {fileID: 11400000, guid: 874cc9b9b85749eb9dd328cc3f3d99f6, type: 2}
+  - key: "\u6700\u540e\u8282\u9009"
+    source: {fileID: 11400000, guid: cd944baf11624047a489432cc5c006a9, type: 2}
+    lanes:
+    - {fileID: 11400000, guid: a9d7cab19b074a3b8050bb53e1a2663c, type: 2}
+    - {fileID: 11400000, guid: 2d0cb4cf46fd4d8ca8ab912f5f8cc80e, type: 2}
+    - {fileID: 11400000, guid: c47a843fe872474889d2515dfb16fe9e, type: 2}
+    - {fileID: 11400000, guid: 930c454c93c74b1caeb22a09308771e3, type: 2}
+    - {fileID: 11400000, guid: a6b97427a15b4868b6d6a7ea97924f73, type: 2}
+    - {fileID: 11400000, guid: 97b8c04f491c42a6ae5791d4e74228aa, type: 2}
+  extras:
+  - key: "Cthugha"
+    source: {fileID: 11400000, guid: 9bb0a538a1814f8ab2708ddb0825dbf7, type: 2}
+    lanes:
+    - {fileID: 11400000, guid: 3a1c19548bc14a14a2eaa88187ce5a17, type: 2}

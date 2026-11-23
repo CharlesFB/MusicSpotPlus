@@ -8,8 +8,8 @@ public class TouchSpotNew : Spot
     public ResultManager resultManager;
     public EffectController effectController;
 
+    public float spawnSongTime;
     private Animator anim;
-    private float timer = 0;
 
     private bool doneTouch = true;
 
@@ -32,16 +32,13 @@ public class TouchSpotNew : Spot
 
     private void Update()
     {
-        if (!GameInfoSingleton.instance.isPaused)
-        {
-            timer += Time.deltaTime;
-        }
-        if (timer >= deltaGap(3))   //结束时间
+        float elapsed = ChartPlayback.Since(spawnSongTime);
+        if (elapsed >= deltaGap(3))   //结束时间
         {
             Miss();
             endAnim();
         }
-        else if (timer >= deltaGap(2) + 0.1f)
+        else if (elapsed >= deltaGap(2) + 0.1f)
         {
             if (doneTouch)
             {
@@ -49,7 +46,7 @@ public class TouchSpotNew : Spot
                 DoTouch(); //直接命中=========================注释这一句test
             }
         }
-        else if (timer >= deltaGap(2))   //允许点击时间
+        else if (elapsed >= deltaGap(2))   //允许点击时间
         {
             isOkForTouch = true;
         }

@@ -20,6 +20,7 @@ public class PressSpot : MonoBehaviour
     public int perfectScore = 360;
 
     public bool isPaused;
+    public float spawnSongTime;
 
     public bool isOkForTouch;
     public bool isPressing;
@@ -63,10 +64,7 @@ public class PressSpot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isPaused)
-        {
-            timer += Time.deltaTime;
-        }
+        timer = ChartPlayback.Since(spawnSongTime);
         
         if (timer >= fullTime && !isOverEarlier)
         {

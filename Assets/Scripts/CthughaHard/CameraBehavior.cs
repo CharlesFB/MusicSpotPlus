@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SonicBloom.Koreo;
 using UnityEngine.UI;
 
 public class CameraBehavior : MonoBehaviour
 {
     private AudioSource aud;
+    private ChartPlayback playback;
     private Text scoreText;
     private Text comboText;
     private Animator ani;
@@ -38,8 +38,13 @@ public class CameraBehavior : MonoBehaviour
         maxCombo = 0;
         curCombo = 0;
 
+        playback = GetComponent<ChartPlayback>();
+        if (playback == null)
+            playback = gameObject.AddComponent<ChartPlayback>();
+        var catalog = Resources.Load<MusicChartCatalog>("MusicChartCatalog");
+        playback.Load(catalog != null ? catalog.Find("Cthugha") : null, aud);
+        playback.Subscribe(eventID, (lane, e) => SpotProduce(e.payload, e.time));
         Invoke("audioPlay", 4); //延迟4秒播放
-        Koreographer.Instance.RegisterForEvents(eventID, SpotProduce);
 
     }
 
@@ -50,18 +55,20 @@ public class CameraBehavior : MonoBehaviour
 
     public void audioPlay()
     {
-        aud.Play();
+        if (playback != null)
+            playback.Play();
     }
 
     public void audioPause()
     {
-        aud.Pause();
+        if (playback != null)
+            playback.Pause();
     }
 
     public void audioReset()
     {
-        aud.Stop();
-        aud.Play();
+        if (playback != null)
+            playback.Restart();
     }
 
     //存放音符的信息
@@ -84,40 +91,42 @@ public class CameraBehavior : MonoBehaviour
     }
 
     // 生产音符
-    private void SpotProduce(KoreographyEvent koreographyEvent)
+    private void SpotProduce(string payload, float songTime)
     {
-        if (koreographyEvent != null)
+        if (string.IsNullOrEmpty(payload))
+            return;
+
+        SpotInfo[] spotInfos = GetInfo(payload);
+        for (int i = 1; i <= spotInfos[0].len; i++)
         {
-            SpotInfo[] spotInfos = GetInfo(koreographyEvent.GetTextValue());
-            for (int i = 1; i <= spotInfos[0].len; i++)
+            switch (spotInfos[i].type)
             {
-                switch (spotInfos[i].type)
-                {
-                    case 0: // 单击音符
-                        GameObject tmp = Instantiate(SinglePrefab);
-                        tmp.transform.position = new Vector3(spotInfos[i].posX, spotInfos[i].posY);
-                        tmp.GetComponent<SpriteRenderer>().sortingOrder = layer--;
-                        tmp.GetComponent<SingleSpot>().timeBegin = aud.time;
-                        tmp.transform.parent = GameObject.Find("Plane").transform;
-                        break;
-                    case 1: // 触发音符
-                        GameObject touch = Instantiate(TouchPrefab);
-                        touch.transform.position = new Vector3(spotInfos[i].posX, spotInfos[i].posY);
-                        touch.GetComponent<SpriteRenderer>().sortingOrder = layer--;
-                        touch.transform.parent = GameObject.Find("Plane").transform;
-                        break;
-                    case 2: // 蓄力音符
-                        GameObject press = Instantiate(PressPrefab);
-                        press.transform.position = new Vector3(spotInfos[i].posX, spotInfos[i].posY);
-                        press.GetComponent<SpriteRenderer>().sortingOrder = layer--;
-                        press.transform.parent = GameObject.Find("Plane").transform;
-                        press.GetComponent<PressSpot>().init(spotInfos[i].dir, spotInfos[i].len);
-                        break;
-                }
-
+                case 0: // 单击音符
+                    GameObject tmp = Instantiate(SinglePrefab);
+                    tmp.transform.position = new Vector3(spotInfos[i].posX, spotInfos[i].posY);
+                    tmp.GetComponent<SpriteRenderer>().sortingOrder = layer--;
+                    tmp.GetComponent<SingleSpot>().timeBegin = songTime;
+                    tmp.GetComponent<SingleSpot>().spawnSongTime = songTime;
+                    tmp.transform.parent = GameObject.Find("Plane").transform;
+                    break;
+                case 1: // 触发音符
+                    GameObject touch = Instantiate(TouchPrefab);
+                    touch.transform.position = new Vector3(spotInfos[i].posX, spotInfos[i].posY);
+                    touch.GetComponent<SpriteRenderer>().sortingOrder = layer--;
+                    touch.GetComponent<TouchSpot>().spawnSongTime = songTime;
+                    touch.transform.parent = GameObject.Find("Plane").transform;
+                    break;
+                case 2: // 蓄力音符
+                    GameObject press = Instantiate(PressPrefab);
+                    press.transform.position = new Vector3(spotInfos[i].posX, spotInfos[i].posY);
+                    press.GetComponent<SpriteRenderer>().sortingOrder = layer--;
+                    press.transform.parent = GameObject.Find("Plane").transform;
+                    press.GetComponent<PressSpot>().spawnSongTime = songTime;
+                    press.GetComponent<PressSpot>().init(spotInfos[i].dir, spotInfos[i].len);
+                    break;
             }
-        }
 
+        }
     }
 
     // 转换负载的文本

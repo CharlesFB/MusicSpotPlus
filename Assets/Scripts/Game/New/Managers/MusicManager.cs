@@ -25,23 +25,18 @@ public class MusicManager : MonoBehaviour
 
     private void Update()
     {
-        if (playing == true && GetComponent<AudioSource>().isPlaying == false) //表示游戏曲目播放完了，该进入结算了
+        var playback = GetComponent<ChartPlayback>();
+        if (playing && playback != null && playback.HasEnded)
         {
-            if (GetComponent<AudioSource>().time < GetComponent<AudioSource>().clip.length)
-            {
-                //表示为暂停
-            }
-            else
-            { //结算
-                pauseManager.pauseButton.interactable = false;
-                blackAlpha.gameObject.GetComponent<BlackAlpha>().isOkForClick = true;
-                Invoke("GetBack", 3f);
-                FinalPanelMoveIn();
-                playing = false;
-                GetComponent<AudioSource>().clip = endMusic;
-                GetComponent<AudioSource>().volume = 0.6f;
-                GetComponent<AudioSource>().Play();
-            }
+            pauseManager.pauseButton.interactable = false;
+            blackAlpha.gameObject.GetComponent<BlackAlpha>().isOkForClick = true;
+            Invoke("GetBack", 3f);
+            FinalPanelMoveIn();
+            playing = false;
+            var source = GetComponent<AudioSource>();
+            source.clip = endMusic;
+            source.volume = 0.6f;
+            source.Play();
         }
     }
 
@@ -52,13 +47,21 @@ public class MusicManager : MonoBehaviour
 
     public void AudioPlay()
     {
-        GetComponent<AudioSource>().Play();
+        var playback = GetComponent<ChartPlayback>();
+        if (playback != null)
+            playback.Play();
+        else
+            GetComponent<AudioSource>().Play();
         playing = true;
     }
 
     public void AudioPause()
     {
-        GetComponent<AudioSource>().Pause();
+        var playback = GetComponent<ChartPlayback>();
+        if (playback != null)
+            playback.Pause();
+        else
+            GetComponent<AudioSource>().Pause();
     }
 
     public void FinalPanelMoveIn()

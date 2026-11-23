@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2657250003c46b9a5bbdc103b3b8ae, type: 3}
+  m_Name: "Originally_Hard_Line2"
+  m_EditorClassIdentifier: 
+  source: {fileID: 11400000, guid: b96f8560055b4ef09ae3104742c8fbe2, type: 2}
+  laneId: line2
+  snapSubdivision: 4
+  events:
+  - stableId: 494837f1f2114c46acdb0eaaec8bd2ad
+    index: 0
+    time: 21.6
+    eventId: "Originally_Hard_Line2"
+    payload: "0000000000000240"
+  - stableId: db356db1d3b54456bd5f5c22ce7390dc
+    index: 1
+    time: 24
+    eventId: "Originally_Hard_Line2"
+    payload: "0000011000000240"
+  - stableId: 1f81ce06b3ae4e53bb9dac37bedc5b9c
+    index: 2
+    time: 26.4
+    eventId: "Originally_Hard_Line2"
+    payload: "0000000000000240"
+  - stableId: 11f3c12a37d74e3d927768e8d7e0b0bc
+    index: 3
+    time: 28.8
+    eventId: "Originally_Hard_Line2"
+    payload: "0000011000000240"

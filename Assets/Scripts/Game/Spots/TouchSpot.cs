@@ -10,6 +10,7 @@ public class TouchSpot : MonoBehaviour
     private Animator ani, effectAnim;
 
     public bool isPaused;
+    public float spawnSongTime;
     public bool isOkForTouch;
     public float touchTimeOn = 0.84f;
     public float touchTimeOff = 1.56f;
@@ -33,10 +34,7 @@ public class TouchSpot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isPaused)
-        {
-            timer += Time.deltaTime;
-        }
+        timer = ChartPlayback.Since(spawnSongTime);
         
         if (timer >= destroyTime)
         {

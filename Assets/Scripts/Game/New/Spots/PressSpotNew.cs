@@ -31,7 +31,7 @@ public class PressSpotNew : Spot
     private Tweener backLoading;  //用于保存读条运动动画，用户在松手的时候会主动停止动画
     private float loadTime = 0.6f; //动画应加载的时间
     private float desSize; //目标back应达到的尺寸，用于判断最终得分
-    private float timer = 0;
+    public float spawnSongTime;
     private bool loadOn = true;
     private bool disappearOn = true;
 
@@ -51,15 +51,12 @@ public class PressSpotNew : Spot
 
     private void Update()
     {
-        if (!GameInfoSingleton.instance.isPaused)
-        {
-            timer += Time.deltaTime;
-        }
-        if (timer > deltaGap(2) + loadTime + 1f)
+        float elapsed = ChartPlayback.Since(spawnSongTime);
+        if (elapsed > deltaGap(2) + loadTime + 1f)
         {
             endAnim();
         }
-        else if (timer > deltaGap(2) + loadTime)
+        else if (elapsed > deltaGap(2) + loadTime)
         {
             if (doneRelease)
             {
@@ -68,11 +65,11 @@ public class PressSpotNew : Spot
                 DoDisappear();
             }
         }
-        else if (timer > deltaGap(2) + loadTime/3)
+        else if (elapsed > deltaGap(2) + loadTime/3)
         {
             Miss();
         }
-        else if (timer >= deltaGap(2))
+        else if (elapsed >= deltaGap(2))
         {
             isOkForTouch = true;
             BackLoadingAnim();

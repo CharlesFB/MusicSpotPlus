@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0eb00cfdd505440b84bc1e5c9747e74, type: 3}
+  m_Name: "Originally"
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 07b375928a9714b1d88671c500f77d51, type: 3}
+  clipAddress: 
+  clipPath: 
+  audioId: 
+  audioHash: 
+  bpm: 100
+  beatOffset: 0
+  duration: 144.19591837
+  beatsPerMeasure: 4
+  beatUnit: 4

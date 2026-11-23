@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using SonicBloom.Koreo;
-using SonicBloom.Koreo.Players;
 
 public class InfoManager : MonoBehaviour
 {
     public Sprite[] backs;
     public AudioClip[] clips;
-    public Koreography[] koreographies;
 
     public Text musicInfo;
     public Text difficulty;
@@ -43,11 +40,15 @@ public class InfoManager : MonoBehaviour
 
     private void MusicInfoOn() //设置乐曲背景和曲目信息
     {
-        musicManager.clip = clips[GameInfoSingleton.instance.musicId]; 
         background.sprite = backs[GameInfoSingleton.instance.musicId];
-        scoreManager.SetKoreographer(koreographies[GameInfoSingleton.instance.musicId]);
+        var playback = musicManager.GetComponent<ChartPlayback>();
+        if (playback == null)
+            playback = musicManager.gameObject.AddComponent<ChartPlayback>();
+        var catalog = Resources.Load<MusicChartCatalog>("MusicChartCatalog");
+        var chart = catalog != null ? catalog.ByMusicId(GameInfoSingleton.instance.musicId) : null;
+        playback.Load(chart, musicManager);
         string registerName = GameInfoSingleton.instance.musicName + "_" + GameInfoSingleton.instance.diff;
-        scoreManager.registerBuilder = registerName; //曲目注册名 “乐曲名_难度”；判定线：“乐曲名_难度_Line”；判定区域：“乐曲名_难度_Area”；判定边界线：“乐曲名_难度_Line1”,“乐曲名_难度_Line2”
+        scoreManager.Bind(playback, registerName);
     }
 
     private void SetSpeed() //设置曲目速度信息
