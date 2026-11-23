@@ -1,0 +1,56 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:metro="FB.Metronome.Editor.UI">
+    <Style src="Uss/MetronomeGrapherWindow.uss" />
+    <ui:VisualElement class="metro-root">
+        <ui:VisualElement class="header">
+            <ui:Label text="METRONOME" class="brand" />
+            <ui:Label text="MUSIC · EVENTS · TIMELINE" class="subtitle" />
+        </ui:VisualElement>
+        <ui:VisualElement class="workspace">
+            <ui:VisualElement class="sidebar panel">
+                <ui:Label text="01 / SOURCE" class="section-title" />
+                <ui:VisualElement name="SourceContainer" />
+                <ui:Label text="EVENT LANES" class="section-title" />
+                <ui:Label text="拖入属于当前 Source 的 Lane" class="hint" />
+                <ui:ListView fixed-item-height="30" name="lvLaneContainer" />
+                <ui:Label text="TIMING" class="section-title" />
+                <ui:TextField label="BPM" name="tfBpm" />
+                <ui:TextField label="Offset · s" name="tfOffset" />
+                <ui:TextField label="Duration" name="tfDuration" readonly="true" />
+            </ui:VisualElement>
+            <ui:VisualElement class="main-column">
+                <ui:VisualElement class="panel event-details">
+                    <ui:Label text="02 / EVENT DETAILS" class="section-title" />
+                    <ui:VisualElement class="field-row">
+                        <ui:TextField label="Index" name="tfIndex" readonly="true" />
+                        <ui:TextField label="Event ID" name="tfEventId" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="field-row">
+                        <ui:TextField label="Time · s" name="tfTime" />
+                        <ui:TextField label="Payload" name="tfPayload" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="actions">
+                        <ui:Label text="选中 marker 或事件卡片查看；更改后 Apply" class="hint" />
+                        <ui:Button text="Delete" name="btnDeleteEvent" class="danger" />
+                        <ui:Button text="Apply changes" name="btnApply" class="primary" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="panel events-panel">
+                    <ui:Label text="03 / LANE EVENTS" class="section-title" />
+                    <ui:ScrollView mode="Horizontal" name="lvEventContainer" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="panel timeline-panel">
+            <ui:Label text="04 / TIMELINE" class="section-title" />
+            <ui:VisualElement name="timelineToolbar" />
+            <ui:ScrollView name="svSpectrumWindow" mode="Horizontal" class="player-window">
+                <metro:SpectrumTrack name="spectrumTrack" />
+            </ui:ScrollView>
+            <ui:VisualElement class="transport">
+                <ui:TextField label="Position · s" name="tfSeek" />
+                <ui:Button text="+ Add event" name="btnAddEvent" class="primary" />
+                <ui:Label text="拖动 marker 调整时间  ·  ⌘/Ctrl C / V 复制粘贴  ·  Delete 删除" class="hint" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

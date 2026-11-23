@@ -1,0 +1,38 @@
+.metro-root { flex-grow: 1; background-color: #151b24; color: #dce5f0; padding: 12px; }
+.header { flex-direction: row; align-items: center; height: 38px; margin-bottom: 10px; }
+.brand { font-size: 21px; -unity-font-style: bold; color: #69d8c2; margin-right: 18px; }
+.subtitle { font-size: 10px; color: #8795ab; }
+.workspace { flex-direction: row; flex-grow: 1; min-height: 230px; margin-bottom: 10px; }
+.panel { background-color: #202938; border-radius: 7px; padding: 12px; }
+.sidebar { width: 280px; margin-right: 10px; }
+.main-column { flex-grow: 1; min-width: 0; }
+.section-title { color: #91a7c4; font-size: 11px; -unity-font-style: bold; margin-bottom: 10px; margin-top: 4px; }
+.hint { color: #8c9bb0; font-size: 11px; white-space: normal; }
+#SourceContainer { flex-direction: row; margin-bottom: 14px; }
+#lvLaneContainer { flex-grow: 1; min-height: 60px; background-color: #18212e; border-radius: 4px; margin-bottom: 10px; }
+.event-details { flex-grow: 1; margin-bottom: 10px; }
+.field-row { flex-direction: row; margin-top: 8px; margin-bottom: 6px; }
+.field-row > .unity-text-field { width: 49%; }
+.unity-base-field__label { min-width: 82px; color: #a9b8ce; }
+.unity-base-text-field__input { background-color: #141d29; color: #e6eef8; border-radius: 3px; padding: 5px; }
+.actions { flex-direction: row; justify-content: flex-end; align-items: center; margin-top: 12px; }
+.actions .hint { flex-grow: 1; }
+Button { background-color: #314158; color: #e2ebf7; border-width: 0; border-radius: 4px; padding: 6px 12px; min-height: 28px; }
+Button:hover { background-color: #425875; }
+Button.primary { background-color: #277b70; color: #edfffa; }
+Button.primary:hover { background-color: #329c8d; }
+Button.danger { color: #ffb0b0; }
+Button:disabled { opacity: 0.4; }
+.events-panel { min-height: 92px; }
+#lvEventContainer { height: 48px; }
+#lvEventContainer .unity-scroll-view__content-container { flex-direction: row; flex-wrap: nowrap; align-items: stretch; height: 30px; }
+.timeline-panel { flex-shrink: 0; }
+#timelineToolbar { margin-bottom: 8px; }
+.player-window { height: 250px; background-color: #101722; border-radius: 4px; }
+.player-window .unity-scroll-view__content-viewport { flex-grow: 1; }
+.player-window .unity-scroll-view__content-container { height: 100%; flex-direction: row; }
+.spectrum-track { height: 100%; flex-shrink: 0; position: relative; }
+.transport { flex-direction: row; align-items: center; margin-top: 10px; }
+.transport .hint { margin-left: 14px; }
+#tfSeek { width: 220px; }
+#EventItem.event-item--selected { border-color: #ffd16a; background-color: #564828; }

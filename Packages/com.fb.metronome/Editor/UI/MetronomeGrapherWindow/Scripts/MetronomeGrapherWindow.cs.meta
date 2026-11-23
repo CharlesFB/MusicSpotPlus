@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fdb87a70d5e25404dbc20e9ea3cb6762
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - metronomeWindow: {fileID: 9197481963319205126, guid: 2141a1221cce54b0f8019bed2d469139, type: 3}
+  - laneItemUxml: {fileID: 9197481963319205126, guid: 71add84aba1544a7a9224c8afb0d47ff, type: 3}
+  - EventItemUxml: {fileID: 9197481963319205126, guid: 95381a3f9051344d1bfb7fe5174f6709, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

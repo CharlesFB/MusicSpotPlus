@@ -1,0 +1,15 @@
+{
+    "name": "MetronomeEditor.Tests",
+    "references": [
+        "MetronomeEditor",
+        "MetronomeRuntime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "autoReferenced": false,
+    "rootNamespace": "FB.Metronome.Tests.Editor"
+}

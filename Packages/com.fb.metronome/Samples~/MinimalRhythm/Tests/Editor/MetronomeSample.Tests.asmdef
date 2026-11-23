@@ -1,0 +1,7 @@
+{
+  "name":"MetronomeSample.Tests",
+  "references":["MetronomeSample","MetronomeRuntime"],
+  "includePlatforms":["Editor"],
+  "optionalUnityReferences":["TestAssemblies"],
+  "autoReferenced":false
+}

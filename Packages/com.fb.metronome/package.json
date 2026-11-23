@@ -1,0 +1,21 @@
+{
+  "name": "com.fb.metronome",
+  "version": "0.1.0",
+  "displayName": "FB Metronome",
+  "description": "DSP music clock, event lanes, timeline authoring and runtime DIY charts.",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.modules.audio": "1.0.0",
+    "com.unity.modules.unitywebrequestaudio": "1.0.0",
+    "com.unity.modules.jsonserialize": "1.0.0",
+    "com.unity.modules.uielements": "1.0.0",
+    "com.unity.modules.imgui": "1.0.0"
+  },
+  "samples": [
+    {
+      "displayName": "Minimal Rhythm + DIY",
+      "description": "Playable two-lane rhythm game, original procedural song, JSON saves and local audio loading.",
+      "path": "Samples~/MinimalRhythm"
+    }
+  ]
+}

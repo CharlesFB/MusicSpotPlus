@@ -149,9 +149,9 @@ Desktop.ini
 # Editor reads Assets/MusicSpot.db. The copy at the project root is a local duplicate.
 /MusicSpot.db
 
-# NuGet restore output unpacked into the Unity Packages folder.
-# Unity only versions manifest.json and packages-lock.json here.
-/Packages/*/
+# NuGet restore output. Not a UPM package; kept out of Packages so the
+# Package Manager only sees manifest files and real embedded packages.
+/.local-nuget/
 /App.config
 /packages.config
 

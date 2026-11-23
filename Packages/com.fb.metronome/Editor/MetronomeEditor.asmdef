@@ -1,0 +1,18 @@
+{
+    "name": "MetronomeEditor",
+    "rootNamespace": "FB.Metronome.Editor",
+    "references": [
+        "MetronomeRuntime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
