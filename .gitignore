@@ -155,8 +155,7 @@ Desktop.ini
 /App.config
 /packages.config
 
-# Full tracks marked for removal / not for continued use. Cuts stay with the project.
-/Assets/Resources/Musics/【毕设结束后删除】*
+# Full tracks marked not for continued use. Cuts stay with the project.
 /Assets/Resources/Musics/【毕设结束后禁止使用】*
 
 # Debug symbols shipped with third-party plugins and vendored packages.
