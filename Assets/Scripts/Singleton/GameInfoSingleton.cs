@@ -34,7 +34,7 @@ public class GameInfoSingleton : MonoBehaviour
 
     //游戏中
     public bool isPaused = false;
-    public float[] gaps = {0.9f, 1.07f, 1.2f, 1.42f, 1.48f, 1.54f}; //100bpm, 1拍曲目的基准数据(single)
+    public float[] gaps = {0.62f, 0.78f, 1.1f, 1.66f, 1.852f, 1.932f}; //相对判定点 1.1 秒，两侧容差放大 60%
 
     //结算后
 
