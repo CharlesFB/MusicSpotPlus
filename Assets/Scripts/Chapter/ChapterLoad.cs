@@ -20,10 +20,10 @@ public class ChapterLoad : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (VarSingleton.instance.chapterNum == -1)
         {
-            if (VarSingleton.instance.chapterNum == -1)//之前未选中任何章节
-            {
+            if (!Input.GetMouseButtonUp(0) || TouchCamera.Dragged)
+                return;
                 //切换章节
                 VarSingleton.instance.chapterNum = number;
                 //切换曲目
@@ -46,9 +46,9 @@ public class ChapterLoad : MonoBehaviour
 
                 //加载可视化音乐
                 visibleMusic.transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (VarSingleton.instance.chapterNum == number)
-            {
+        }
+        else if (VarSingleton.instance.chapterNum == number && Input.GetMouseButtonDown(0))
+        {
                 int total = VarSingleton.instance.chapters[number].musicNum;
                 int num = VarSingleton.instance.musicNumInChapter;
                 num = (num + 1) % total;
@@ -82,9 +82,7 @@ public class ChapterLoad : MonoBehaviour
                 //加载乐曲信息
                 infoController.SetName();
                 infoController.SetDiffAndScores(VarSingleton.instance.musics[num].lastPlayedDiff);
-            }
         }
-        
     }
 
     public void ChangeName(string name) //更改章节名称

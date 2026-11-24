@@ -1,117 +1,150 @@
 using UnityEngine;
+using DG.Tweening;
+
 public class TouchCamera : MonoBehaviour
 {
     public bool canPan = true;
+    public static bool Dragged { get; private set; }
 
-    //around center
-    public Transform target;
-    private Vector3 targetPan;
-    private Vector3 currentPan;
-    private float v; //移动初速度
-    private float a = 30; // 加速度
+    const float ChapterPlaneZ = 15f;
+    const float DragPixels = 18f;
+    const float FlickSpeed = 8f;
 
-    private bool getCurrentDA = true;
+    Camera cam;
+    bool dragging;
+    Vector2 pressPos;
+    Vector2 lastPos;
+    readonly float[] speeds = new float[4];
+    int speedCount;
 
-    //Damper(阻尼) for move
-    [Range(0, 10)]
-    private float damper = 2;
-
-    void Start()
+    void Awake()
     {
-        GameObject camTargetObj = GameObject.Find("Main Camera");
-        if (camTargetObj == null)
-            camTargetObj = new GameObject("Main Camera");
-        target = camTargetObj.transform;
-        v = 0;
-        currentPan = targetPan = transform.position;
+        cam = GetComponent<Camera>();
     }
 
     void Update()
     {
-        if (VarSingleton.instance.chapterNum == -1) //在没有选中任何一个
+        if (VarSingleton.instance == null || VarSingleton.instance.chapterNum != -1)
         {
-            if (Input.touchCount <= 0)
-            {
-                getCurrentDA = true;
-
-                if (v != 0)
-                {
-                    //没检测到触屏的时候根据速度v进行减速移动
-                    float t = Time.deltaTime;
-                    if ((v + a * t) * v > 0) // 没有减速超过0，即减速前后v的方向不变（同号）
-                    {
-
-                        targetPan.x -= v * t; // 位移公式\
-                        if (targetPan.x < 0)
-                        {
-                            targetPan.x = 0;
-                            v = 0;
-                        }
-                        else if (targetPan.x > (VarSingleton.instance.chapterCount-1) * VarSingleton.instance.chapterGap)
-                        {
-                            targetPan.x = (VarSingleton.instance.chapterCount - 1) * VarSingleton.instance.chapterGap;
-                            v = 0;
-                        }
-                        else
-                            v += a * t; // 速度变化公式
-
-                        transform.position = targetPan;
-                    }
-                    else
-                        v = 0;
-                }
-
-
-                return;
-            }
-            else
-            {
-                v = 0; // 初速度清零
-                       //确保获取最新的Camera状态
-                if (getCurrentDA)
-                {
-                    getCurrentDA = false;
-                    currentPan = targetPan = transform.position;
-                }
-            }
-
-            if (Input.touchCount == 1)
-            {
-                Touch touch = Input.GetTouch(0);
-                if (Input.GetTouch(0).phase == TouchPhase.Moved)
-                {
-                    //平移
-                    if (canPan)
-                    {
-                        //v = touch.deltaPosition.x / touch.deltaTime;
-                        targetPan.x -= touch.deltaPosition.x / 100;
-                        currentPan = Vector3.Lerp(currentPan, targetPan, (damper) * Time.deltaTime);
-                        if (targetPan.x < 0)
-                        {
-                            targetPan.x = 0;
-                        }
-                        else if (targetPan.x > (VarSingleton.instance.chapterCount - 1) * VarSingleton.instance.chapterGap)
-                        {
-                            targetPan.x = (VarSingleton.instance.chapterCount - 1) * VarSingleton.instance.chapterGap;
-                        }
-                        transform.position = targetPan;
-                    }
-
-                    //v = Mathf.Clamp(touch.deltaPosition.x / touch.deltaTime, -30, 30);//获取手指离开时的瞬时速度作为初速度，限制速度范围
-                    //if (v != 0)
-                    //    a = -1 * Mathf.Abs(a) * (v / Mathf.Abs(v)); //调整加速度的方向与v相反
-
-                }
-                else if (Input.GetTouch(0).phase == TouchPhase.Ended)
-                {
-                    v = Mathf.Clamp(touch.deltaPosition.x / touch.deltaTime, -30, 30); //获取手指离开时的瞬时速度作为初速度
-                    if (v != 0) //很关键！！！！！！
-                        a = -1 * Mathf.Abs(a) * (v / Mathf.Abs(v)); //调整加速度的方向与v相反
-                                                                    //Debug.Log(v);
-                                                                    //Debug.Log(a);
-                }
-            }
+            dragging = false;
+            return;
         }
+        if (!canPan || cam == null)
+            return;
+        if (!ReadPointer(out bool down, out bool held, out bool up, out Vector2 pos))
+        {
+            if (dragging)
+                EndDrag();
+            return;
+        }
+        if (down)
+            BeginDrag(pos);
+        if (dragging && held)
+            Drag(pos);
+        if (up && dragging)
+            EndDrag();
+    }
 
+    void BeginDrag(Vector2 pos)
+    {
+        dragging = true;
+        Dragged = false;
+        pressPos = lastPos = pos;
+        speedCount = 0;
+        transform.DOKill();
+    }
+
+    void Drag(Vector2 pos)
+    {
+        if ((pos - pressPos).sqrMagnitude > DragPixels * DragPixels)
+            Dragged = true;
+        float dx = WorldX(pos) - WorldX(lastPos);
+        float previous = transform.position.x;
+        float next = Mathf.Clamp(previous - dx, 0f, MaxX());
+        PushSpeed((next - previous) / Mathf.Max(Time.deltaTime, 0.0001f));
+        Vector3 at = transform.position;
+        at.x = next;
+        transform.position = at;
+        lastPos = pos;
+    }
+
+    void EndDrag()
+    {
+        dragging = false;
+        if (!Dragged)
+            return;
+        float gap = VarSingleton.instance.chapterGap;
+        if (gap <= 0f)
+            return;
+        float index = transform.position.x / gap;
+        float speed = AverageSpeed();
+        int target;
+        if (speed > FlickSpeed)
+            target = Mathf.FloorToInt(index) + 1;
+        else if (speed < -FlickSpeed)
+            target = Mathf.CeilToInt(index) - 1;
+        else
+            target = Mathf.FloorToInt(index + 0.5f);
+        int last = Mathf.Max(0, VarSingleton.instance.chapterCount - 1);
+        target = Mathf.Clamp(target, 0, last);
+        float dest = target * gap;
+        float duration = Mathf.Clamp(Mathf.Abs(dest - transform.position.x) / gap * 0.3f, 0.12f, 0.32f);
+        transform.DOKill();
+        transform.DOMoveX(dest, duration).SetEase(Ease.OutCubic);
+    }
+
+    float WorldX(Vector2 screen)
+    {
+        float distance = ChapterPlaneZ - transform.position.z;
+        return cam.ScreenToWorldPoint(new Vector3(screen.x, screen.y, distance)).x;
+    }
+
+    float MaxX()
+    {
+        int count = VarSingleton.instance.chapterCount;
+        if (count <= 1)
+            return 0f;
+        return (count - 1) * VarSingleton.instance.chapterGap;
+    }
+
+    void PushSpeed(float speed)
+    {
+        speeds[speedCount % speeds.Length] = speed;
+        speedCount++;
+    }
+
+    float AverageSpeed()
+    {
+        int count = Mathf.Min(speedCount, speeds.Length);
+        if (count == 0)
+            return 0f;
+        float sum = 0f;
+        for (int i = 0; i < count; i++)
+            sum += speeds[i];
+        return sum / count;
+    }
+
+    static bool ReadPointer(out bool down, out bool held, out bool up, out Vector2 pos)
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            pos = touch.position;
+            down = touch.phase == TouchPhase.Began;
+            up = touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled;
+            held = touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled;
+            return true;
+        }
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
+        {
+            pos = Input.mousePosition;
+            down = Input.GetMouseButtonDown(0);
+            up = Input.GetMouseButtonUp(0);
+            held = Input.GetMouseButton(0);
+            return true;
+        }
+        down = held = up = false;
+        pos = Vector2.zero;
+        return false;
     }
 }

@@ -20,6 +20,31 @@ public class Info : MonoBehaviour
     public GameObject score;
     public GameObject grade;
 
+    RectTransform chapterRect;
+    RectTransform musicRect;
+    Vector3 chapterHiddenPos;
+    Vector3 musicHiddenPos;
+    Quaternion chapterHiddenRot;
+    Quaternion musicHiddenRot;
+    Vector3 chapterShownPos;
+    Vector3 musicShownPos;
+    Quaternion chapterShownRot;
+    Quaternion musicShownRot;
+
+    void Awake()
+    {
+        chapterRect = chapterInfo.GetComponent<RectTransform>();
+        musicRect = musicInfo.GetComponent<RectTransform>();
+        chapterHiddenPos = chapterRect.localPosition;
+        musicHiddenPos = musicRect.localPosition;
+        chapterHiddenRot = chapterRect.localRotation;
+        musicHiddenRot = musicRect.localRotation;
+        chapterShownPos = chapterHiddenPos + new Vector3(824f, 0f, 420f);
+        musicShownPos = musicHiddenPos + new Vector3(-824f, 0f, 420f);
+        chapterShownRot = chapterHiddenRot * Quaternion.Euler(0f, -20f, 0f);
+        musicShownRot = musicHiddenRot * Quaternion.Euler(0f, 20f, 0f);
+    }
+
     public void SetDiffAndScores(int diffCode)
     {
         //修改数据库上次游玩难度的信息
@@ -125,24 +150,24 @@ public class Info : MonoBehaviour
 
     public void MoveIn()
     {
-        RectTransform rect1 = chapterInfo.GetComponent<RectTransform>();
-        rect1.DOBlendableLocalMoveBy(new Vector3(824,0,420),0.8f);
-        rect1.DOBlendableLocalRotateBy(new Vector3(0,-20,0),0.8f);
-        RectTransform rect2 = musicInfo.GetComponent<RectTransform>();
-        rect2.DOBlendableLocalRotateBy(new Vector3(0, 20, 0), 0.8f);
-        rect2.DOBlendableLocalMoveBy(new Vector3(-824, 0, 420), 0.8f);
+        Slide(chapterRect, chapterShownPos, chapterShownRot);
+        Slide(musicRect, musicShownPos, musicShownRot);
     }
 
     public void MoveOut()
     {
-        if (VarSingleton.instance.chapterNum != -1)
-        {
-            RectTransform rect1 = chapterInfo.GetComponent<RectTransform>();
-            rect1.DOBlendableLocalMoveBy(new Vector3(-824, 0, -420), 0.8f);
-            rect1.DOBlendableLocalRotateBy(new Vector3(0, -70, 0), 0.8f);
-            RectTransform rect2 = musicInfo.GetComponent<RectTransform>();
-            rect2.DOBlendableLocalRotateBy(new Vector3(0, 70, 0), 0.8f);
-            rect2.DOBlendableLocalMoveBy(new Vector3(824, 0, -420), 0.8f);
-        }
+        if (VarSingleton.instance.chapterNum == -1)
+            return;
+        Slide(chapterRect, chapterHiddenPos, chapterHiddenRot);
+        Slide(musicRect, musicHiddenPos, musicHiddenRot);
+    }
+
+    static void Slide(RectTransform rect, Vector3 pos, Quaternion rot)
+    {
+        if (rect == null)
+            return;
+        rect.DOKill();
+        rect.DOLocalMove(pos, 0.8f);
+        rect.DOLocalRotate(rot.eulerAngles, 0.8f);
     }
 }

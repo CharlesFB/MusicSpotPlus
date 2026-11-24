@@ -31,6 +31,7 @@ public class CameraAutoMove : MonoBehaviour
 
     public void CameraMove(int chapterNum)
     {
+        transform.DOKill();
         transform.DOMove(new Vector3(VarSingleton.instance.chapterGap * chapterNum, 0, -10), 0.6f);
     }
 }
