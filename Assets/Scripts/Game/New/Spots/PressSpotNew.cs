@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -13,273 +11,279 @@ public class PressSpotNew : Spot
     public ResultManager resultManager;
     public EffectController effectController;
 
-    public int dir; //0：向上， 1：向下
-    /* spd: 用于动态调整变速
-     * （以100bpm 1拍曲速为基准，初始基准速度为0.6秒/节）
-     * 0：快1倍
-     * 1：正常
-     * 2：慢1番
-     * 3：慢2番
-     * 
-     * 说人话就是分别在0.5/1/2/4个小节内完成长条读条动画，用于动态调整变速问题
-     */
-    public int spd; 
-    public bool isPressing;  //是否处于按压状态
+    public int dir;
+    public int spd;
+    public bool isPressing;
 
-    private Animator buttonAnim;
+    Animator buttonAnim;
+    AudioSource hitSource;
+    Image barImage;
+    Image backImage;
+    Image buttonImage;
+    RectTransform barRect;
+    RectTransform backRect;
+    RectTransform rootRect;
+    Tweener backLoading;
+    float loadTime = 0.6f;
+    float desSize;
+    bool loadOn = true;
+    bool disappearOn = true;
+    float gameWidth;
+    float gameHeight;
+    Vector2 barBase;
+    Vector2 backBase;
+    Quaternion baseRotation;
+    float baseButtonSpeed;
+    static float GAME_SCREEN_VERTICAL_FEC = 0.64f;
+    static float GAME_SCREEN_HORIZ_FEC = 0.9f;
 
-    private Tweener backLoading;  //用于保存读条运动动画，用户在松手的时候会主动停止动画
-    private float loadTime = 0.6f; //动画应加载的时间
-    private float desSize; //目标back应达到的尺寸，用于判断最终得分
-    public float spawnSongTime;
-    private bool loadOn = true;
-    private bool disappearOn = true;
-
-    private float gameWidth, gameHeight;  //游戏屏幕的最大宽高
-    private static float GAME_SCREEN_VERTICAL_FEC = 0.64f;
-    private static float GAME_SCREEN_HORIZ_FEC = 0.9f;
-
-    private bool donePress = true, doneRelease = true;
-
-    private void Start()
+    protected override void Awake()
     {
-        init();
-        animSpeed *= speedInfo.speedFec;
-        SetAnimSpeed(animSpeed);
-        bar.GetComponent<Image>().DOFade(1, 0.8f);
+        base.Awake();
+        if (hitCollider == null)
+            hitCollider = GetComponent<BoxCollider2D>();
+        buttonAnim = button.GetComponent<Animator>();
+        hitSource = GetComponent<AudioSource>();
+        barImage = bar.GetComponent<Image>();
+        backImage = back.GetComponent<Image>();
+        buttonImage = button.GetComponent<Image>();
+        barRect = bar.GetComponent<RectTransform>();
+        backRect = back.GetComponent<RectTransform>();
+        rootRect = GetComponent<RectTransform>();
+        barBase = barRect.sizeDelta;
+        backBase = backRect.sizeDelta;
+        baseRotation = rootRect.localRotation;
+        baseButtonSpeed = buttonAnim.speed;
     }
 
-    private void Update()
+    public override void Prepare(float songTime)
     {
-        float elapsed = ChartPlayback.Since(spawnSongTime);
+        base.Prepare(songTime);
+        StopMotion();
+        isPressing = false;
+        loadOn = true;
+        disappearOn = true;
+        speedInfo = GameServices.Info;
+        resultManager = GameServices.Results;
+        effectController = GameServices.Effects;
+        gameWidth = Screen.width * GAME_SCREEN_HORIZ_FEC / 2f;
+        gameHeight = Screen.height * GAME_SCREEN_VERTICAL_FEC / 2f;
+        barRect.sizeDelta = barBase;
+        backRect.sizeDelta = backBase;
+        rootRect.localRotation = baseRotation;
+        rootRect.localScale = Vector3.one;
+        button.GetComponent<RectTransform>().localScale = Vector3.one;
+        BarInit();
+        DirInit();
+        SpdInit();
+        if (buttonAnim != null)
+        {
+            buttonAnim.Rebind();
+            buttonAnim.Update(0f);
+            buttonAnim.speed = baseButtonSpeed * (speedInfo != null ? speedInfo.speedFec : 1f);
+        }
+        barImage.color = new Color(barImage.color.r, barImage.color.g, barImage.color.b, 0f);
+        barImage.DOFade(1f, 0.8f);
+    }
+
+    public override void Tick(float songTime)
+    {
+        float elapsed = songTime - spawnSongTime;
         if (elapsed > deltaGap(2) + loadTime + 1f)
         {
             endAnim();
         }
         else if (elapsed > deltaGap(2) + loadTime)
         {
-            if (doneRelease)
-            {
-                doneRelease = false;
-                DoRelease();  //注释这一行========================test
-                DoDisappear();
-            }
+            if (isPressing)
+                DoRelease();
+            DoDisappear();
         }
-        else if (elapsed > deltaGap(2) + loadTime/3)
+        else if (elapsed > deltaGap(2) + loadTime / 3f)
         {
             Miss();
         }
         else if (elapsed >= deltaGap(2))
         {
-            isOkForTouch = true;
+            if (!judged)
+                isOkForTouch = true;
             BackLoadingAnim();
-            if (donePress)
-            {
-                DoPress();  //注释这一行===========================test
-                donePress = false;
-            }
         }
     }
 
-    private void init() //需要在实例化的时候分配type
+    void SpdInit()
     {
-        isPressing = false; //开始处于未按压
-        buttonAnim = button.GetComponent<Animator>();
-        isOkForTouch = false;
-        speedInfo = GameObject.Find("InfoManager").GetComponent<InfoManager>();
-        resultManager = GameObject.Find("ResultManager").GetComponent<ResultManager>();
-        effectController = GameObject.Find("EffectController").GetComponent<EffectController>();
-
-        gameWidth = Screen.width * GAME_SCREEN_HORIZ_FEC / 2;
-        gameHeight = Screen.height * GAME_SCREEN_VERTICAL_FEC / 2;
-
-        BarInit(); //根据type显示bar的长度
-        DirInit(); //根据dir 调整朝向
-        SpdInit(); //根据spd 调整动画播放时间
-    }
-
-    private void SpdInit()
-    {
-        loadTime = speedInfo.secPerBeat * 2;
-        float rate = 1;
+        loadTime = (speedInfo != null ? speedInfo.secPerBeat : 0.6f) * 2f;
+        float rate = 1f;
         switch (spd)
         {
             case 0:
-                rate *= 0.5f;
-                break;
-            case 1:
-                rate *= 1;
+                rate = 0.5f;
                 break;
             case 2:
-                rate *= 2;
+                rate = 2f;
                 break;
             case 3:
-                rate *= 4;
+                rate = 4f;
                 break;
         }
         loadTime *= rate;
     }
 
-    private void BarInit()
+    void BarInit()
     {
-        RectTransform barRect = bar.GetComponent<RectTransform>();
-        RectTransform backRect = back.GetComponent<RectTransform>();
-        switch (this.type)
+        switch (type)
         {
-            case 2: //   1/4屏距
-                desSize = backRect.sizeDelta.y + 1 / 4 * gameHeight;
-                barRect.sizeDelta = new Vector2(barRect.sizeDelta.x,barRect.sizeDelta.y + 1 / 4 * gameHeight);
+            case 2:
+                desSize = backRect.sizeDelta.y + (1f / 4f) * gameHeight;
+                barRect.sizeDelta = new Vector2(barRect.sizeDelta.x, barRect.sizeDelta.y + (1f / 4f) * gameHeight);
                 break;
-            case 3: //   1/2屏距
-                desSize = backRect.sizeDelta.y + 1 / 2 * gameHeight;
-                barRect.sizeDelta = new Vector2(barRect.sizeDelta.x, barRect.sizeDelta.y + 1 / 2 * gameHeight);
+            case 3:
+                desSize = backRect.sizeDelta.y + (1f / 2f) * gameHeight;
+                barRect.sizeDelta = new Vector2(barRect.sizeDelta.x, barRect.sizeDelta.y + (1f / 2f) * gameHeight);
                 break;
-            case 4: //     1屏距
+            case 4:
                 desSize = backRect.sizeDelta.y + gameHeight;
                 barRect.sizeDelta = new Vector2(barRect.sizeDelta.x, barRect.sizeDelta.y + gameHeight);
                 break;
+            default:
+                desSize = backRect.sizeDelta.y;
+                break;
         }
     }
 
-    private void DirInit()
+    void DirInit()
     {
         if (dir == 1)
-        {
-            GetComponent<RectTransform>().Rotate(0, 0, 180);
-        }
+            rootRect.Rotate(0f, 0f, 180f);
     }
 
-    public void DoPress()  //按压状态函数
+    public void DoPress()
     {
+        if (judged || isPressing || !isOkForTouch)
+            return;
         isPressing = true;
-        ButtonDoScaleAnim();
+        button.GetComponent<RectTransform>().localScale = new Vector3(1.25f, 1.25f, 1.25f);
         buttonAnim.SetBool("Pressing", true);
-
-        Image backImage = back.GetComponent<Image>();
-        backImage.DOFade(0.7f, 0.05f).SetId<Tween>("game"); //按压状态下读条透明度恢复
+        backImage.DOFade(0.7f, 0.05f).SetId<Tween>("game");
     }
 
-    public void DoRelease()  //松手状态函数
+    public void DoRelease()
     {
+        if (judged)
+            return;
+        judged = true;
         isPressing = false;
-        if (backLoading.IsPlaying())
+        isOkForTouch = false;
+        if (backLoading != null && backLoading.IsPlaying())
             backLoading.Pause();
-        button.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1); //按钮大小恢复
+        button.GetComponent<RectTransform>().localScale = Vector3.one;
         buttonAnim.SetBool("Pressing", false);
 
-        RectTransform backRect = back.GetComponent<RectTransform>();
         Vector3 effectPos = backRect.position;
-        if (dir == 1)
-        {
-            effectPos.y -= backRect.sizeDelta.y;
-        }
-        else
-        {
-            effectPos.y += backRect.sizeDelta.y;
-        }
-
-        float desPercentage = backRect.sizeDelta.y / desSize;
-        if (desPercentage >= 0.85f)   //Perfect区域：读条到应当达到长度的85%以上
-        {
+        effectPos.y += dir == 1 ? -backRect.sizeDelta.y : backRect.sizeDelta.y;
+        float desPercentage = desSize > 0f ? backRect.sizeDelta.y / desSize : 0f;
+        if (desPercentage >= 0.85f)
             PerfectClick(effectPos);
-        }
-        else if (desPercentage >= 0.7f) //Great区域：读条应达到长度的85%以下，70%以上
-        {
+        else if (desPercentage >= 0.7f)
             GreatClick(effectPos);
-        }
-        else  //Bad区域：读条长度不到70%
-        {
+        else
             BadClick(effectPos);
-        }
     }
 
     public void DoDisappear()
     {
-        if (disappearOn)
-        {
-            disappearOn = false;
-            Image barImage = bar.GetComponent<Image>();
-            Image backImage = back.GetComponent<Image>();
-            Image buttonImage = button.GetComponent<Image>();
-            barImage.DOFade(0, 0.17f).SetId<Tween>("game");
-            backImage.DOFade(0, 0.17f).SetId<Tween>("game");
-            buttonAnim.SetBool("Disappear", true);
-        }
+        if (!disappearOn)
+            return;
+        disappearOn = false;
+        barImage.DOFade(0f, 0.17f).SetId<Tween>("game");
+        backImage.DOFade(0f, 0.17f).SetId<Tween>("game");
+        buttonAnim.SetBool("Disappear", true);
     }
 
     public void SetAnimSpeed(float s)
     {
-        buttonAnim.speed *= s;
+        if (buttonAnim != null)
+            buttonAnim.speed = s;
     }
 
-    private void BackLoadingAnim()
+    void BackLoadingAnim()
     {
-        if (loadOn)
-        {
-            loadOn = false;
-            RectTransform backRect = back.GetComponent<RectTransform>();
-            RectTransform barRect = bar.GetComponent<RectTransform>();
-            backLoading = backRect.DOSizeDelta(new Vector2(backRect.sizeDelta.x, barRect.sizeDelta.y), loadTime).SetEase(Ease.Linear).SetId("game");
-        }
+        if (!loadOn)
+            return;
+        loadOn = false;
+        backLoading = backRect.DOSizeDelta(new Vector2(backRect.sizeDelta.x, barRect.sizeDelta.y), loadTime).SetEase(Ease.Linear).SetId("game");
     }
 
-    private void ButtonDoScaleAnim() //按住使button部分scale增加到1.25倍
-    {
-        RectTransform buttonRect = button.GetComponent<RectTransform>();
-        buttonRect.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-    }
-
-    private void PerfectClick(Vector3 effectPos)
+    void PerfectClick(Vector3 effectPos)
     {
         effectController.SetEffect(effectPos, 0);
         PlaySound();
-        
         resultManager.ComboUp();
         resultManager.PerfectUp();
         resultManager.ScoreUp(GameInfoSingleton.instance.pressPerfectScore);
     }
 
-    private void GreatClick(Vector3 effectPos)
+    void GreatClick(Vector3 effectPos)
     {
         effectController.SetEffect(effectPos, 1);
         PlaySound();
-        
         resultManager.ComboUp();
         resultManager.GreatUp();
         resultManager.ScoreUp((int)(GameInfoSingleton.instance.pressPerfectScore * 0.6f));
     }
 
-    private void BadClick(Vector3 effectPos)
+    void BadClick(Vector3 effectPos)
     {
         effectController.SetEffect(effectPos, 2);
-        
         resultManager.ComboReset();
         resultManager.BadUp();
         resultManager.ScoreUp((int)(GameInfoSingleton.instance.pressPerfectScore * 0.14f));
     }
 
-    private void Miss()
+    void Miss()
     {
-        Image barImage = bar.GetComponent<Image>();
-        Image buttonImage = button.GetComponent<Image>();
-        if (isOkForTouch && !isPressing)
+        if (!isOkForTouch || isPressing || judged)
+            return;
+        judged = true;
+        isOkForTouch = false;
+        barImage.DOFade(0.4f, 0.05f).SetId("game");
+        buttonImage.DOFade(0.4f, 0.05f).SetId("game");
+        resultManager.ComboReset();
+        resultManager.MissUp();
+    }
+
+    void PlaySound()
+    {
+        if (GameServices.Hits != null && hitSource != null)
+            GameServices.Hits.Play(hitSource.clip);
+    }
+
+    protected override void endAnim()
+    {
+        StopMotion();
+        base.endAnim();
+    }
+
+    void StopMotion()
+    {
+        if (backLoading != null)
         {
-            isOkForTouch = false;
-            barImage.DOFade(0.4f, 0.05f).SetId("game");
-            buttonImage.DOFade(0.4f, 0.05f).SetId("game");
-            resultManager.ComboReset();
-            resultManager.MissUp();
-            //PerfectClick();
+            backLoading.Kill();
+            backLoading = null;
         }
+        barImage.DOKill();
+        backImage.DOKill();
+        buttonImage.DOKill();
+        barRect.DOKill();
+        backRect.DOKill();
     }
 
-    private void PlaySound() //成功触发音效
+    float deltaGap(int i)
     {
-
-    }
-
-    private float deltaGap(int i) //range (0,5)
-    {
-        return GameInfoSingleton.instance.gaps[i] / speedInfo.speedFec;
+        float scale = speedInfo != null ? speedInfo.speedFec : 1f;
+        if (scale == 0f)
+            scale = 1f;
+        return GameInfoSingleton.instance.gaps[i] / scale;
     }
 }

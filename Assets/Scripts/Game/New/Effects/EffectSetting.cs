@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +6,6 @@ public class EffectSetting : MonoBehaviour
     public Image grade;
     public ParticleSystem effect;
 
-    private void Start()
-    {
-        Invoke("DestroyThis", 0.6f);
-    }
-
     public void SetGrade(Sprite sprite)
     {
         grade.sprite = sprite;
@@ -20,17 +13,29 @@ public class EffectSetting : MonoBehaviour
 
     public void SetEffectColor(Color color)
     {
+        if (effect == null)
+            return;
         ParticleSystem.MainModule main = effect.main;
         main.startColor = color;
     }
 
-    public void PlayEffect()
+    public void PlayAndReturn()
     {
-        effect.Play();
+        if (effect != null)
+        {
+            effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            effect.Play();
+        }
+        CancelInvoke(nameof(ReturnToPool));
+        Invoke(nameof(ReturnToPool), 0.6f);
     }
 
-    public void DestroyThis()
+    void ReturnToPool()
     {
-        Destroy(gameObject);
+        PooledToken token = GetComponent<PooledToken>();
+        if (token != null && token.Pool != null)
+            token.Pool.Release(gameObject);
+        else
+            Destroy(gameObject);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TouchSpotNew : Spot
@@ -8,45 +6,40 @@ public class TouchSpotNew : Spot
     public ResultManager resultManager;
     public EffectController effectController;
 
-    public float spawnSongTime;
-    private Animator anim;
+    Animator anim;
+    AudioSource hitSource;
 
-    private bool doneTouch = true;
-
-    private void Awake()
+    protected override void Awake()
     {
-        init();
-        animSpeed *= speedInfo.speedFec;
-        SetAnimSpeed(animSpeed);
-    }
-
-    private void init()
-    {
+        base.Awake();
         anim = GetComponent<Animator>();
-        isOkForTouch = false;
-        type = 1; //告诉父级这个继承来自与触发音符
-        speedInfo = GameObject.Find("InfoManager").GetComponent<InfoManager>();
-        resultManager = GameObject.Find("ResultManager").GetComponent<ResultManager>();
-        effectController = GameObject.Find("EffectController").GetComponent<EffectController>();
+        hitSource = GetComponent<AudioSource>();
+        type = 1;
     }
 
-    private void Update()
+    public override void Prepare(float songTime)
     {
-        float elapsed = ChartPlayback.Since(spawnSongTime);
-        if (elapsed >= deltaGap(3))   //结束时间
+        base.Prepare(songTime);
+        speedInfo = GameServices.Info;
+        resultManager = GameServices.Results;
+        effectController = GameServices.Effects;
+        if (anim != null)
+        {
+            anim.Rebind();
+            anim.Update(0f);
+            anim.speed = animSpeed * (speedInfo != null ? speedInfo.speedFec : 1f);
+        }
+    }
+
+    public override void Tick(float songTime)
+    {
+        float elapsed = songTime - spawnSongTime;
+        if (elapsed >= deltaGap(3))
         {
             Miss();
             endAnim();
         }
-        else if (elapsed >= deltaGap(2) + 0.1f)
-        {
-            if (doneTouch)
-            {
-                doneTouch = false;
-                DoTouch(); //直接命中=========================注释这一句test
-            }
-        }
-        else if (elapsed >= deltaGap(2))   //允许点击时间
+        else if (!judged && elapsed >= deltaGap(2))
         {
             isOkForTouch = true;
         }
@@ -54,48 +47,46 @@ public class TouchSpotNew : Spot
 
     public void DoTouch()
     {
-        isOkForTouch = false; //点击后不允许再点击
+        if (judged || !isOkForTouch)
+            return;
+        judged = true;
+        isOkForTouch = false;
         anim.SetBool("Touch", true);
         effectController.SetEffect(transform.position, 0);
         PlaySound();
-        
         resultManager.ComboUp();
         resultManager.PerfectUp();
         resultManager.ScoreUp(GameInfoSingleton.instance.touchPerfectScore);
     }
 
-    private void Miss()
-    {
-        if (isOkForTouch) 
-        {
-            isOkForTouch = false;
-            effectController.SetEffect(transform.position, 3);
-            resultManager.ComboReset();
-            resultManager.MissUp();
-            { //Perfect
-                //anim.SetBool("Touch", true);
-                //effectController.SetEffect(transform.position, 0);
-                //PlaySound();
-
-                //resultManager.ComboUp();
-                //resultManager.PerfectUp();
-                //resultManager.ScoreUp(GameInfoSingleton.instance.touchPerfectScore);
-            }
-        }
-    }
-
     public void SetAnimSpeed(float s)
     {
-        anim.speed = s;
+        if (anim != null)
+            anim.speed = s;
     }
 
-    private void PlaySound()
+    void Miss()
     {
-        GameObject.Find("MusicManager").GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+        if (!isOkForTouch)
+            return;
+        judged = true;
+        isOkForTouch = false;
+        effectController.SetEffect(transform.position, 3);
+        resultManager.ComboReset();
+        resultManager.MissUp();
     }
 
-    private float deltaGap(int i) //range (0,5)
+    void PlaySound()
     {
-        return GameInfoSingleton.instance.gaps[i] / speedInfo.speedFec;
+        if (GameServices.Hits != null && hitSource != null)
+            GameServices.Hits.Play(hitSource.clip);
+    }
+
+    float deltaGap(int i)
+    {
+        float scale = speedInfo != null ? speedInfo.speedFec : 1f;
+        if (scale == 0f)
+            scale = 1f;
+        return GameInfoSingleton.instance.gaps[i] / scale;
     }
 }

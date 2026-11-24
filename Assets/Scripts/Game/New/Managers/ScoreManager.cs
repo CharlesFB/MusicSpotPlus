@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using FB.Metronome.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -42,13 +42,56 @@ public class ScoreManager : MonoBehaviour
     private static float GAME_SCALE_VERTICAL_FEC = 0.64f;
     private static float GAME_SCALE_HORIZ_FEC = 0.9f;
 
+    GameObjectPool singlePool;
+    GameObjectPool touchPool;
+    GameObjectPool pressPool;
+    NoteBoard board;
+    Camera cam;
+    bool runtimeReady;
+    readonly Dictionary<string, SpotInfo[]> noteCache = new Dictionary<string, SpotInfo[]>();
+    readonly Dictionary<string, AnimInfo[]> animCache = new Dictionary<string, AnimInfo[]>();
+
+    private void Awake()
+    {
+        EnsureRuntime();
+    }
+
     private void Start()
     {
         Init();
     }
 
-    public void Bind(ChartPlayback playback, string registerName)
+    void EnsureRuntime()
     {
+        if (runtimeReady)
+            return;
+        runtimeReady = true;
+        if (GameServices.Results == null)
+            GameServices.Results = FindObjectOfType<ResultManager>();
+        if (GameServices.Effects == null)
+            GameServices.Effects = FindObjectOfType<EffectController>();
+        cam = Camera.main;
+        GameServices.Camera = cam;
+        HitSound hits = GetComponent<HitSound>();
+        if (hits == null)
+            hits = gameObject.AddComponent<HitSound>();
+        GameServices.Hits = hits;
+        board = GetComponent<NoteBoard>();
+        if (board == null)
+            board = gameObject.AddComponent<NoteBoard>();
+        GameServices.Board = board;
+        if (singlePrefab != null)
+            singlePool = new GameObjectPool(singlePrefab, 24);
+        if (touchPrefab != null)
+            touchPool = new GameObjectPool(touchPrefab, 12);
+        if (pressPrefab != null)
+            pressPool = new GameObjectPool(pressPrefab, 8);
+    }
+
+    public void Bind(ChartPlayback playback, string registerName, MusicChart chart)
+    {
+        EnsureRuntime();
+        Warm(chart);
         registerBuilder = registerName;
         registerLine = registerBuilder + "_Line";
         registerArea = registerBuilder + "_Area";
@@ -82,51 +125,115 @@ public class ScoreManager : MonoBehaviour
 
     private void SpotsProducer(string payload, float songTime)
     {
-        if (string.IsNullOrEmpty(payload))
+        if (string.IsNullOrEmpty(payload) || spotsPanel == null)
             return;
 
-        SpotInfo[] spotInfos = GetInfo(payload);
+        SpotInfo[] spotInfos = NotesFor(payload);
         for (int i = 1; i <= spotInfos[0].len; i++)
         {
             switch (spotInfos[i].type)
             {
-                case 0: // 单击音符
-                    GameObject single = Instantiate(singlePrefab);
-                    single.transform.SetParent(spotsPanel, false);
-                    single.GetComponent<SingleSpotNew>().spawnSongTime = songTime;
-                    single.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX,spotInfos[i].posY)), area.transform.localRotation);
-                    single.transform.SetSiblingIndex(0); //将该UI元素在当前父级序列中的渲染位置调整为0（第一个），也就是叠在早生成元素的下方
+                case 0:
+                    SpawnSingle(spotInfos[i], songTime);
                     break;
-                case 1: // 触发音符
-                    GameObject touch = Instantiate(touchPrefab);
-                    touch.transform.SetParent(spotsPanel, false);
-                    touch.GetComponent<TouchSpotNew>().spawnSongTime = songTime;
-                    touch.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX, spotInfos[i].posY)), area.transform.localRotation);
-                    touch.transform.SetSiblingIndex(0);
+                case 1:
+                    SpawnTouch(spotInfos[i], songTime);
                     break;
-                case 2: // 蓄力音符
+                case 2:
                 case 3:
                 case 4:
-                    GameObject press = Instantiate(pressPrefab);
-                    press.transform.SetParent(spotsPanel, false);
-
-                    press.GetComponent<PressSpotNew>().dir = spotInfos[i].dir;
-                    press.GetComponent<PressSpotNew>().spd = spotInfos[i].len;
-                    press.GetComponent<PressSpotNew>().type = spotInfos[i].type;
-                    press.GetComponent<PressSpotNew>().spawnSongTime = songTime;
-
-                    press.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(spotInfos[i].posX, spotInfos[i].posY)), area.transform.localRotation);
-                    
-                    press.transform.SetAsFirstSibling();
+                    SpawnPress(spotInfos[i], songTime);
                     break;
             }
-
         }
+    }
+
+    void SpawnSingle(SpotInfo info, float songTime)
+    {
+        if (singlePool == null)
+            return;
+        GameObject single = singlePool.Get(spotsPanel);
+        SingleSpotNew spot = single.GetComponent<SingleSpotNew>();
+        spot.Prepare(songTime);
+        Place(single, info);
+        board.Add(spot);
+    }
+
+    void SpawnTouch(SpotInfo info, float songTime)
+    {
+        if (touchPool == null)
+            return;
+        GameObject touch = touchPool.Get(spotsPanel);
+        TouchSpotNew spot = touch.GetComponent<TouchSpotNew>();
+        spot.Prepare(songTime);
+        Place(touch, info);
+        board.Add(spot);
+    }
+
+    void SpawnPress(SpotInfo info, float songTime)
+    {
+        if (pressPool == null)
+            return;
+        GameObject press = pressPool.Get(spotsPanel);
+        PressSpotNew spot = press.GetComponent<PressSpotNew>();
+        spot.dir = info.dir;
+        spot.spd = info.len;
+        spot.type = info.type;
+        spot.Prepare(songTime);
+        Place(press, info);
+        board.Add(spot);
+    }
+
+    void Place(GameObject note, SpotInfo info)
+    {
+        note.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(info.posX, info.posY)), area.transform.localRotation);
+        note.transform.SetAsFirstSibling();
+    }
+
+    void Warm(MusicChart chart)
+    {
+        if (chart == null || chart.lanes == null)
+            return;
+        foreach (EventLane lane in chart.lanes)
+        {
+            if (lane == null || lane.events == null)
+                continue;
+            bool spots = lane.laneId == "spots";
+            foreach (var e in lane.events)
+            {
+                if (string.IsNullOrEmpty(e.payload) || lane.laneId == "back")
+                    continue;
+                if (spots)
+                    NotesFor(e.payload);
+                else
+                    AnimFor(e.payload);
+            }
+        }
+    }
+
+    SpotInfo[] NotesFor(string payload)
+    {
+        if (noteCache.TryGetValue(payload, out SpotInfo[] cached))
+            return cached;
+        SpotInfo[] parsed = GetInfo(payload);
+        noteCache[payload] = parsed;
+        return parsed;
+    }
+
+    AnimInfo[] AnimFor(string payload)
+    {
+        if (animCache.TryGetValue(payload, out AnimInfo[] cached))
+            return cached;
+        AnimInfo[] parsed = GetAnimInfo(payload);
+        animCache[payload] = parsed;
+        return parsed;
     }
 
     private Vector3 ScreenFecToPos(Vector2 fecs)
     {
-        Vector3 v = Camera.main.ScreenToWorldPoint(new Vector3(fecs.x * width * GAME_SCALE_HORIZ_FEC + width, fecs.y * height * GAME_SCALE_VERTICAL_FEC + height));
+        if (cam == null)
+            cam = Camera.main;
+        Vector3 v = cam.ScreenToWorldPoint(new Vector3(fecs.x * width * GAME_SCALE_HORIZ_FEC + width, fecs.y * height * GAME_SCALE_VERTICAL_FEC + height));
         v.z = 0;
         return v;
     }
@@ -218,7 +325,7 @@ public class ScoreManager : MonoBehaviour
         if (string.IsNullOrEmpty(payload))
             return;
 
-        AnimInfo[] infos = GetAnimInfo(payload);
+            AnimInfo[] infos = AnimFor(payload);
         for (int i = 1; i <= infos[0].type; i++)
         {
             switch (infos[i].type)
@@ -272,7 +379,7 @@ public class ScoreManager : MonoBehaviour
         if (string.IsNullOrEmpty(payload))
             return;
 
-        AnimInfo[] infos = GetAnimInfo(payload);
+            AnimInfo[] infos = AnimFor(payload);
         for (int i = 1; i <= infos[0].type; i++)
         {
             switch (infos[i].type)

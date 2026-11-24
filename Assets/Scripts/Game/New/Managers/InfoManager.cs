@@ -24,9 +24,10 @@ public class InfoManager : MonoBehaviour
 
     void Awake()
     {
+        GameServices.Info = this;
         SetInfo();
-        MusicInfoOn();
         SetSpeed();
+        MusicInfoOn();
     }
 
     private void SetInfo()
@@ -48,7 +49,7 @@ public class InfoManager : MonoBehaviour
         var chart = catalog != null ? catalog.ByMusicId(GameInfoSingleton.instance.musicId) : null;
         playback.Load(chart, musicManager);
         string registerName = GameInfoSingleton.instance.musicName + "_" + GameInfoSingleton.instance.diff;
-        scoreManager.Bind(playback, registerName);
+        scoreManager.Bind(playback, registerName, chart);
     }
 
     private void SetSpeed() //设置曲目速度信息

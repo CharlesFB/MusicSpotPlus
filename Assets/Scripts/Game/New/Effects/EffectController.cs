@@ -1,36 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 
 public class EffectController : MonoBehaviour
 {
     public Sprite[] sprites;
-
     public GameObject effectPrefab;
     public GameObject panel;
 
+    GameObjectPool pool;
+
+    void Awake()
+    {
+        GameServices.Effects = this;
+        if (effectPrefab != null)
+            pool = new GameObjectPool(effectPrefab, 12);
+    }
+
     public void SetEffect(Vector3 vec, int type)
     {
-        GameObject eff = Instantiate(effectPrefab);
-//        Debug.Log(eff.GetComponent<RectTransform>().localScale);
+        if (panel == null || sprites == null || type < 0 || type >= sprites.Length)
+            return;
+        GameObject eff = pool != null ? pool.Get(panel.transform) : Instantiate(effectPrefab, panel.transform, false);
         EffectSetting setting = eff.GetComponent<EffectSetting>();
-        eff.transform.SetParent(panel.transform, false);
-        //Debug.Log(eff.GetComponent<RectTransform>().localScale);
         eff.transform.position = vec;
-       
-        switch (type)
-        {
-            case 0: //perfect
-                setting.SetEffectColor(new Color(255,255,130,1));
-                setting.PlayEffect();
-                break;
-            case 1: //great
-                setting.SetEffectColor(new Color(130,210,255,1));
-                setting.PlayEffect();
-                break;
-        }
+        if (type == 0)
+            setting.SetEffectColor(new Color(1f, 1f, 130f / 255f, 1f));
+        else if (type == 1)
+            setting.SetEffectColor(new Color(130f / 255f, 210f / 255f, 1f, 1f));
         setting.SetGrade(sprites[type]);
+        setting.PlayAndReturn();
     }
 }

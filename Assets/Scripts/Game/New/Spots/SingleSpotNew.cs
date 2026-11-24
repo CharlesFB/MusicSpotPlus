@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SingleSpotNew : Spot
@@ -8,50 +6,55 @@ public class SingleSpotNew : Spot
     public ResultManager resultManager;
     public EffectController effectController;
 
-    public float spawnSongTime;
-    private Animator anim;
+    Animator anim;
+    AudioSource hitSource;
+    bool open;
 
-    private bool doneTouch = true;
-    private bool doneOK = true;
-
-    private void Awake()
+    protected override void Awake()
     {
-        init();
-        animSpeed *= speedInfo.speedFec;
-        SetAnimSpeed(animSpeed);
+        base.Awake();
+        anim = GetComponent<Animator>();
+        hitSource = GetComponent<AudioSource>();
+        type = 0;
     }
 
-    private void Update()
+    public override void Prepare(float songTime)
     {
-        float elapsed = ChartPlayback.Since(spawnSongTime);
+        base.Prepare(songTime);
+        open = false;
+        speedInfo = GameServices.Info;
+        resultManager = GameServices.Results;
+        effectController = GameServices.Effects;
+        if (anim != null)
+        {
+            anim.Rebind();
+            anim.Update(0f);
+            anim.speed = animSpeed * (speedInfo != null ? speedInfo.speedFec : 1f);
+        }
+    }
 
-        if (elapsed >= deltaGap(5))   //结束时间
+    public override void Tick(float songTime)
+    {
+        float elapsed = songTime - spawnSongTime;
+        if (elapsed >= deltaGap(5))
         {
             Miss();
             endAnim();
         }
-        else if (elapsed >= deltaGap(2) + 0.1f)  //注释这一段==============test
+        else if (!judged && elapsed >= deltaGap(0))
         {
-            if (doneTouch)
-            {
-                DoTouch();
-                doneTouch = false;
-            }
-        }
-        else if (elapsed >= deltaGap(0))   //允许点击时间
-        {
-            if (doneOK)
-            {
-                isOkForTouch = true;
-                doneOK = false;
-            }
+            isOkForTouch = true;
+            open = true;
         }
     }
 
-    public void DoTouch() //执行点击事件
+    public void DoTouch()
     {
-        isOkForTouch = false; //点击后不允许再点击
-        float elapsed = ChartPlayback.Since(spawnSongTime);
+        if (judged || !open)
+            return;
+        judged = true;
+        isOkForTouch = false;
+        float elapsed = CurrentElapsed();
         if (elapsed >= deltaGap(2) && elapsed < deltaGap(3))
             PerfectClick();
         else if (elapsed >= deltaGap(1) && elapsed < deltaGap(4))
@@ -60,72 +63,71 @@ public class SingleSpotNew : Spot
             BadClick();
     }
 
-    private void init()
-    {
-        anim = GetComponent<Animator>();
-        isOkForTouch = false;
-        type = 0; //告诉父级这个继承来自与单击音符
-        speedInfo = GameObject.Find("InfoManager").GetComponent<InfoManager>();
-        resultManager = GameObject.Find("ResultManager").GetComponent<ResultManager>();
-        effectController = GameObject.Find("EffectController").GetComponent<EffectController>();
-    }
-
     public void SetAnimSpeed(float s)
     {
-        anim.speed = s;
+        if (anim != null)
+            anim.speed = s;
     }
 
-    private void PerfectClick()
+    void PerfectClick()
     {
         anim.SetInteger("Click", 1);
-        effectController.SetEffect(transform.position,0);
+        effectController.SetEffect(transform.position, 0);
         PlaySound();
-        
         resultManager.ComboUp();
         resultManager.PerfectUp();
         resultManager.ScoreUp(GameInfoSingleton.instance.singlePerfectScore);
     }
 
-    private void GreatClick()
+    void GreatClick()
     {
         anim.SetInteger("Click", 1);
         effectController.SetEffect(transform.position, 1);
         PlaySound();
-        
         resultManager.ComboUp();
         resultManager.GreatUp();
         resultManager.ScoreUp((int)(GameInfoSingleton.instance.singlePerfectScore * 0.6f));
     }
 
-    private void BadClick()
+    void BadClick()
     {
         anim.SetInteger("Click", 2);
         effectController.SetEffect(transform.position, 2);
-        
         resultManager.ComboReset();
         resultManager.BadUp();
         resultManager.ScoreUp((int)(GameInfoSingleton.instance.singlePerfectScore * 0.14f));
     }
 
-    private void Miss()
+    void Miss()
     {
-        if (isOkForTouch)
-        {
-            isOkForTouch = false;
-            effectController.SetEffect(transform.position, 3);
-            resultManager.ComboReset();
-            resultManager.MissUp();
-            //PerfectClick();
-        }
+        if (!isOkForTouch)
+            return;
+        judged = true;
+        isOkForTouch = false;
+        effectController.SetEffect(transform.position, 3);
+        resultManager.ComboReset();
+        resultManager.MissUp();
     }
 
-    private void PlaySound()
+    void PlaySound()
     {
-        GameObject.Find("MusicManager").GetComponent<AudioSource>().PlayOneShot(GetComponent<AudioSource>().clip);
+        if (GameServices.Hits != null && hitSource != null)
+            GameServices.Hits.Play(hitSource.clip);
     }
 
-    private float deltaGap(int i) //range (0,5)
+    float CurrentElapsed()
     {
-        return GameInfoSingleton.instance.gaps[i] / speedInfo.speedFec;
+        ChartPlayback playback = ChartPlayback.Instance;
+        if (playback == null)
+            return 0f;
+        return (float)playback.SongTime - spawnSongTime;
+    }
+
+    float deltaGap(int i)
+    {
+        float scale = speedInfo != null ? speedInfo.speedFec : 1f;
+        if (scale == 0f)
+            scale = 1f;
+        return GameInfoSingleton.instance.gaps[i] / scale;
     }
 }
