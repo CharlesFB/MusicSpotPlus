@@ -23,12 +23,27 @@ public class TouchSpotNew : Spot
         speedInfo = GameServices.Info;
         resultManager = GameServices.Results;
         effectController = GameServices.Effects;
+        RectTransform rect = transform as RectTransform;
+        if (anim != null)
+            anim.enabled = false;
+        if (rect != null)
+            ClearSpin(rect);
         if (anim != null)
         {
+            anim.enabled = true;
+            anim.SetBool("Touch", false);
             anim.Rebind();
             anim.Update(0f);
             anim.speed = animSpeed * (speedInfo != null ? speedInfo.speedFec : 1f);
+            if (rect != null)
+                ClearSpin(rect);
         }
+    }
+
+    static void ClearSpin(RectTransform rect)
+    {
+        rect.localEulerAngles = Vector3.zero;
+        rect.localRotation = Quaternion.identity;
     }
 
     public override void Tick(float songTime)

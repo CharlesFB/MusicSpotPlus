@@ -19,15 +19,26 @@ public class EffectSetting : MonoBehaviour
         main.startColor = color;
     }
 
-    public void PlayAndReturn()
+    public void PlayAndReturn(bool playParticles)
     {
+        float wait = 0.6f;
         if (effect != null)
         {
             effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            effect.Play();
+            effect.Clear(true);
+            if (playParticles)
+            {
+                effect.time = 0f;
+                effect.Play(true);
+                ParticleSystem.MainModule main = effect.main;
+                float lifetime = main.startLifetime.constantMax;
+                if (lifetime <= 0f)
+                    lifetime = main.startLifetime.constant;
+                wait = Mathf.Max(0.6f, main.duration + lifetime);
+            }
         }
         CancelInvoke(nameof(ReturnToPool));
-        Invoke(nameof(ReturnToPool), 0.6f);
+        Invoke(nameof(ReturnToPool), wait);
     }
 
     void ReturnToPool()

@@ -24,12 +24,12 @@ public class Info : MonoBehaviour
     RectTransform musicRect;
     Vector3 chapterHiddenPos;
     Vector3 musicHiddenPos;
-    Quaternion chapterHiddenRot;
-    Quaternion musicHiddenRot;
+    Vector3 chapterHiddenEuler;
+    Vector3 musicHiddenEuler;
     Vector3 chapterShownPos;
     Vector3 musicShownPos;
-    Quaternion chapterShownRot;
-    Quaternion musicShownRot;
+    Vector3 chapterShownEuler;
+    Vector3 musicShownEuler;
 
     void Awake()
     {
@@ -37,12 +37,12 @@ public class Info : MonoBehaviour
         musicRect = musicInfo.GetComponent<RectTransform>();
         chapterHiddenPos = chapterRect.localPosition;
         musicHiddenPos = musicRect.localPosition;
-        chapterHiddenRot = chapterRect.localRotation;
-        musicHiddenRot = musicRect.localRotation;
+        chapterHiddenEuler = chapterRect.localEulerAngles;
+        musicHiddenEuler = musicRect.localEulerAngles;
         chapterShownPos = chapterHiddenPos + new Vector3(824f, 0f, 420f);
         musicShownPos = musicHiddenPos + new Vector3(-824f, 0f, 420f);
-        chapterShownRot = chapterHiddenRot * Quaternion.Euler(0f, -20f, 0f);
-        musicShownRot = musicHiddenRot * Quaternion.Euler(0f, 20f, 0f);
+        chapterShownEuler = chapterHiddenEuler + new Vector3(0f, 20f, 0f);
+        musicShownEuler = musicHiddenEuler + new Vector3(0f, -20f, 0f);
     }
 
     public void SetDiffAndScores(int diffCode)
@@ -150,24 +150,24 @@ public class Info : MonoBehaviour
 
     public void MoveIn()
     {
-        Slide(chapterRect, chapterShownPos, chapterShownRot);
-        Slide(musicRect, musicShownPos, musicShownRot);
+        Slide(chapterRect, chapterShownPos, chapterShownEuler);
+        Slide(musicRect, musicShownPos, musicShownEuler);
     }
 
     public void MoveOut()
     {
         if (VarSingleton.instance.chapterNum == -1)
             return;
-        Slide(chapterRect, chapterHiddenPos, chapterHiddenRot);
-        Slide(musicRect, musicHiddenPos, musicHiddenRot);
+        Slide(chapterRect, chapterHiddenPos, chapterHiddenEuler);
+        Slide(musicRect, musicHiddenPos, musicHiddenEuler);
     }
 
-    static void Slide(RectTransform rect, Vector3 pos, Quaternion rot)
+    static void Slide(RectTransform rect, Vector3 pos, Vector3 euler)
     {
         if (rect == null)
             return;
         rect.DOKill();
         rect.DOLocalMove(pos, 0.8f);
-        rect.DOLocalRotate(rot.eulerAngles, 0.8f);
+        rect.DOLocalRotate(euler, 0.8f);
     }
 }

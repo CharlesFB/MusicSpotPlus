@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SingleSpotNew : Spot
 {
@@ -10,12 +11,16 @@ public class SingleSpotNew : Spot
     AudioSource hitSource;
     bool open;
 
+    bool poseReady;
+
     protected override void Awake()
     {
         base.Awake();
         anim = GetComponent<Animator>();
         hitSource = GetComponent<AudioSource>();
         type = 0;
+        if (anim != null)
+            anim.writeDefaultValuesOnDisable = true;
     }
 
     public override void Prepare(float songTime)
@@ -25,12 +30,60 @@ public class SingleSpotNew : Spot
         speedInfo = GameServices.Info;
         resultManager = GameServices.Results;
         effectController = GameServices.Effects;
+        RectTransform rect = transform as RectTransform;
+        Image image = GetComponent<Image>();
         if (anim != null)
         {
-            anim.Rebind();
-            anim.Update(0f);
-            anim.speed = animSpeed * (speedInfo != null ? speedInfo.speedFec : 1f);
+            anim.SetInteger("Click", 0);
+            anim.enabled = false;
+            RuntimeAnimatorController controller = anim.runtimeAnimatorController;
+            anim.runtimeAnimatorController = null;
+            if (rect != null)
+                ClearSpin(rect, Quaternion.identity);
+            anim.runtimeAnimatorController = controller;
         }
+        else if (rect != null)
+            ClearSpin(rect, Quaternion.identity);
+        if (image != null)
+        {
+            Color color = image.color;
+            color.a = 1f;
+            image.color = color;
+        }
+        poseReady = true;
+    }
+
+    void LateUpdate()
+    {
+        if (!poseReady || anim == null)
+            return;
+        poseReady = false;
+        Quaternion keep = transform.localRotation;
+        anim.enabled = true;
+        anim.SetInteger("Click", 0);
+        anim.Play("SingleAnim", 0, 0f);
+        anim.Update(0f);
+        anim.speed = animSpeed * (speedInfo != null ? speedInfo.speedFec : 1f);
+        transform.localRotation = keep;
+    }
+
+    protected override void endAnim()
+    {
+        if (anim != null)
+        {
+            anim.SetInteger("Click", 0);
+            anim.enabled = false;
+        }
+        RectTransform rect = transform as RectTransform;
+        if (rect != null)
+            ClearSpin(rect, Quaternion.identity);
+        base.endAnim();
+    }
+
+    static void ClearSpin(RectTransform rect, Quaternion rotation)
+    {
+        rect.localEulerAngles = Vector3.zero;
+        rect.localRotation = rotation;
     }
 
     public override void Tick(float songTime)

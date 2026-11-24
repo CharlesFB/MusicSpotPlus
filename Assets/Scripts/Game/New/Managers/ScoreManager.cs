@@ -181,12 +181,17 @@ public class ScoreManager : MonoBehaviour
         spot.type = info.type;
         spot.Prepare(songTime);
         Place(press, info);
+        spot.ApplyDirection();
         board.Add(spot);
     }
 
     void Place(GameObject note, SpotInfo info)
     {
-        note.GetComponent<RectTransform>().SetPositionAndRotation(ScreenFecToPos(new Vector2(info.posX, info.posY)), area.transform.localRotation);
+        RectTransform rect = note.GetComponent<RectTransform>();
+        rect.SetPositionAndRotation(ScreenFecToPos(new Vector2(info.posX, info.posY)), area.transform.localRotation);
+        Quaternion rotation = rect.localRotation;
+        rect.localEulerAngles = Vector3.zero;
+        rect.localRotation = rotation;
         note.transform.SetAsFirstSibling();
     }
 

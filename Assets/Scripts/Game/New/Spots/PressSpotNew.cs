@@ -70,11 +70,13 @@ public class PressSpotNew : Spot
         gameHeight = Screen.height * GAME_SCREEN_VERTICAL_FEC / 2f;
         barRect.sizeDelta = barBase;
         backRect.sizeDelta = backBase;
-        rootRect.localRotation = baseRotation;
         rootRect.localScale = Vector3.one;
-        button.GetComponent<RectTransform>().localScale = Vector3.one;
+        RectTransform buttonRect = button.GetComponent<RectTransform>();
+        buttonRect.localScale = Vector3.one;
+        buttonRect.localEulerAngles = Vector3.zero;
+        buttonRect.localRotation = Quaternion.identity;
+        ClearSpin(rootRect, baseRotation);
         BarInit();
-        DirInit();
         SpdInit();
         if (buttonAnim != null)
         {
@@ -152,10 +154,21 @@ public class PressSpotNew : Spot
         }
     }
 
+    public void ApplyDirection()
+    {
+        DirInit();
+    }
+
     void DirInit()
     {
         if (dir == 1)
             rootRect.Rotate(0f, 0f, 180f);
+    }
+
+    static void ClearSpin(RectTransform rect, Quaternion rotation)
+    {
+        rect.localEulerAngles = Vector3.zero;
+        rect.localRotation = rotation;
     }
 
     public void DoPress()

@@ -27,6 +27,6 @@ public class EffectController : MonoBehaviour
         else if (type == 1)
             setting.SetEffectColor(new Color(130f / 255f, 210f / 255f, 1f, 1f));
         setting.SetGrade(sprites[type]);
-        setting.PlayAndReturn();
+        setting.PlayAndReturn(type != 3);
     }
 }
