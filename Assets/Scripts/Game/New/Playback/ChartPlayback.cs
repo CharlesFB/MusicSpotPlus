@@ -4,7 +4,7 @@ using FB.Metronome.Data;
 using UnityEngine;
 
 /// <summary>
-/// 场景只依赖这一层。音符在事件到点时生成，不走 LookAhead。
+/// 场景只依赖这一层。音符提前一个四分音符生成，判定仍用事件上的命中时间。
 /// </summary>
 public class ChartPlayback : MonoBehaviour
 {

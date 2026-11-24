@@ -15,6 +15,8 @@ public class Spot : MonoBehaviour
     public float animSpeed = 1;
     public float spawnSongTime;
     public Collider2D hitCollider;
+    public bool useGrid;
+    public int gridColumn;
 
     protected bool judged;
     bool released;
@@ -34,6 +36,13 @@ public class Spot : MonoBehaviour
         judged = false;
         released = false;
         animSpeed = baseAnimSpeed;
+        useGrid = false;
+        gridColumn = 0;
+    }
+
+    public void Recycle()
+    {
+        ReleaseSelf();
     }
 
     public virtual void Tick(float songTime)

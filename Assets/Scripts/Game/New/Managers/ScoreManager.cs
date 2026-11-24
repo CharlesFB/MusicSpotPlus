@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using FB.Metronome.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+[DefaultExecutionOrder(-60)]
 public class ScoreManager : MonoBehaviour
 {
     public GameObject mainLine;
@@ -48,8 +51,18 @@ public class ScoreManager : MonoBehaviour
     NoteBoard board;
     Camera cam;
     bool runtimeReady;
-    readonly Dictionary<string, SpotInfo[]> noteCache = new Dictionary<string, SpotInfo[]>();
     readonly Dictionary<string, AnimInfo[]> animCache = new Dictionary<string, AnimInfo[]>();
+    readonly List<QueuedNote> queue = new List<QueuedNote>();
+    readonly List<NoteRecipe> recipes = new List<NoteRecipe>();
+    TempoMap tempo;
+    int queueIndex;
+    float lastSong = -1f;
+
+    struct QueuedNote
+    {
+        public float time;
+        public string payload;
+    }
 
     private void Awake()
     {
@@ -92,6 +105,7 @@ public class ScoreManager : MonoBehaviour
     {
         EnsureRuntime();
         Warm(chart);
+        BuildChart(chart);
         registerBuilder = registerName;
         registerLine = registerBuilder + "_Line";
         registerArea = registerBuilder + "_Area";
@@ -99,7 +113,6 @@ public class ScoreManager : MonoBehaviour
         registerLine2 = registerBuilder + "_Line2";
         registerBack = registerBuilder + "_Back";
 
-        playback.Subscribe(registerBuilder, (lane, e) => SpotsProducer(e.payload, e.time));
         playback.Subscribe(registerLine, (lane, e) => LineMove(e.payload));
         playback.Subscribe(registerLine1, (lane, e) => TopScaleLineMove(e.payload));
         playback.Subscribe(registerLine2, (lane, e) => BottomScaleLineMove(e.payload));
@@ -123,76 +136,173 @@ public class ScoreManager : MonoBehaviour
         height = Screen.height / 2;
     }
 
-    private void SpotsProducer(string payload, float songTime)
+    void Update()
     {
-        if (string.IsNullOrEmpty(payload) || spotsPanel == null)
+        if (tempo == null || board == null || width == 0)
             return;
-
-        SpotInfo[] spotInfos = NotesFor(payload);
-        for (int i = 1; i <= spotInfos[0].len; i++)
+        ChartPlayback playback = ChartPlayback.Instance;
+        if (playback == null)
+            return;
+        float song = (float)playback.SongTime;
+        if (song + 0.05f < lastSong)
         {
-            switch (spotInfos[i].type)
+            queueIndex = 0;
+            RecycleBoard();
+        }
+        lastSong = song;
+        while (queueIndex < queue.Count)
+        {
+            float hit = queue[queueIndex].time;
+            float ticksLeft = tempo.TickAt(hit) - tempo.TickAt(song);
+            if (ticksLeft > ChartGrid.TicksPerQuarter)
+                break;
+            SpawnPayload(queue[queueIndex].payload, hit);
+            queueIndex++;
+        }
+        FollowNotes(song);
+    }
+
+    void BuildChart(MusicChart chart)
+    {
+        tempo = new TempoMap();
+        float bpm = GameInfoSingleton.instance != null ? GameInfoSingleton.instance.bpm : ChartGrid.ReferenceBpm;
+        tempo.SetBase(bpm);
+        queue.Clear();
+        queueIndex = 0;
+        lastSong = -1f;
+        if (chart != null && chart.lanes != null)
+        {
+            foreach (EventLane lane in chart.lanes)
             {
-                case 0:
-                    SpawnSingle(spotInfos[i], songTime);
-                    break;
-                case 1:
-                    SpawnTouch(spotInfos[i], songTime);
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                    SpawnPress(spotInfos[i], songTime);
-                    break;
+                if (lane == null || lane.events == null)
+                    continue;
+                bool tempoLane = lane.laneId == "tempo";
+                bool spots = lane.laneId == "spots";
+                foreach (MetroEvent e in lane.events)
+                {
+                    if (tempoLane)
+                    {
+                        AddTempo(e.time, e.payload);
+                        continue;
+                    }
+                    if (spots && !string.IsNullOrEmpty(e.payload))
+                        queue.Add(new QueuedNote { time = e.time, payload = e.payload });
+                }
             }
+        }
+        queue.Sort((a, b) => a.time.CompareTo(b.time));
+        ChartSession.Tempo = tempo;
+    }
+
+    void AddTempo(float time, string payload)
+    {
+        if (string.IsNullOrEmpty(payload))
+            return;
+        string token = payload.Split(',')[0].Trim();
+        if (float.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out float bpm))
+            tempo.Add(time, bpm);
+    }
+
+    void SpawnPayload(string payload, float hitTime)
+    {
+        if (spotsPanel == null)
+            return;
+        NotePayload.Read(payload, recipes);
+        for (int i = 0; i < recipes.Count; i++)
+        {
+            NoteRecipe recipe = recipes[i];
+            if (recipe.type == 1)
+                SpawnTouch(recipe, hitTime);
+            else if (recipe.type >= 2)
+                SpawnPress(recipe, hitTime);
+            else
+                SpawnSingle(recipe, hitTime);
         }
     }
 
-    void SpawnSingle(SpotInfo info, float songTime)
+    void SpawnSingle(NoteRecipe recipe, float hitTime)
     {
         if (singlePool == null)
             return;
         GameObject single = singlePool.Get(spotsPanel);
         SingleSpotNew spot = single.GetComponent<SingleSpotNew>();
-        spot.Prepare(songTime);
-        Place(single, info);
+        spot.Prepare(hitTime);
+        Place(single, spot, recipe);
         board.Add(spot);
     }
 
-    void SpawnTouch(SpotInfo info, float songTime)
+    void SpawnTouch(NoteRecipe recipe, float hitTime)
     {
         if (touchPool == null)
             return;
         GameObject touch = touchPool.Get(spotsPanel);
         TouchSpotNew spot = touch.GetComponent<TouchSpotNew>();
-        spot.Prepare(songTime);
-        Place(touch, info);
+        spot.Prepare(hitTime);
+        Place(touch, spot, recipe);
         board.Add(spot);
     }
 
-    void SpawnPress(SpotInfo info, float songTime)
+    void SpawnPress(NoteRecipe recipe, float hitTime)
     {
         if (pressPool == null)
             return;
         GameObject press = pressPool.Get(spotsPanel);
         PressSpotNew spot = press.GetComponent<PressSpotNew>();
-        spot.dir = info.dir;
-        spot.spd = info.len;
-        spot.type = info.type;
-        spot.Prepare(songTime);
-        Place(press, info);
+        spot.dir = recipe.dir;
+        spot.spd = recipe.rateIndex;
+        spot.type = recipe.type;
+        spot.Prepare(hitTime);
+        Place(press, spot, recipe);
         spot.ApplyDirection();
         board.Add(spot);
     }
 
-    void Place(GameObject note, SpotInfo info)
+    void Place(GameObject note, Spot spot, NoteRecipe recipe)
     {
+        spot.useGrid = true;
+        spot.gridColumn = recipe.column;
         RectTransform rect = note.GetComponent<RectTransform>();
-        rect.SetPositionAndRotation(ScreenFecToPos(new Vector2(info.posX, info.posY)), area.transform.localRotation);
+        rect.SetPositionAndRotation(ScreenFecToPos(new Vector2(ChartGrid.ColumnToFec(recipe.column), LineFec())), area.transform.localRotation);
         Quaternion rotation = rect.localRotation;
         rect.localEulerAngles = Vector3.zero;
         rect.localRotation = rotation;
         note.transform.SetAsFirstSibling();
+    }
+
+    void FollowNotes(float song)
+    {
+        float nowTick = tempo.TickAt(song);
+        float step = ChartGrid.PitchScale(tempo.BpmAt(song)) / ChartGrid.TicksPerQuarter;
+        float lineFec = LineFec();
+        List<Spot> active = board.Active;
+        for (int i = 0; i < active.Count; i++)
+        {
+            Spot spot = active[i];
+            if (!spot.useGrid)
+                continue;
+            float ticksLeft = tempo.TickAt(spot.spawnSongTime) - nowTick;
+            if (ticksLeft < 0f)
+                ticksLeft = 0f;
+            float y = lineFec + ticksLeft * step;
+            spot.transform.position = ScreenFecToPos(new Vector2(ChartGrid.ColumnToFec(spot.gridColumn), y));
+        }
+    }
+
+    float LineFec()
+    {
+        if (mainLineRect == null || height == 0)
+            return 0f;
+        float span = height * GAME_SCALE_VERTICAL_FEC;
+        if (span < 0.001f)
+            return 0f;
+        return mainLineRect.localPosition.y / span;
+    }
+
+    void RecycleBoard()
+    {
+        List<Spot> active = board.Active;
+        for (int i = active.Count - 1; i >= 0; i--)
+            active[i].Recycle();
     }
 
     void Warm(MusicChart chart)
@@ -203,26 +313,14 @@ public class ScoreManager : MonoBehaviour
         {
             if (lane == null || lane.events == null)
                 continue;
-            bool spots = lane.laneId == "spots";
+            if (lane.laneId == "spots" || lane.laneId == "back" || lane.laneId == "tempo")
+                continue;
             foreach (var e in lane.events)
             {
-                if (string.IsNullOrEmpty(e.payload) || lane.laneId == "back")
-                    continue;
-                if (spots)
-                    NotesFor(e.payload);
-                else
+                if (!string.IsNullOrEmpty(e.payload))
                     AnimFor(e.payload);
             }
         }
-    }
-
-    SpotInfo[] NotesFor(string payload)
-    {
-        if (noteCache.TryGetValue(payload, out SpotInfo[] cached))
-            return cached;
-        SpotInfo[] parsed = GetInfo(payload);
-        noteCache[payload] = parsed;
-        return parsed;
     }
 
     AnimInfo[] AnimFor(string payload)
@@ -241,68 +339,6 @@ public class ScoreManager : MonoBehaviour
         Vector3 v = cam.ScreenToWorldPoint(new Vector3(fecs.x * width * GAME_SCALE_HORIZ_FEC + width, fecs.y * height * GAME_SCALE_VERTICAL_FEC + height));
         v.z = 0;
         return v;
-    }
-
-    //存放音符的信息
-    private class SpotInfo
-    {
-        public int type;
-        public float posX;
-        public float posY;
-        public int dir;
-        public int len;
-        public SpotInfo() { }
-    }
-
-    // 转换负载的文本
-    /*
-     * 10142034802,10181123411
-     * -> [0] len  = 2
-     * 
-     *    [1] type = 1
-     *        posX = 1.42
-     *        posY = 3.48
-     *        dir  = 0
-     *        len  = 2
-     *        
-     *    [2] type = 1
-     *        posX = 1.81
-     *        posY = -2.34
-     *        dir  = 1
-     *        len  = 1
-     */
-    private SpotInfo[] GetInfo(string s)
-    {
-        SpotInfo[] res = new SpotInfo[11];
-        res[0] = new SpotInfo();
-        int cnt = 0;
-        string[] infos = s.Split(',');
-        foreach (string info in infos)
-        {
-            //Debug.Log(info);
-            long x = long.Parse(info);
-            cnt++;
-            res[cnt] = new SpotInfo();
-            res[cnt].len = (int)(x % 10);
-            x /= 10;
-            res[cnt].dir = (int)(x % 10);
-            x /= 10;
-            res[cnt].posY = (x % 1000)/100f;
-            x /= 1000;
-            if (x % 10 == 1)
-                res[cnt].posY *= -1;
-            x /= 10;
-            res[cnt].posX = (x % 1000)/100f;
-            x /= 1000;
-            if (x % 10 == 1)
-                res[cnt].posX *= -1;
-            x /= 10;
-            res[cnt].type = (int)x;
-
-            //Debug.Log(res[cnt].type.ToString() + "  " + res[cnt].posX.ToString() + "  " + res[cnt].posY.ToString() + "  " + res[cnt].dir.ToString() + "  " + res[cnt].len.ToString());
-        }
-        res[0].len = cnt;
-        return res;
     }
 
     private void LineMove(string payload)
