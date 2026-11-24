@@ -13,6 +13,7 @@ public class PressSpotNew : Spot
 
     public int dir;
     public int spd;
+    public int holdTicks;
     public bool isPressing;
 
     Animator buttonAnim;
@@ -91,17 +92,21 @@ public class PressSpotNew : Spot
     public override void Tick(float songTime)
     {
         float elapsed = songTime - spawnSongTime;
+        if (holdTicks > 0)
+            LayoutHold(songTime);
+        bool finished = holdTicks > 0 ? HoldFraction(songTime) >= 1f : elapsed >= deltaGap(2) + loadTime;
+        bool late = holdTicks > 0 ? HoldFraction(songTime) > 1f / 3f : elapsed > deltaGap(2) + loadTime / 3f;
         if (elapsed > deltaGap(2) + loadTime + 1f)
         {
             endAnim();
         }
-        else if (elapsed > deltaGap(2) + loadTime)
+        else if (elapsed > deltaGap(2) && finished)
         {
             if (isPressing)
                 DoRelease();
             DoDisappear();
         }
-        else if (elapsed > deltaGap(2) + loadTime / 3f)
+        else if (elapsed > deltaGap(2) && late)
         {
             Miss();
         }
@@ -109,12 +114,18 @@ public class PressSpotNew : Spot
         {
             if (!judged)
                 isOkForTouch = true;
-            BackLoadingAnim();
+            if (holdTicks <= 0)
+                BackLoadingAnim();
         }
     }
 
     void SpdInit()
     {
+        if (holdTicks > 0 && ChartSession.Tempo != null)
+        {
+            loadTime = ChartGrid.SecondsPerTick(ChartSession.Tempo.BpmAt(spawnSongTime)) * holdTicks;
+            return;
+        }
         loadTime = (speedInfo != null ? speedInfo.secPerBeat : 0.6f) * 2f;
         float rate = 1f;
         switch (spd)
@@ -134,6 +145,11 @@ public class PressSpotNew : Spot
 
     void BarInit()
     {
+        if (holdTicks > 0)
+        {
+            LayoutHold(spawnSongTime);
+            return;
+        }
         switch (type)
         {
             case 2:
@@ -152,6 +168,28 @@ public class PressSpotNew : Spot
                 desSize = backRect.sizeDelta.y;
                 break;
         }
+    }
+
+    void LayoutHold(float songTime)
+    {
+        TempoMap map = ChartSession.Tempo;
+        float bpm = map != null ? map.BpmAt(songTime) : ChartGrid.ReferenceBpm;
+        float body = holdTicks * ChartGrid.RowPitchPixels(Screen.height * 0.5f, bpm);
+        desSize = backBase.y + body;
+        barRect.sizeDelta = new Vector2(barBase.x, desSize);
+        float shown = backBase.y + body * Mathf.Clamp01(HoldFraction(songTime));
+        backRect.sizeDelta = new Vector2(backBase.x, shown);
+    }
+
+    float HoldFraction(float songTime)
+    {
+        TempoMap map = ChartSession.Tempo;
+        if (holdTicks <= 0 || map == null)
+            return 0f;
+        float done = map.TickAt(songTime) - map.TickAt(spawnSongTime);
+        if (done <= 0f)
+            return 0f;
+        return done / holdTicks;
     }
 
     public void ApplyDirection()

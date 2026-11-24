@@ -251,6 +251,7 @@ public class ScoreManager : MonoBehaviour
         PressSpotNew spot = press.GetComponent<PressSpotNew>();
         spot.dir = recipe.dir;
         spot.spd = recipe.rateIndex;
+        spot.holdTicks = recipe.holdTicks;
         spot.type = recipe.type;
         spot.Prepare(hitTime);
         Place(press, spot, recipe);
