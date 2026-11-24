@@ -57,6 +57,7 @@ public class ScoreManager : MonoBehaviour
     TempoMap tempo;
     int queueIndex;
     float lastSong = -1f;
+    float introMoveSeconds = 0.4f;
 
     struct QueuedNote
     {
@@ -113,11 +114,11 @@ public class ScoreManager : MonoBehaviour
         registerLine2 = registerBuilder + "_Line2";
         registerBack = registerBuilder + "_Back";
 
-        playback.Subscribe(registerLine, (lane, e) => LineMove(e.payload));
-        playback.Subscribe(registerLine1, (lane, e) => TopScaleLineMove(e.payload));
-        playback.Subscribe(registerLine2, (lane, e) => BottomScaleLineMove(e.payload));
-        playback.Subscribe(registerArea, (lane, e) => AreaMove(e.payload));
-        playback.Subscribe(registerBack, (lane, e) => BackChange(e.payload));
+        playback.Subscribe(registerLine, (lane, e) => LineMove(e.payload, e.time));
+        playback.Subscribe(registerLine1, (lane, e) => TopScaleLineMove(e.payload, e.time));
+        playback.Subscribe(registerLine2, (lane, e) => BottomScaleLineMove(e.payload, e.time));
+        playback.Subscribe(registerArea, (lane, e) => AreaMove(e.payload, e.time));
+        playback.Subscribe(registerBack, (lane, e) => BackChange(e.payload, e.time));
     }
 
     private void Init()
@@ -317,7 +318,7 @@ public class ScoreManager : MonoBehaviour
                 continue;
             foreach (var e in lane.events)
             {
-                if (!string.IsNullOrEmpty(e.payload))
+                if (!string.IsNullOrEmpty(e.payload) && e.payload.IndexOf("b,", StringComparison.Ordinal) < 0)
                     AnimFor(e.payload);
             }
         }
@@ -341,60 +342,59 @@ public class ScoreManager : MonoBehaviour
         return v;
     }
 
-    private void LineMove(string payload)
+    private void LineMove(string payload, float eventTime)
     {
-        AnimChange(mainLineRect, mainLineImage, payload);
+        AnimChange(mainLineRect, mainLineImage, payload, eventTime);
     }
 
-    private void TopScaleLineMove(string payload)
+    private void TopScaleLineMove(string payload, float eventTime)
     {
-        AnimChange(topLineRect, topLineImage, payload);
+        AnimChange(topLineRect, topLineImage, payload, eventTime);
     }
 
-    private void BottomScaleLineMove(string payload)
+    private void BottomScaleLineMove(string payload, float eventTime)
     {
-        AnimChange(bottomLineRect, bottomLineImage, payload);
-    }
-    
-    private void AreaMove(string payload)
-    {
-        AnimChange(areaRect, payload);
+        AnimChange(bottomLineRect, bottomLineImage, payload, eventTime);
     }
 
-    private void AnimChange(RectTransform rect, Image img, string payload)
+    private void AreaMove(string payload, float eventTime)
+    {
+        AnimChange(areaRect, payload, eventTime);
+    }
+
+    private void AnimChange(RectTransform rect, Image img, string payload, float eventTime)
     {
         if (string.IsNullOrEmpty(payload))
             return;
+        if (payload.IndexOf("b,", StringComparison.Ordinal) >= 0)
+        {
+            PlayBeats(rect, img, payload, eventTime, true);
+            return;
+        }
 
-            AnimInfo[] infos = AnimFor(payload);
+        AnimInfo[] infos = AnimFor(payload);
         for (int i = 1; i <= infos[0].type; i++)
         {
+            float seconds = MotionSeconds(infos[i].duration, eventTime);
             switch (infos[i].type)
             {
-                case 0: //线性移动
-                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX/100f), GetScreenPosY(infos[i].vecY/100f), 0), infos[i].duration, 0);
+                case 0:
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), seconds, 0);
                     break;
-                case 1: //线性旋转
-                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 0);
+                case 1:
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), seconds, 0);
                     break;
-                case 2: //渐变
-                    ImageFade(img, infos[i].vecX, infos[i].duration);
+                case 2:
+                    ImageFade(img, infos[i].vecX, seconds);
                     break;
-                case 3: //开始动画
-                    mainLineRect.DOScaleX(1, 0.6f).SetId<Tween>("game");
-                    Invoke("StartMove", 0.2f);
-                    topLineImage.DOFade(1, 0.5f).SetId<Tween>("game");
-                    topLineRect.DOScale(1, 0.5f).SetId<Tween>("game");
-                    topLineRect.DOLocalMove(new Vector3(0, GAME_SCALE_VERTICAL_FEC * height, 0), 0.5f).SetId<Tween>("game");
-                    bottomLineImage.DOFade(1, 0.5f).SetId<Tween>("game");
-                    bottomLineRect.DOScale(1, 0.5f).SetId<Tween>("game");
-                    bottomLineRect.DOLocalMove(new Vector3(0, -1 * GAME_SCALE_VERTICAL_FEC * height, 0), 0.5f).SetId<Tween>("game");
+                case 3:
+                    PlayIntro(eventTime, 1f);
                     break;
-                case 4: //非线性移动
-                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 1);
+                case 4:
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), seconds, 1);
                     break;
-                case 5: //非线性旋转
-                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 1);
+                case 5:
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), seconds, 1);
                     break;
             }
         }
@@ -412,50 +412,137 @@ public class ScoreManager : MonoBehaviour
 
     private void StartMove()
     {
-        mainLineRect.DOLocalMove(new Vector3(0,height * GAME_SCALE_VERTICAL_FEC,0),0.4f).SetId<Tween>("game");
+        mainLineRect.DOLocalMove(new Vector3(0, height * GAME_SCALE_VERTICAL_FEC, 0), introMoveSeconds).SetId<Tween>("game");
     }
 
-    private void AnimChange(RectTransform rect, string payload)
+    private void AnimChange(RectTransform rect, string payload, float eventTime)
     {
         if (string.IsNullOrEmpty(payload))
             return;
+        if (payload.IndexOf("b,", StringComparison.Ordinal) >= 0)
+        {
+            PlayBeats(rect, null, payload, eventTime, false);
+            return;
+        }
 
-            AnimInfo[] infos = AnimFor(payload);
+        AnimInfo[] infos = AnimFor(payload);
         for (int i = 1; i <= infos[0].type; i++)
         {
+            float seconds = MotionSeconds(infos[i].duration, eventTime);
             switch (infos[i].type)
             {
-                case 0: //移动
-                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 0);
+                case 0:
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), seconds, 0);
                     break;
-                case 1: //旋转
-                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 0);
+                case 1:
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), seconds, 0);
                     break;
-                case 4: //非线性移动
-                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), infos[i].duration, 1);
+                case 4:
+                    RectMove(rect, new Vector3(GetScreenPosX(infos[i].vecX / 100f), GetScreenPosY(infos[i].vecY / 100f), 0), seconds, 1);
                     break;
-                case 5: //非线性旋转
-                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), infos[i].duration, 1);
+                case 5:
+                    RectRotate(rect, new Vector3(infos[i].vecX, infos[i].vecY, infos[i].vecZ), seconds, 1);
                     break;
             }
         }
+    }
+
+    void PlayIntro(float eventTime, float beats)
+    {
+        if (beats <= 0f)
+            beats = 1f;
+        float beat = BeatSeconds(beats, eventTime);
+        float side = BeatSeconds(beats * (0.5f / 0.6f), eventTime);
+        introMoveSeconds = BeatSeconds(beats * (0.4f / 0.6f), eventTime);
+        mainLineRect.DOScaleX(1, beat).SetId<Tween>("game");
+        Invoke(nameof(StartMove), BeatSeconds(beats * (0.2f / 0.6f), eventTime));
+        topLineImage.DOFade(1, side).SetId<Tween>("game");
+        topLineRect.DOScale(1, side).SetId<Tween>("game");
+        topLineRect.DOLocalMove(new Vector3(0, GAME_SCALE_VERTICAL_FEC * height, 0), side).SetId<Tween>("game");
+        bottomLineImage.DOFade(1, side).SetId<Tween>("game");
+        bottomLineRect.DOScale(1, side).SetId<Tween>("game");
+        bottomLineRect.DOLocalMove(new Vector3(0, -1 * GAME_SCALE_VERTICAL_FEC * height, 0), side).SetId<Tween>("game");
+    }
+
+    void PlayBeats(RectTransform rect, Image img, string payload, float eventTime, bool withImage)
+    {
+        string[] parts = payload.Split(';');
+        for (int i = 0; i < parts.Length; i++)
+        {
+            string text = parts[i].Trim();
+            if (!text.StartsWith("b,", StringComparison.Ordinal))
+                continue;
+            string[] fields = text.Split(',');
+            if (fields.Length < 3)
+                continue;
+            if (!int.TryParse(fields[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out int type))
+                continue;
+            if (!float.TryParse(fields[2], NumberStyles.Float, CultureInfo.InvariantCulture, out float beats))
+                continue;
+            float x = 0f;
+            float y = 0f;
+            float z = 0f;
+            if (fields.Length > 3)
+                float.TryParse(fields[3], NumberStyles.Float, CultureInfo.InvariantCulture, out x);
+            if (fields.Length > 4)
+                float.TryParse(fields[4], NumberStyles.Float, CultureInfo.InvariantCulture, out y);
+            if (fields.Length > 5)
+                float.TryParse(fields[5], NumberStyles.Float, CultureInfo.InvariantCulture, out z);
+            float seconds = BeatSeconds(beats, eventTime);
+            switch (type)
+            {
+                case 0:
+                    RectMove(rect, new Vector3(GetScreenPosX(x), GetScreenPosY(y), 0), seconds, 0);
+                    break;
+                case 1:
+                    RectRotate(rect, new Vector3(x, y, z), seconds, 0);
+                    break;
+                case 2:
+                    if (withImage && img != null)
+                        ImageFade(img, x, seconds);
+                    break;
+                case 3:
+                    PlayIntro(eventTime, beats);
+                    break;
+                case 4:
+                    RectMove(rect, new Vector3(GetScreenPosX(x), GetScreenPosY(y), 0), seconds, 1);
+                    break;
+                case 5:
+                    RectRotate(rect, new Vector3(x, y, z), seconds, 1);
+                    break;
+            }
+        }
+    }
+
+    float MotionSeconds(float stored, float eventTime)
+    {
+        if (tempo == null)
+            return stored;
+        return tempo.ScaleFromBase(stored, eventTime);
+    }
+
+    float BeatSeconds(float beats, float eventTime)
+    {
+        float bpm = tempo != null ? tempo.BpmAt(eventTime) : ChartGrid.ReferenceBpm;
+        return beats * 60f / bpm;
     }
 
     /*
      * 0：背景图变黑
      * 1：背景图恢复
      */
-    private void BackChange(string payload)
+    private void BackChange(string payload, float eventTime)
     {
         if (!int.TryParse(payload, out int value))
             return;
+        float seconds = BeatSeconds(1f, eventTime);
         switch (value)
         {
-            case 0: //背景图变黑
-                BackTurnBlack();
+            case 0:
+                blackInGame.DOFade(1, seconds).SetId<Tween>("game");
                 break;
-            case 1: //背景图转为曲绘
-                BackTurnMusicBack();
+            case 1:
+                blackInGame.DOFade(0, seconds).SetId<Tween>("game");
                 break;
         }
     }
@@ -489,7 +576,8 @@ public class ScoreManager : MonoBehaviour
         string[] ss = s.Split(',');
         foreach (string tmp in ss)
         {
-            long x = long.Parse(tmp);
+            if (!long.TryParse(tmp, NumberStyles.Integer, CultureInfo.InvariantCulture, out long x))
+                continue;
             cnt++;
             infos[cnt] = new AnimInfo();
             infos[cnt].duration = (x % 1000) / 100f;
@@ -536,13 +624,4 @@ public class ScoreManager : MonoBehaviour
         img.DOFade(endFade, duration).SetId<Tween>("game");
     }
 
-    private void BackTurnBlack()
-    {
-        blackInGame.DOFade(1, 0.6f).SetId<Tween>("game");
-    }
-
-    private void BackTurnMusicBack()
-    {
-        blackInGame.DOFade(0, 0.6f).SetId<Tween>("game");
-    }
 }
