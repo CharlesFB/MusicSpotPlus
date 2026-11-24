@@ -38,7 +38,7 @@ namespace FB.Metronome.Dispatch
             while (cursor < entries.Count && entries[cursor].Event.time <= time)
             {
                 var entry = entries[cursor++];
-                try { emit(entry.Lane, entry.Event.Copy()); } catch (Exception ex) { onError?.Invoke(ex); }
+                try { emit(entry.Lane, entry.Event); } catch (Exception ex) { onError?.Invoke(ex); }
                 if (stamp != version) return;
             }
             waterline = time;

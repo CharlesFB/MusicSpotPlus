@@ -295,13 +295,23 @@ namespace FB.Metronome.Conductor
             var copy = new List<EventLane>(activeLanes ?? throw new ArgumentNullException(nameof(activeLanes)));
             MetroValidation.Validate(music, copy);
             Stop(); audioSource = output; source = music; lanes = copy;
+            ClearSubscriptions();
             RefreshEvents();
+        }
+        public void ClearSubscriptions()
+        {
+            _byEventId.Clear();
+            _byLane.Clear();
+            _byLaneEvent.Clear();
+            EventApproaching = null;
         }
         public void RefreshEvents()
         {
             ValidateParameters();
             MetroValidation.Validate(source, lanes);
-            dispatcher.Load(lanes); lookAheadDispatcher.Load(lanes);
+            dispatcher.Load(lanes);
+            if (LookAheadSeconds > 0f) lookAheadDispatcher.Load(lanes);
+            else lookAheadDispatcher.Load(System.Array.Empty<EventLane>());
             laneIds.Clear(); foreach (var lane in lanes) laneIds[lane] = lane.laneId;
             if (State != PlaybackState.Stopped || _clipOffset > 0) { dispatcher.Seek(SongTime); lookAheadDispatcher.Seek(SongTime); }
             snapshotReady = true; controlVersion++;
